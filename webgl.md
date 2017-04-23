@@ -45,4 +45,4 @@ https://developer.mozilla.org/en-US/docs/Learn/WebGL/By_example/Canvas_size_and_
 
 ## 
 
-没有了？后面的例子都无法运行。。我可能要放弃这份教材了。。再看看这个  http://www.webglacademy.com/courses.php?courses=0|1|20|2|3|4|23|5|6|7|10#4
+没有了？后面的例子都无法运行。。我可能要放弃这份教材了。。再看看这个 http://www.webglacademy.com/courses.php
