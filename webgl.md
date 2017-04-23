@@ -4,7 +4,7 @@
 
 ##
 
-首先，脚本所运行的环境支持webgl吗？
+***脚本所运行的环境支持webgl吗？***
 
 https://developer.mozilla.org/en-US/docs/Learn/WebGL/By_example/Detect_WebGL
 
@@ -45,4 +45,22 @@ https://developer.mozilla.org/en-US/docs/Learn/WebGL/By_example/Canvas_size_and_
 
 ## 
 
-没有了？后面的例子都无法运行。。我可能要放弃这份教材了。。再看看这个 http://www.webglacademy.com/courses.php
+没有了？后面的例子都无法运行。。再看看这个 http://www.webglacademy.com/courses.php 继续。
+
+##
+
+~~着色器（shader）~~
+
+渲染过程十分复杂难以理解。。。
+
+- Vertex shader：渲染定点。
+- Fragment Shader：渲染之间fragments的颜色。
+
+主要api：
+
+- createShader：创建一个指定类型的shader对象。
+- shaderSource：注入GLSL。
+- compileShader：编译GLSL。
+
+紧接着再通过shader对象创建shaderProgram，然后webgl的上下文需要链接shaderProgram，紧接着要将GLSL变量链接到
+
