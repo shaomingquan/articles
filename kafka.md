@@ -48,10 +48,6 @@ streams of data safely in a distributed replicated cluster。说明它有安全�
 
 核心概念
 
-***record***
-
-记录，由一个key，value，和时间戳组成。（为什么跟我在公司的kafka admin上看到的不一样）。会根据时间戳来判断是否过期。
-
 ***topic***
 
 用于将记录进行分类。topic中的每个record只有一个元信息，那就是offset。
@@ -62,6 +58,14 @@ parition是物理上的概念，每个topic包含一个或多个partition，创�
 
 逻辑上还是只需要关心topic的概念，producer复制将数据发往不同的分区。
 
+***segment***
+
+partition又分为多个段（segment），每次文件操作都是对一个小文件进行操作，所以非常轻便，而且也增加了并行处理的能力。 
+
+***record***
+
+记录，由一个key，value，和时间戳组成。（为什么跟我在公司的kafka admin上看到的不一样）。会根据时间戳来判断是否过期。
+
 ##
 
 五种角色。第一个是kafka集群，下面四种都需要在集群之上工作。
@@ -70,11 +74,10 @@ parition是物理上的概念，每个topic包含一个或多个partition，创�
 
 ***cluster***
 
-kafka集群。集群中的每台机器分别为一个*Broker*。
+kafka集群。集群中的每台机器分别为一个*Broker*。各个broker之间是没有主从关系的，可以随意的增加或删除任何一个broker节点。
 
 ***connector***
 
-会帮助customer和producer协调offset。
 
 ***stream processor***
 
@@ -82,13 +85,15 @@ node中传输流中的processor的概念，在消费之前做预处理。
 
 ***producer***
 
-产生record流。并指定分区，一般来讲 round-robin 即可。
+产生record流。需要指定分区，如果要均衡到各个分区采用简单的round-robin即可。
 
 ***consumer***
 
 消费record记录。consumer使用组的概念标识自身，消费进程可能在不同机器上，同组之间负载均衡，不同组之间广播。同组的几个消费进程称为一个“逻辑上的订阅者”。
 
-消费需要指定topic和offset。指定partition则在该partition消费，不指定则会将partition分散到customer。集群会自动帮你记录当前消费到的位置。
+消费需要指定topic和起始的offset。指定partition则在该partition消费，不指定则会将partition分散到customer。集群会自动帮你记录当前消费到的位置，返回你当前消费的位置，确认消费是帮助消费者重启时不重复消费，集群只保证不少消费，不保证重复消费。
+
+一个partition只能被一个消费者消费（一个消费者可以同时消费多个partition），因此，如果设置的partition的数量小于consumer的数量，就会有消费者消费不到数据。所以，推荐partition的数量一定要大于同时运行的consumer的数量。
 
 ##
 
@@ -98,14 +103,35 @@ node中传输流中的processor的概念，在消费之前做预处理。
 
 不会想想象那样消费即删除，会有相应的过期策略。kafka是否删除record跟消息是否被消费一点关系都没有。有两种过期策略。一是基于时间，二是基于partition文件大小。
 
+***消费者策略***
+
+Kafka提供了两套consumer api，分为high-level api和sample-api。Sample-api 是一个底层的API，它维持了一个和单一broker的连接，并且这个API是完全无状态的，每次请求都需要指定offset值，因此，这套API也是**最灵活**的。
+
+很多时候，客户程序只是希望从Kafka读取数据，不太关心消息offset的处理。同时也希望提供一些语义，例如同一条消息只被某一个Consumer消费（单播）或被所有Consumer消费（广播）。因此，Kafka Hight Level Consumer提供了一个从Kafka消费数据的高层抽象，从而屏蔽掉其中的细节并提供丰富的语义。但需要Consumer Rebalance 管理 consumers 和 partitions，而且无法提供原子性的消费确认。
+
+10版本之后建议不使用high-level了。
+
+http://www.jasongj.com/2015/08/09/KafkaColumn4/
+http://zqhxuyuan.github.io/2016/02/20/Kafka-Consumer-New/
+
 ***消费确认***
 
 使用集群做消息确认很难做到原子性，所以在consumer重启的时候可能会出现重复消费的情况，所以需要将消费和消费确认做成原子性的操作。http://blog.csdn.net/chunlongyu/article/details/52663090（关闭消息确认）。这样获取重启前的offset就可以更精确的控制重复消费了。
 
+***消息副本***
+
+一般会至少设置副本（Replications）数为2，这样一台机器挂了之后还有另一台机器。现在的话每个partition会存放在不同的机器上，这样就需要一个leader partition。
+
+***压缩***
+
+Kafka还支持对消息集合进行压缩，Producer端可以通过GZIP或Snappy格式对消息集合进行压缩。Producer端进行压缩之后，在Consumer端需进行解压。压缩的好处就是减少传输的数据量，减轻对网络传输的压力，在对大数据处理上，瓶颈往往体现在网络上而不是CPU（压缩和解压会耗掉部分CPU资源）。
 
 ## 
 
-那么实际玩一下。TODO。
+在公司中？
 
+***公共服务***
 
+上面那么多在实际工作中或许统统用不上。一般在大厂都会标配的数据研发组，他们帮前端工程师解决了很多的问题，让工程师能投身于业务本身，快速的获得数据服务带来的收益。
 
+这个过程仿佛十分简单，申请个topic，再使用对应语言的sdk接入就ok了。
