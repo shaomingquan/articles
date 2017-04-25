@@ -80,10 +80,52 @@ docker stop 1fa4ab2cf395 // 通过查看到的容器号停掉对应的容器。
 
 *share*
 
-需要一个登记处，一个登记处是一系列的仓库，像github的仓库那样。需要找一个公共的登记处或者自行搭建。
+需要一个登记处，一个登记处是一系列的仓库，像github的仓库那样。需要找一个公共的登记处或者自行搭建(https://docs.docker.com/datacenter/dtr/2.2/guides/)。
 
 下面注册到官方的登记处，并在网站上创建一个新的仓库。在命令行登陆docker，`docker login`，将当前镜像关联到远程仓库的一个版本`docker tag hello-world shaomingquan/helloworld:v1.0.0`，上传本地仓库到远程仓库`docker push shaomingquan/helloworld:v1.0.0`。使用tag为当前的仓库提供版本机制。
 
 https://cloud.docker.com/swarm/shaomingquan/repository/registry-1.docker.io/shaomingquan/helloworld/general
 
 换台机器，运行 `docker run -p 4000:80 shaomingquan/helloworld:v1.0.0`。
+
+*service*
+
+一个service只运行一个镜像，它规定了镜像如何运行，完成容量管理，服务重启等功能。`docker-compose.yml`定义了容器如何运行。比如下面的service规定了五个负载均衡的容器。
+
+```
+version: "3"
+services:
+  web:
+    image: friendlyhello
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3002:80"
+    networks:
+      - webnet
+networks:
+  webnet:
+```
+如下，有五个容器。
+![](/images/1493132249kl.png)
+
+*swarm*
+
+swarm是集群内部的一组运行docker的机器。通过swarm manager管理。
+
+`docker swarm init`看起swarm模式并且使用当前机器作为swarm manager。
+
+
+创建两台虚拟机。创建第一台的时候需要下载镜像。第二个就很快了。
+```
+$ docker-machine create --driver virtualbox myvm1
+$ docker-machine create --driver virtualbox myvm2
+```
+
+`$ docker-machine ssh myvm1 "docker swarm init"` 让myvm1作为manager。
