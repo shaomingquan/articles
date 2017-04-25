@@ -85,3 +85,5 @@ docker stop 1fa4ab2cf395 // 通过查看到的容器号停掉对应的容器。
 下面注册到官方的登记处，并在网站上创建一个新的仓库。在命令行登陆docker，`docker login`，将当前镜像关联到远程仓库的一个版本`docker tag hello-world shaomingquan/helloworld:v1.0.0`，上传本地仓库到远程仓库`docker push shaomingquan/helloworld:v1.0.0`。使用tag为当前的仓库提供版本机制。
 
 https://cloud.docker.com/swarm/shaomingquan/repository/registry-1.docker.io/shaomingquan/helloworld/general
+
+换台机器，运行 `docker run -p 4000:80 shaomingquan/helloworld:v1.0.0`。
