@@ -80,6 +80,8 @@ docker stop 1fa4ab2cf395 // 通过查看到的容器号停掉对应的容器。
 
 *share*
 
+在分布式应用中镜像需要分享给各个机器。
+
 需要一个登记处，一个登记处是一系列的仓库，像github的仓库那样。需要找一个公共的登记处或者自行搭建(https://docs.docker.com/datacenter/dtr/2.2/guides/)。
 
 下面注册到官方的登记处，并在网站上创建一个新的仓库。在命令行登陆docker，`docker login`，将当前镜像关联到远程仓库的一个版本`docker tag hello-world shaomingquan/helloworld:v1.0.0`，上传本地仓库到远程仓库`docker push shaomingquan/helloworld:v1.0.0`。使用tag为当前的仓库提供版本机制。
@@ -122,10 +124,68 @@ swarm是集群内部的一组运行docker的机器。通过swarm manager管理�
 `docker swarm init`看起swarm模式并且使用当前机器作为swarm manager。
 
 
-创建两台虚拟机。创建第一台的时候需要下载镜像。第二个就很快了。
+使用虚拟机在本地测试集群。创建两台虚拟机。创建第一台的时候需要下载镜像。第二个就很快了。
 ```
 $ docker-machine create --driver virtualbox myvm1
 $ docker-machine create --driver virtualbox myvm2
 ```
 
 `$ docker-machine ssh myvm1 "docker swarm init"` 让myvm1作为manager。
+
+```
+$ docker-machine ssh myvm2 "docker swarm join \
+--token <token> \
+<ip>:<port>"
+
+This node joined a swarm as a worker. (blocked here)
+```
+
+报错
+```
+Error response from daemon: rpc error: code = 13 desc = connection error: desc = "transport: remote error: tls: bad certificate"
+```
+解决上面报错的方法 https://github.com/docker/machine/issues/4064，不要用ls里面的port。
+
+使用scp上传文件 `docker-machine scp docker-compose.yml myvm1:~`
+
+剩下的按照service的步骤，在myvm1中执行，服务将均匀部署在整个集群。
+
+```
+$ docker-machine ssh myvm1 "docker stack ps getstartedlab"
+
+ID            NAME        IMAGE              NODE   DESIRED STATE
+jq2g3qp8nzwx  test_web.1  username/repo:tag  myvm1  Running
+88wgshobzoxl  test_web.2  username/repo:tag  myvm2  Running
+vbb1qbkb0o2z  test_web.3  username/repo:tag  myvm2  Running
+ghii74p9budx  test_web.4  username/repo:tag  myvm1  Running
+0prmarhavs87  test_web.5  username/repo:tag  myvm2  Running
+```
+
+*stack*
+
+stack 是分布式应用程序的最上层的结构。他是一组关联的服务，方便这些服务统一的容量管理。在service中，已经使用了stack命令，只不过是个单service的stack。
+
+需要加一个服务。在教程中有两个新选项。
+
+- volumes：定义了docker内部访问外部资源的映射，因为发布代码都是在外部，而不会发布到docker内部。
+- deploy：定义了容器部署的行为。
+
+
+https://docs.docker.com/get-started/part5/#adding-a-new-service-and-redeploying
+
+官网例子是在manager上面运行了一个可视化的界面。
+
+加入redis服务有一个重要的点是要让db文件夹映射到host的文件目录下，因为容器redeploy的时候会擦除这些数据。
+
+```
+volumes:
+      - ./data:/data
+```
+redis的官方镜像已经被批准为一个短名称  redis。
+```
+redis:
+    image: redis
+```
+
+部署：
+`docker-machine ssh myvm1 "docker stack deploy -c docker-compose.yml getstartedlab"` 在manager上面运行stack deploy， 指定配置文件，给stack取个名字。
