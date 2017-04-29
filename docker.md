@@ -78,6 +78,22 @@ docker stop 1fa4ab2cf395 // 通过查看到的容器号停掉对应的容器。
 
 ```
 
+同样道理，我们也可以用nodejs做类似的事情 https://docs.npmjs.com/misc/scripts#default-values。
+
+也可以不每次打包。
+
+`docker run -it --rm --name my-running-script -v "$PWD":/usr/src/app -w /usr/src/app node:4 node your-daemon-or-script.js`
+
+上面命令的意思是，容器内的`usr/src/app`对应当前目录，移动容器内的工作目录到`usr/src/app`，使用node:4镜像根据配置生成容器，并在容器内运行node以及应用。volume是容器间文件共享的策略，这里面一般会有代码，以及对每个镜像行为的配置。可以添加ro选项来限制它只读`"$PWD":/usr/src/app:ro`。
+
+```
+--rm	false	Automatically remove the container when it exits
+--workdir, -w	 	Working directory inside the container
+--volume, -v	 	Bind mount a volume
+```
+
+所以是否要重新构建镜像，按需。
+
 *share*
 
 在分布式应用中镜像需要分享给各个机器。
@@ -92,7 +108,9 @@ https://cloud.docker.com/swarm/shaomingquan/repository/registry-1.docker.io/shao
 
 *service*
 
-一个service只运行一个镜像，它规定了镜像如何运行，完成容量管理，服务重启等功能。`docker-compose.yml`定义了容器如何运行。比如下面的service规定了五个负载均衡的容器。
+与直接run最大的不同，service可以管理重启，更多是投入在生产中。
+
+一个service运行一个镜像，它规定了镜像如何运行，完成容量管理，服务重启等功能。`docker-compose.yml`定义了容器如何运行。比如下面的service规定了五个负载均衡的容器。
 
 ```
 version: "3"
@@ -134,8 +152,8 @@ $ docker-machine create --driver virtualbox myvm2
 
 ```
 $ docker-machine ssh myvm2 "docker swarm join \
---token <token> \
-<ip>:<port>"
+--token  \
+:"
 
 This node joined a swarm as a worker. (blocked here)
 ```
@@ -189,3 +207,29 @@ redis:
 
 部署：
 `docker-machine ssh myvm1 "docker stack deploy -c docker-compose.yml getstartedlab"` 在manager上面运行stack deploy， 指定配置文件，给stack取个名字。
+
+*在容器内执行一个命令。*
+
+
+装一个Ubuntu `docker run -itd --name=networktest ubuntu`。可以用`docker exec`执行一个命令。-itd === -i -t -d(后台运行*)。
+
+```
+$ docker exec 6f974c13511f date
+Wed Apr 26 14:49:03 UTC 2017
+```
+
+```
+$ docker exec 69427306c7b7 node -v
+v4.8.2
+```
+
+也可以使用`docker attach`登录container中。 
+
+```
+$ docker attach 6f974c13511f
+root@6f974c13511f:/#
+```
+
+当exit或者ctrl-d的时候，会使容器退出，但docker仍然占用`/networktest`这个名字。需要执行`docker container rm /networktest`去移除这个名字，才可以用这个名字继续重启。
+
+*拓展一个镜像*
