@@ -233,3 +233,7 @@ root@6f974c13511f:/#
 当exit或者ctrl-d的时候，会使容器退出，但docker仍然占用`/networktest`这个名字。需要执行`docker container rm /networktest`去移除这个名字，才可以用这个名字继续重启。
 
 *拓展一个镜像*
+
+拓展一个镜像有两种方法。
+- exec装新东西，在发布到一个新的镜像。
+- FROM it。
