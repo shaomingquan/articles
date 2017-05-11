@@ -1,0 +1,27 @@
+一次偶然的解决方案查找让我重新思考浏览器地址栏。如何使用前端下载文件？
+
+一道经典的面试题是这样的：当在地址栏输入url在按回车会发生什么？一般来讲面试者会回答一整套的计算机网络知识。实际上url的定义中的第一部分：协议，决定了是否发生这套计算机网络行为。
+
+协议，为双方之事。浏览器懂，另一方懂，则可以运行。http中，另一方是web服务器，当url的协议是http时，意味着浏览器要跟web服务器进行沟通。以此类推，当协议不同时，浏览器以不同的方式与不同的端进行沟通。
+
+简单的，在地址栏中数据file://，则看到自己的文件目录，端为文件系统。输入mailto:261744942@qq.com则吊起mac的邮件应用（端）。javascript:alert(1)则执行alert(1)，端为v8引擎。浏览器中吊起app也是利用了协议，端为各种app。
+
+还是比较好理解的。一个很有意思的东西叫data:，虽然后面带冒号，但按照规范，data url属于http协议范畴，我经常使用这个来加一些小的图标，很方便。data协议的格式是这样的`data:[<mediatype>][;base64],<data>`，当浏览器可以处理mediatype时则在页面中显示以data为数据源mediatype类型的输出结果。当浏览器无法输出该结果时，则会下载data。如`data:application/vnd.ms-powerpoint,<h1>Hello%2C%20World!<%2Fh1>`，类型为ppt的文件浏览器打不开，所以下载了，且保存类型为*.ppt。
+
+***所以window.open可以用作下载，脑洞太大。***如`window.open('data:application/vnd.ms-powerpoint,<h1>Hello%2C%20World!<%2Fh1>')`。只要下载文件类型浏览器打不开，二进制转base64码即可。当然这个ppt并不能打开。
+
+不过注意一点。data协议本身依赖http的get方法，所以使用data协议加window.open的方式下载文件大小十分受限。也可以知道为什么用base64，因为长度相同存的东西多啊。主流浏览器最少也支持2k比较保险，所以base64串能存8k的数据。不过还是太小了。
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2218079-c16efebcd01344d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+说到地址栏，还有个很有意思的功能。如下图直接输入zhihu.com然后tab就可以直接进行搜索。
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2218079-f130f5e295fac80d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+探索了一下，发现是一个叫openSearch的东西。
+使用上很简单，如知乎的openSearch设置，实际上只需一个静态的xml设置和一段头部引用即可`<link rel="search" type="application/opensearchdescription+xml" href="https://static.zhihu.com/static/search.xml" title="知乎" />`
+这个配置大概瞄一眼就知道什么意思https://static.zhihu.com/static/search.xml。
+
+实际上我并没有设置其他搜索引擎，但我的chrome设置里面却有这么多个设置，我又没有去挨个添加，所以想到是自动设置的。在什么时机自动设置的？理所应当想到的是“第一次搜索时”。经验证之后确实是这样的。
+
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2218079-ae94145ce99bb238.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+非要下个结论的话：浏览器是一个根据能处理各种应用层协议的软件，地址栏是切换协议的入口，也承担了搜索和openSearch的功能。

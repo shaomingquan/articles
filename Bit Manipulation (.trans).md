@@ -1,0 +1,344 @@
+原文链接https://discuss.leetcode.com/topic/50315/a-summary-how-to-use-bit-manipulation-to-solve-problems-easily-and-efficiently
+
+> 如何利用位操作去简单高效的解决问题？原文中的小哥做了不错的总结，在此翻译并学习一下。
+
+### 先说几句
+
+这里的位操作指在算法上利用位操作将代码片段缩短的行为。很多计算机程序任务需要位操作，包括底层的设备控制，错误检测，校验算法，数据压缩，加密算法，还有算法优化。对于大多数其他任务，现代编程语言允许开发者直接工作在更多抽象出来的概念，而不是去直接做位操作。位操作则交给语言源代码（内核）执行，按位操作的操作符有AND（位与 &），OR（位或 |），XOR（位异或 ^），和位移运算（右移 >> 左移 <<）。
+
+使用位操作，在某些情况下，可以避免或者减少对数据结构的循环提供多重的加速，这归功于位操作并行运行的特点（并行表示 10101 & 10010 是一次操作）。但是代码实现会变困难，并且难以维护。
+
+### 详解
+
+##### 基础知识
+
+位操作的核心是按位运算符，AND（位与 &），OR（位或 |），XOR（位异或 ^），和位移运算（右移 >> 左移 <<）。下面是一些常用的组合。
+
+- 并集 A | B
+- 交集 A & B
+- 差集 A & ~B
+- 取反 ALL_BITS ^ A or ~A
+- 位赋值 A |= 1 << bit
+- 位清空 A &= ~(1 << bit)
+- 检查位 (A & 1 << bit) != 0
+- 提取末位 A&-A or A&~(A-1) or x^(x&(x-1))
+- 删除末位1 A&(A-1)
+- 得到所有位是1的数 ~0
+
+##### 热身
+
+计算所给数字的二进制数有多少位为1。
+```
+int count_one(int n) {
+    int count = 0;
+    while(n) {
+        // 每次删除最后一个1，直到没有1，则求出1的个数。
+        n = n&(n-1);
+        count++;
+    }
+    return count;
+}
+```
+是否是4的n次方。
+```
+bool isPowerOfFour(int n) {
+    return !(n&(n-1)) && (n&0x55555555); //1010101010101010101010101010101
+    // &&前面判断只能有一个比特位为1（挪走最后一个比特位之后为零）。
+    // &&后面判断比特位应该出现的位置是1，4，16，64对应的位置。  
+}
+```
+
+##### `^`的技巧
+
+用`^`去移除偶数保留奇数，或者保留不同的位，移除相同的位。
+
+***用 `^` 和 `&` 去求两个整数的和。***
+
+```
+int getSum(int a, int b) {
+    return b == 0 ? a : getSum(a^b, (a&b)<<1); 
+    // 不进位和 a ^ b，进位和 (a & b) << 1，进位和为0时，返回不进位和。
+}
+```
+
+***缺失的数字***
+一个包含n个不同数字的数组`0,1,2, ..., n`，现在其中一个数字缺失，写段程序找到它。比如，`nums = [0, 1, 3]`，则返回值为2。（当然，这个题也可以用数学方法解决）。
+
+```
+int missingNumber(vector<int>& nums) {
+    int ret = 0;
+    for(int i = 0; i < nums.size(); ++i) {
+        ret ^= i;
+        ret ^= nums[i];
+    }
+    // 6 ^ 6 === 0，利用这个，只有缺失的数字 ^ 了一次。相当于移除了重复。
+    return ret^=nums.size();
+}
+```
+数学方法（不存在与原文）
+```
+// javascript
+var missingNumber = function(nums) {
+    var n = nums.length;
+    var all = n * (n + 1) / 2;
+    return nums.reduce((result, current) => {
+        return result - current;
+    }, all);
+};
+```
+
+##### `|`的技巧
+
+尽可能保留更多为1的位。
+
+***找到比N小的是2的整次方的数***
+
+```
+long largest_power(long N) {
+    //changing all right side bits to 1.
+    N = N | (N>>1);
+    N = N | (N>>2);
+    N = N | (N>>4);
+    N = N | (N>>8);
+    N = N | (N>>16);
+    // 填满1，然后在留住第一个1。（实际上也可以通过慢慢去1来做，但目前的方法时最好的。）
+    return (N+1)>>1;
+}
+```
+
+***反转字节***
+
+反转一个32位无符号整型数字的字节。
+```
+// 从后往前的生产过程。
+uint32_t reverseBits(uint32_t n) {
+    unsigned int mask = 1<<31, res = 0;
+    for(int i = 0; i < 32; ++i) {
+        if(n & 1) res |= mask;
+        mask >>= 1;
+        n >>= 1;
+    }
+    return res;
+}
+```
+
+```
+//从前往后的生产过程。
+uint32_t reverseBits(uint32_t n) {
+	uint32_t mask = 1, ret = 0;
+	for(int i = 0; i < 32; ++i){
+		ret <<= 1;
+		if(mask & n) ret |= 1;
+		mask <<= 1;
+	}
+	return ret;
+}
+```
+
+##### `&`的技巧
+
+选择某些位。
+翻转某些位。
+
+```
+// 并不清楚作者贴这个的用意。
+x = ((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1); // 偶数位右移一位，奇数位左移一位？
+x = ((x & 0xcccccccc) >> 2) | ((x & 0x33333333) << 2);
+x = ((x & 0xf0f0f0f0) >> 4) | ((x & 0x0f0f0f0f) << 4);
+x = ((x & 0xff00ff00) >> 8) | ((x & 0x00ff00ff) << 8);
+x = ((x & 0xffff0000) >> 16) | ((x & 0x0000ffff) << 16);
+```
+
+***区间内数字的位与运算***
+一个区间`[m, n]`，满足`0 <= m <= n <= 2147483647`，返回区间内所有数字的位与操作。比如`[5, 7]`，返回值为4。
+
+```
+// 思路是看首尾的最高几位是否相同。中间的不用管，中间连续的位与总是让低位的字节为零。
+int rangeBitwiseAnd(int m, int n) {
+    int a = 0;
+    while(m != n) {
+        m >>= 1;
+        n >>= 1;
+        a++;
+    }
+    return m<<a; 
+}
+```
+***为1的位的数量***
+实现一个方法，输入时一个整形数字，输出是这个整形数字的为1的位的数量。
+```
+// 跟热身题1重复。
+int hammingWeight(uint32_t n) {
+	int count = 0;
+	while(n) {
+                // 每次删除最后一个1，直到没有1，则求出1的个数。
+		n = n&(n-1);
+		count++;
+	}
+	return count;
+}
+```
+```
+int hammingWeight(uint32_t n) {
+    ulong mask = 1;
+    int count = 0;
+    for(int i = 0; i < 32; ++i){ //31 will not do, delicate;
+        // 按位检查
+        if(mask & n) count++;
+        mask <<= 1;
+    }
+    return count;
+}
+```
+##### 应用
+
+***重复的DNA序列***
+所有的DNA都是由一系列的核苷酸组成，这些核苷酸可以简写为 `A, C, G,` 和 `T,` 举个例子：`“ACGAATTCCG”`。在研究DNA的时候，识别DNA中的重复序列有时会很有用。写一个方法，找出所有长度为10的在序列里不止出现一次的子序列。
+
+举个例子：
+s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"，
+返回值: ["AAAAACCCCC", "CCCCCAAAAA"]。
+
+```java
+
+// 思路是给每个子序列计数，计数大于1则当前子串作为返回值。
+// 用二进制记录子串，(s[i]-'A'+1)%5 为 0,1,2,3，每存一个字符需要两位，十个则需要20位，位移后需要截断，所以mask为0xfffff （1 * 20）
+class Solution {
+public:
+    vector<string> findRepeatedDnaSequences(string s) {
+        int sLen = s.length();
+        vector<string> v;
+        if(sLen < 11) return v;
+        char keyMap[1<<21]{0};
+        int hashKey = 0;
+        for(int i = 0; i < 9; ++i) hashKey = (hashKey<<2) | (s[i]-'A'+1)%5; // 0,1,2,3
+        for(int i = 9; i < sLen; ++i) { // 0xfffff  =>  111111111...20个
+            if(keyMap[hashKey = ((hashKey<<2)|(s[i]-'A'+1)%5)&0xfffff]++ == 1)
+                v.push_back(s.substr(i-9, 10));
+        }
+        return v;
+    }
+};
+```
+> 对于上面的解，当结果过多的时候会有问题。在这种情况下，我们应该使用 `unordered_map<int, int> keyMap` 去替换 `char keyMap[1<<21]{0}`。
+
+***重要元素***
+在一个大小为 n的数组中，找到其中的重要元素。重要元素是指出现超过 `n/2` 次以上的元素。（位操作是一种常规解法，还有另外一种方法是运用排序和Moore Voting算法）。
+```
+// 自以为不是很高效。
+int majorityElement(vector<int>& nums) {
+    int len = sizeof(int)*8, size = nums.size();
+    int count = 0, mask = 1, ret = 0;
+    for(int i = 0; i < len; ++i) { // 对于每一位。⤵️
+        count = 0;
+        for(int j = 0; j < size; ++j)
+            if(mask & nums[j]) count++;
+        if(count > size/2) ret |= mask; // 本位1超过一半则本位参与贡献结果。
+        mask <<= 1;
+    }
+    return ret;
+}
+```
+***单独的数字②***
+一个整形数组，除了某个数字之外每个数字都出现了三次，求这个数字。这种问题仍然可以通过字符计数解决，但这次我们会通过数字逻辑设计来解决。
+```
+//受启发与逻辑电路设计和布尔代数。
+//设计一个每三个相同的数字循环一圈的计数器。
+//current   incoming  next
+//a b            c    a b
+//0 0            0    0 0
+//0 1            0    0 1
+//1 0            0    1 0
+//0 0            1    0 1
+//0 1            1    1 0
+//1 0            1    0 0
+//a = a&~b&~c + ~a&b&c;
+//b = ~a&b&~c + ~a&~b&c;
+//返回值 a|b 因为出现一次和出现两次的时候，结果不一定是A或者B。
+// TODO：how to design a counter?
+int singleNumber(vector<int>& nums) {
+    int t = 0, a = 0, b = 0;
+    for(int i = 0; i < nums.size(); ++i) {
+        t = (a&~b&~nums[i]) | (~a&b&nums[i]);
+        b = (~a&b&~nums[i]) | (~a&~b&nums[i]);
+        a = t;
+    }
+    return a | b;
+};
+```
+***单词长度乘积的最大值***
+一个元素是单词的数组，求`length(word[i]) * length(word[j])`的最大值，要求这两个单词不享有共同的字母。可以假定每个单词只含有小写字母。如果没有这样的两个单词，返回值为0。
+>例 1:
+> ["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]
+> 返回值 16
+> 这两个单词是："abcw"，"xtfn"。
+****
+> 例 2:
+> ["a", "aa", "aaa", "aaaa"]
+> 返回值 0
+> 没有这样的两个单词。
+
+
+因为我们要非常频繁的时候单词的长度，并且会去比较两个单词是否含有相同的字母。所以：
+- 使用一个数组去预存每个单词的长度。
+- 应为一个整形有四个字节32个比特，并且这里只有26个字母，所以我们仅使用一个字节就可以去标识单词中字母的存在情况。
+```
+int maxProduct(vector<string>& words) {
+    vector<int> mask(words.size());
+    vector<int> lens(words.size());
+    for(int i = 0; i < words.size(); ++i) lens[i] = words[i].length();
+    int result = 0;
+    for (int i=0; i<words.size(); ++i) {
+        for (char c : words[i])
+            mask[i] |= 1 << (c - 'a');
+        for (int j=0; j<i; ++j)
+            if (!(mask[i] & mask[j]))
+                result = max(result, lens[i]*lens[j]);
+    }
+    return result;
+}
+```
+
+注意：
+- 位移过多的结果是未定义的。
+- 负数的右移操作是未定义的。
+- 位移操作符的右操作数必须是非负数，否者结果将会是未定义的。
+- 位与（&）和位或（|）运算符的优先级比比较运算符的优先级要低。
+
+##### 集合
+***所有的子集***
+位操作的一个巨大的优势是，它可以很快的遍历一个N元素集合的所有子集：每一个N位的二进制值代表一个子集。更好的是，如果A是B的子集，则表示A的数字小于表示B的数字，这对于一些动态编程解决方案是方便的。
+
+也可以对有特殊模式的子集进行遍历，假如你不介意以相反的顺序遍历他们（如果遇到困难，利用数组在他们产生的时候缓存起来，然后反向遍历）。这个技巧与找最低位类似，如果我们减1，最低位被清空，但每个低位的位变成了1。然而我们只想将这些低位按之前的样子，所以这个迭代步骤变成了`i = (i - 1) & superset`。
+```
+vector<vector<int>> subsets(vector<int>& nums) {
+    vector<vector<int>> vv;
+    int size = nums.size(); 
+    if(size == 0) return vv;
+    int num = 1 << size; // 子集个数为2 ^ size。
+    vv.resize(num);
+    for(int i = 0; i < num; ++i) {
+        for(int j = 0; j < size; ++j) // i的二进制描述了取哪个位置的值。
+            if((1<<j) & i) vv[i].push_back(nums[j]);   
+    }
+    return vv;
+}
+```
+
+##### 位集合
+位集合存储位（元素只能有两种值，0或者1，true或者false）。这个类好像是一个bool型的数组，但是这个类做了空间分配的优化：通常情况下，每个元素只占一位（因此，在大多数的操作系统里，它比最小的原生类型char还小八倍）。
+```
+// bitset::count
+#include <iostream>       // std::cout
+#include <string>         // std::string
+#include <bitset>         // std::bitset
+
+int main () {
+  std::bitset<8> foo (std::string("10110011"));
+  std::cout << foo << " has ";
+  std::cout << foo.count() << " ones and ";
+  std::cout << (foo.size()-foo.count()) << " zeros.\n";
+  return 0;
+}
+```
+随时欢迎留言，分享你的新想法和实用的技巧！（完）。
