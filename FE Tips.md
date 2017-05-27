@@ -100,9 +100,9 @@ document.onclick = function (e){
 ***image preview***
 一种最简单的图片preview的方法。使用浏览器默认的preview效果，报一个url即可。
 ```html
-<a href="http://static1.xxx.com/yyy.png">
-	<img src="http://static1.xxx.com/yyy.png"/>
-</a>
+
+	
+
 ```
 
 ***hack curry***
@@ -237,3 +237,7 @@ require('./lib').options = {...}
 require('./lib').run(_ => console.log(_))
 ```
 可作为构架问题传参层数过多时快速配置的hack方法。不建议大量使用。
+
+***cannot require index.js?***
+
+不能require 目录下的index.js？那一定是package.json将main引到另外一个文件或者文件夹了。
