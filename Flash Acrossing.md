@@ -26,7 +26,7 @@ div:hover + ul {
 ***stage 2***
 
 上面的例子有什么不好呢？当鼠标移开的时候的一点点延迟稍微让它显得不完美。所以delay属性放在伪类里面，这样好些。
-```
+```css
 ul {
   visibility: hidden;
   transition-property: visibility;

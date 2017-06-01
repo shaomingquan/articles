@@ -28,7 +28,7 @@
 ##### 热身
 
 计算所给数字的二进制数有多少位为1。
-```
+```c
 int count_one(int n) {
     int count = 0;
     while(n) {
@@ -40,7 +40,7 @@ int count_one(int n) {
 }
 ```
 是否是4的n次方。
-```
+```c
 bool isPowerOfFour(int n) {
     return !(n&(n-1)) && (n&0x55555555); //1010101010101010101010101010101
     // &&前面判断只能有一个比特位为1（挪走最后一个比特位之后为零）。
@@ -54,7 +54,7 @@ bool isPowerOfFour(int n) {
 
 ***用 `^` 和 `&` 去求两个整数的和。***
 
-```
+```c
 int getSum(int a, int b) {
     return b == 0 ? a : getSum(a^b, (a&b)<<1); 
     // 不进位和 a ^ b，进位和 (a & b) << 1，进位和为0时，返回不进位和。
@@ -64,8 +64,8 @@ int getSum(int a, int b) {
 ***缺失的数字***
 一个包含n个不同数字的数组`0,1,2, ..., n`，现在其中一个数字缺失，写段程序找到它。比如，`nums = [0, 1, 3]`，则返回值为2。（当然，这个题也可以用数学方法解决）。
 
-```
-int missingNumber(vector<int>& nums) {
+```c
+int missingNumber(vector& nums) {
     int ret = 0;
     for(int i = 0; i < nums.size(); ++i) {
         ret ^= i;
@@ -76,7 +76,7 @@ int missingNumber(vector<int>& nums) {
 }
 ```
 数学方法（不存在与原文）
-```
+```js
 // javascript
 var missingNumber = function(nums) {
     var n = nums.length;
@@ -93,7 +93,7 @@ var missingNumber = function(nums) {
 
 ***找到比N小的是2的整次方的数***
 
-```
+```c
 long largest_power(long N) {
     //changing all right side bits to 1.
     N = N | (N>>1);
@@ -109,7 +109,7 @@ long largest_power(long N) {
 ***反转字节***
 
 反转一个32位无符号整型数字的字节。
-```
+```c
 // 从后往前的生产过程。
 uint32_t reverseBits(uint32_t n) {
     unsigned int mask = 1<<31, res = 0;
@@ -122,7 +122,7 @@ uint32_t reverseBits(uint32_t n) {
 }
 ```
 
-```
+```c
 //从前往后的生产过程。
 uint32_t reverseBits(uint32_t n) {
 	uint32_t mask = 1, ret = 0;
@@ -140,7 +140,7 @@ uint32_t reverseBits(uint32_t n) {
 选择某些位。
 翻转某些位。
 
-```
+```c
 // 并不清楚作者贴这个的用意。
 x = ((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1); // 偶数位右移一位，奇数位左移一位？
 x = ((x & 0xcccccccc) >> 2) | ((x & 0x33333333) << 2);
@@ -152,7 +152,7 @@ x = ((x & 0xffff0000) >> 16) | ((x & 0x0000ffff) << 16);
 ***区间内数字的位与运算***
 一个区间`[m, n]`，满足`0 <= m <= n <= 2147483647`，返回区间内所有数字的位与操作。比如`[5, 7]`，返回值为4。
 
-```
+```c
 // 思路是看首尾的最高几位是否相同。中间的不用管，中间连续的位与总是让低位的字节为零。
 int rangeBitwiseAnd(int m, int n) {
     int a = 0;
@@ -161,53 +161,9 @@ int rangeBitwiseAnd(int m, int n) {
         n >>= 1;
         a++;
     }
-    return m<<a; 
-}
-```
-***为1的位的数量***
-实现一个方法，输入时一个整形数字，输出是这个整形数字的为1的位的数量。
-```
-// 跟热身题1重复。
-int hammingWeight(uint32_t n) {
-	int count = 0;
-	while(n) {
-                // 每次删除最后一个1，直到没有1，则求出1的个数。
-		n = n&(n-1);
-		count++;
-	}
-	return count;
-}
-```
-```
-int hammingWeight(uint32_t n) {
-    ulong mask = 1;
-    int count = 0;
-    for(int i = 0; i < 32; ++i){ //31 will not do, delicate;
-        // 按位检查
-        if(mask & n) count++;
-        mask <<= 1;
-    }
-    return count;
-}
-```
-##### 应用
-
-***重复的DNA序列***
-所有的DNA都是由一系列的核苷酸组成，这些核苷酸可以简写为 `A, C, G,` 和 `T,` 举个例子：`“ACGAATTCCG”`。在研究DNA的时候，识别DNA中的重复序列有时会很有用。写一个方法，找出所有长度为10的在序列里不止出现一次的子序列。
-
-举个例子：
-s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"，
-返回值: ["AAAAACCCCC", "CCCCCAAAAA"]。
-
-```java
-
-// 思路是给每个子序列计数，计数大于1则当前子串作为返回值。
-// 用二进制记录子串，(s[i]-'A'+1)%5 为 0,1,2,3，每存一个字符需要两位，十个则需要20位，位移后需要截断，所以mask为0xfffff （1 * 20）
-class Solution {
-public:
-    vector<string> findRepeatedDnaSequences(string s) {
+    return m< findRepeatedDnaSequences(string s) {
         int sLen = s.length();
-        vector<string> v;
+        vector v;
         if(sLen < 11) return v;
         char keyMap[1<<21]{0};
         int hashKey = 0;
@@ -220,13 +176,13 @@ public:
     }
 };
 ```
-> 对于上面的解，当结果过多的时候会有问题。在这种情况下，我们应该使用 `unordered_map<int, int> keyMap` 去替换 `char keyMap[1<<21]{0}`。
+> 对于上面的解，当结果过多的时候会有问题。在这种情况下，我们应该使用 `unordered_map keyMap` 去替换 `char keyMap[1<<21]{0}`。
 
 ***重要元素***
 在一个大小为 n的数组中，找到其中的重要元素。重要元素是指出现超过 `n/2` 次以上的元素。（位操作是一种常规解法，还有另外一种方法是运用排序和Moore Voting算法）。
-```
+```c
 // 自以为不是很高效。
-int majorityElement(vector<int>& nums) {
+int majorityElement(vector& nums) {
     int len = sizeof(int)*8, size = nums.size();
     int count = 0, mask = 1, ret = 0;
     for(int i = 0; i < len; ++i) { // 对于每一位。⤵️
@@ -241,7 +197,7 @@ int majorityElement(vector<int>& nums) {
 ```
 ***单独的数字②***
 一个整形数组，除了某个数字之外每个数字都出现了三次，求这个数字。这种问题仍然可以通过字符计数解决，但这次我们会通过数字逻辑设计来解决。
-```
+```c
 //受启发与逻辑电路设计和布尔代数。
 //设计一个每三个相同的数字循环一圈的计数器。
 //current   incoming  next
@@ -256,7 +212,7 @@ int majorityElement(vector<int>& nums) {
 //b = ~a&b&~c + ~a&~b&c;
 //返回值 a|b 因为出现一次和出现两次的时候，结果不一定是A或者B。
 // TODO：how to design a counter?
-int singleNumber(vector<int>& nums) {
+int singleNumber(vector& nums) {
     int t = 0, a = 0, b = 0;
     for(int i = 0; i < nums.size(); ++i) {
         t = (a&~b&~nums[i]) | (~a&b&nums[i]);

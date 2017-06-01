@@ -42,7 +42,7 @@ http.get({
 });
 ```
 分离子进程，这样主进程只负责开进程，之后就退出。
-```
+```js
 var _process = require('child_process').spawn('node', ['./httpserver.js'], {
     detached: true, // 设为分离的
     stdio: ['ignore', 'pipe', 'pipe'] // 忽略输入流
@@ -56,8 +56,8 @@ _process.unref(); // 进程不要在意process的事件流
 
 idempotent（等幂性）意味着`unref`没有副作用。
 
-```c++
-void HandleWrap::Unref(const FunctionCallbackInfo<Value>& args) {
+```js
+void HandleWrap::Unref(const FunctionCallbackInfo& args) {
   HandleWrap* wrap;
   ASSIGN_OR_RETURN_UNWRAP(&wrap, args.Holder());
 
