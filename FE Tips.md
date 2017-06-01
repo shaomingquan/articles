@@ -4,7 +4,7 @@ move curries :）
 
 ***“提前执行”***
 如下代码，当我点一下`#logo`，会打印什么？
-```
+```js
 document.getElementById('logo').onclick = function () {
 	console.log('logo clicked');
     document.addEventListener('click', function () {
@@ -13,7 +13,7 @@ document.getElementById('logo').onclick = function () {
 };
 ```
 目的是点`#logo`在全局绑一个点击。但两条都打印，看起来很奇葩，其实很合理。只因为冒泡，事件没冒泡完毕就绑定了document的事件，document不幸被冒泡。如下nextTick一下就ok了。如果不知道事件冒泡的绝对百思不得其解，即使知道事件冒泡也难免踩坑。
-```
+```js
 document.getElementById('logo').onclick = function () {
 	console.log('logo clicked');
 	setTimeout(function () {
@@ -35,13 +35,13 @@ document.getElementById('logo').onclick = function () {
 
 ***event 变量***
 之前看过同事这样一段代码。
-```
+```js
 dom.onclick = function (e) {
     func(event);
 }
 ```
 我说这不对啊应该是`func(e)`。没成想真是对的。
-```
+```js
 document.onclick = function (e){
 	console.log(e === event); // true   event 是个特殊的变量，在event发生的时候会自动赋值。
 }
@@ -49,9 +49,7 @@ document.onclick = function (e){
 ***image preview***
 一种最简单的图片preview的方法。使用浏览器默认的preview效果，报一个url即可。
 ```html
-
-  ![](/statics/images/example.png)
-
+  <a href="/statics/images/example.png"><img src="/statics/images/example.png"/></a>
 ```
 
 ***checked 伪类注意事项 ***
@@ -63,7 +61,7 @@ document.onclick = function (e){
 
 ***resolve 一个Promise实例***
 记在这里，加深印象。如下。
-```
+```js
 var p1 = new Promise(function (resolve, reject) {
   setTimeout(() => reject(new Error('fail')), 5000)
 })
@@ -81,11 +79,11 @@ p2
 
 ***Promise.all 可传任意Iterator实现***
 关于Iterator是使用ES6应该活用的点，解构，展开，传参，遍历...很多操作都是Iterator通用。同期推出的Promise.all也支持Iterator，这让我觉得这个思路很重要。所以像下面的代码也不奇怪了。
-```
+```js
 function* pros () {
 	yield Promise.resolve(1);
 	yield Promise.resolve(2);
-	yield Promise.resolve(3);	
+	yield Promise.resolve(3);
 }
 Promise.all(pros()).then(_ => console.log(_))
 // [1, 2, 3]
@@ -93,7 +91,7 @@ Promise.all(pros()).then(_ => console.log(_))
 
 ***culc 与预处理器***
 最大的区别在于，预处理器只能算绝对值，无法处理动态的相对情况。下面效果预处理器就做不到。
-```
+```css
 #wrapper {
   min-height: calc(100vh - 7em);
 }
@@ -105,3 +103,35 @@ cubic-bezier，是css3动画中最普遍的调速方法。极少有人会知道�
 一定超时才重发吗？
 没收到ack一定会重发吗？
 上面两者在tcp滑动窗口控制的情况下皆为否定答案。（图解TCP6.4.7）
+
+***console log***
+
+在执行一次`JSON.parse`的时候失败了，遂打印之。贴到命令行中发现可以成功！后来我意识到打印结果不一定是真实结果。
+
+```js
+> console.log('\\"hello\\"')    #打印这个值#
+\"hello\"
+> JSON.parse('\"hello\"')    #按照打印值进行parse，可以成功#
+'hello'
+> JSON.parse('\\"hello\\"')    #实际上是失败的#
+SyntaxError: Unexpected token \ in JSON at position 0
+```
+
+***hack options***
+
+这是我之前忽略的一个点。模块抛出配置。
+```js
+//lib.js
+exports.options = {};
+exports.run = function (fn) {
+	return fn(options);
+}
+//main.js
+require('./lib').options = {...}
+require('./lib').run(_ => console.log(_))
+```
+可作为构架问题传参层数过多时快速配置的hack方法。不建议大量使用。
+
+***cannot require index.js?***
+
+不能require 目录下的index.js？那一定是package.json将main引到另外一个文件或者文件夹了。
