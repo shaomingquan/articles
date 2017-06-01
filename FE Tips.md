@@ -1,57 +1,6 @@
-记录遗漏的小tips...不定期更新~
+记录遗漏的小tips...不定期更新~。并会将一些需要整理拓展的单拿出来。
 
-***bind 绑定默认参数***
-```
-var a = function (arg1, arg2) { console.log(arg1, arg2); }
-var b = a.bind(null, 2);
-b(); //2,undefined
-b(3); //2,3
-var bb = b.bind(null, 3); //继续bind
-bb(); //2,3
-```
-之前一直这样写curry的。
-```
-function curry (func) {
-    var args = [];
-    var argLength = func.length;
-    var ctx = this;
-    
-    return function _ () {
-        var _args = [].slice.call(arguments);
-        args = args.concat(_args);
-        if(args.length >= argLength) {
-            var ret = func.apply(ctx, args);
-            args = [];
-            return ret;
-        } else {
-            return _;
-        }
-    }
-}
-```
-如今利用这个遗漏的tip。貌似这次是真的curry吧。
-```
-function curry2 (func) {
-    var argLength = func.length;
-    var counter = 0;
-    var _func = func;
-    var ctx = this;
-
-    return function _ () {
-        counter += arguments.length;
-        _func = _func.bind(ctx, ...arguments);
-        if(counter >= argLength) {
-            var ret = _func();
-            _func = func;
-            counter = 0;
-            return ret;
-        } else {
-            return _;
-        }
-    }
-
-}
-```
+move curries :）
 
 ***“提前执行”***
 如下代码，当我点一下`#logo`，会打印什么？
@@ -100,63 +49,10 @@ document.onclick = function (e){
 ***image preview***
 一种最简单的图片preview的方法。使用浏览器默认的preview效果，报一个url即可。
 ```html
-<a href="/statics/images/example.png">
+
   ![](/statics/images/example.png)
-</a>
+
 ```
-
-***hack curry***
-
-idea from [my boss](https://ljw.me/).
-```
-function sum (a, b, c) {
-	return a + b + c;
-}
-
-function* currySum () {
-	return sum(yield, yield, yield)
-}
-
-var _ = currySum();
-_.next();
-_.next(1);
-_.next(2);
-_.next(3); // Object {value: 6, done: true}
-```
-原理大概是上面那样。可以改装成通用的curry。
-```js
-function curry (func) {
-	function* _ () {
-		var args = [];
-		while(true) {
-            var arg = yield;
-            if(arg) {
-                args.push(arg);
-            } else {
-                return func(...args);
-            }
-		}
-	}
-	var gene = _();
-	gene.next();
-	return gene;
-}
-
-function join(...args) {
-	return args.join('');
-}
-
-var _ = curry(join);
-_.next(1)
-// Object {value: undefined, done: false}
-_.next(2)
-// Object {value: undefined, done: false}
-_.next(3)
-// Object {value: undefined, done: false}
-_.next()
-// Object {value: "123", done: true}
-```
-这里已经有curry的3种实现了。。
 
 ***checked 伪类注意事项 ***
 
