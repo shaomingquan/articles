@@ -73,4 +73,65 @@ https://www.highcharts.com/demo/arearange-line
 - 面积图搭配折线图（最大最小平均值）。
 - 面积区域图的数据格式（每个item三个）。
 
+https://www.highcharts.com/demo/bar-stacked
 
+- 柱状堆叠。
+
+https://www.highcharts.com/demo/bar-negative-stack
+
+- 正负堆叠。
+
+https://www.highcharts.com/demo/column-stacked-and-grouped
+
+- 指定stack（group the columns）。
+
+https://www.highcharts.com/demo/column-stacked-percent
+
+- 百分比柱状堆叠。
+
+https://www.highcharts.com/demo/column-rotated-labels
+
+- label防拥挤（xLabel，dataLabel旋转）。
+
+https://www.highcharts.com/demo/column-drilldown
+
+- chart in chart（drilldown: 不局限子图表可以是任何类型的）。
+
+https://www.highcharts.com/demo/column-placement
+
+- 柱状图样式示例。
+
+https://www.highcharts.com/demo/column-parsed
+
+- 通过html表格生成柱状图（如果不是数字？）。
+
+https://www.highcharts.com/demo/columnrange
+
+- 柱状range图（range图普遍规律，key point:双数据）。
+
+https://www.highcharts.com/demo/pie-basic
+
+- pie basic（dataLabel加格式）
+
+https://www.highcharts.com/demo/pie-legend
+
+- 启动Legend（showInLegend: true）。
+- pie的data格式与前面的别无二致（此处obj格式的数据体现了更易于添加配置的特点）。
+
+https://www.highcharts.com/demo/pie-donut
+
+- 双层饼图basic。（并不智能，智能的代码需自己封装，双层的样式实际上的“环套饼”）。
+
+https://www.highcharts.com/demo/pie-semi-circle
+
+- 半饼图demo（中间的是title）。
+
+https://www.highcharts.com/demo/pie-drilldown
+
+- chart in chart pie demo
+
+***
+
+以上是基础图表。
+
+***
