@@ -1,6 +1,6 @@
 需要重构一下组内的一个可视化平台，再加上这一年来总是再用highcharts，所以整理一下，这也算是一个标准的图标库，有哪些有用的特性，可以对标到其他chart lib上。
 
-方式是跟着highcharts的demo走，相当于建一个`特性 -> demo`的索引。目前整理相对表象的特征，每个demo里的细节配置，不做发掘。且如果上面例子提及，下面例子不再赘述。
+方式是跟着highcharts的demo走，相当于建一个`特性 -> demo`的索引。目前整理相对表象的特征，每个demo里的细节配置，不做发掘。且如果上面例子提及，下面例子不再赘述。有时将highcharts简称hc。
 
 ***
 
@@ -135,3 +135,32 @@ https://www.highcharts.com/demo/pie-drilldown
 以上是基础图表。
 
 ***
+
+https://www.highcharts.com/demo/synchronized-charts
+
+- 图表间交互同步（图表联动）。
+
+https://www.highcharts.com/demo/combo
+
+- 图表混合（加入pie，数据上与spline和column混合别无二致，不过hc不负责布局pie，用户需手动布局，不然效果很惨）。
+
+https://www.highcharts.com/demo/combo-multi-axes
+
+- 三纵轴（所以算多轴吧，不过这样很乱）。
+
+https://www.highcharts.com/demo/combo-histogram
+
+- 散点加区域汇总demo。
+
+https://www.highcharts.com/demo/combo-regression
+
+- 线性回归demo。
+
+https://www.highcharts.com/demo/combo-meteogram
+
+https://www.highcharts.com/demo/combo-timeline
+
+- 复杂demo（上面两个，十分花哨）。
+
+
+
