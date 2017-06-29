@@ -49,7 +49,7 @@ document.onclick = function (e){
 ***image preview***
 一种最简单的图片preview的方法。使用浏览器默认的preview效果，报一个url即可。
 ```html
-  <a href="/statics/images/example.png"><img src="/statics/images/example.png"/></a>
+  
 ```
 
 ***checked 伪类注意事项 ***
@@ -135,3 +135,9 @@ require('./lib').run(_ => console.log(_))
 ***cannot require index.js?***
 
 不能require 目录下的index.js？那一定是package.json将main引到另外一个文件或者文件夹了。
+
+***uncaught xxx***
+
+unreject的promise与uncaught的error比起来，柔和得多，代码会继续执行下去，此时的unhandledRejection看起来并不是程序的兜底，更像是对unhandledRejection的采集方案（上报错误异常）。
+
+相反，error的不柔和。uncaughtException会使程序挂掉，而即使process绑定了uncaughtException事件，error发生之后，下面的代码都不会继续执行了，如果在一个http的声明周期里面，会呈现出卡住的现象，此时该实例处理后续请求会堵塞，。
