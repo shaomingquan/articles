@@ -4,20 +4,7 @@
 
 #### exproling
 
-首先下面的代码时debounce的。
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
-</head>
-<body>
-  <div class="app"></div>
-</body>
-</html>
-```
+首先下面的代码是debounce的。
 ```css
 body, html {
   height: 100%;
@@ -32,7 +19,7 @@ body, html {
 }
 ```
 如何no debounce？很简单。将css略微改动。
-```
+```css
 body, html {
   height: 100%;
   width: 100%;
