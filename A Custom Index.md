@@ -48,7 +48,7 @@
 
 首先上面的表需要在加一个hash，取名为secondary_hash，那么表结构变为。
 
-`id | metric | primary_hash | secondary_hash | value`
+result表：`id | metric | primary_hash | secondary_hash | value`
 
 - secondary_hash：已知维度和模糊维度名组合的hash。
 
@@ -58,15 +58,19 @@
 
 这样要查询模糊维度时，只要使用**指定的app，province值，指定需要模糊的维度city**，就可以将这些值查出来。问题来了，每一条对应的city的值是什么？这里引入第二张表：
 
-`id | primary_hash | tag_name | tag_value`
+tag表beta： `id | primary_hash | tag_name | tag_value`
 
 在计算过程中将需要模糊查询的tag_name的tag_value值以及对应的primary_hash存起来，这样对于使用secondary_hash取出来的每一条数据，就可以通过他的primary_hash以及需要的tag_name去查对应的tag_value。也就完成了一次模糊查询。
 
 因为tag_name和tag_value的组合会被重复写入，为了复用数据，所以将上面的表拆成两张表，tag_name和tag_value写入另外一张表，通过联表进行关联即可。两张表的结构是这样的。
 
-`id | primary_hash | tag_id`
+tagIndex表：`id | primary_hash | tag_id`
 
-`tag_id | tag_name | tag_value`
+tag表：`tag_id | tag_name | tag_value`
+
+result表中的每一项会在tagIndex表中对应多个tag_id，每个tag_id在tagIndex表里对应多个primary_hash。所以数据量大概是下面的关系（两边的n意义分离）。
+
+![](/images/1498839611hz.png)
 
 如果维度爆炸的话，后面两张表的压力也很大，这也是做统计都要面对的问题。但我感觉这个方案还是比较能抗的。
 
