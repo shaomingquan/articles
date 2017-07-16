@@ -39,22 +39,26 @@ document.getElementById('logo').onclick = function () {
 之前看过同事这样一段代码。
 ```js
 dom.onclick = function (e) {
-    func(event);
+  func(event);
 }
 ```
 我说这不对啊应该是`func(e)`。没成想真是对的。
 ```js
 document.onclick = function (e){
-	console.log(e === event); // true   event 是个特殊的变量，在event发生的时候会自动赋值。
+  console.log(e === event); // true   event 是个特殊的变量，在event发生的时候会自动赋值。
 }
 ```
 ***image preview***
+
 一种最简单的图片preview的方法。使用浏览器默认的preview效果，报一个url即可。
+
 ```html
-  
+<a target="_blank" href="xxx">
+  <img src="xxx"/>
+</a>
 ```
 
-***checked 伪类注意事项 ***
+***checked 伪类注意事项***
 
 使用checked伪类即可自定义选框样式。但有一点需要注意。
 - 不要用`display: none;` 使选框丧失tab键的可访问性
@@ -83,9 +87,9 @@ p2
 关于Iterator是使用ES6应该活用的点，解构，展开，传参，遍历...很多操作都是Iterator通用。同期推出的Promise.all也支持Iterator，这让我觉得这个思路很重要。所以像下面的代码也不奇怪了。
 ```js
 function* pros () {
-	yield Promise.resolve(1);
-	yield Promise.resolve(2);
-	yield Promise.resolve(3);
+  yield Promise.resolve(1);
+  yield Promise.resolve(2);
+  yield Promise.resolve(3);
 }
 Promise.all(pros()).then(_ => console.log(_))
 // [1, 2, 3]
@@ -168,9 +172,25 @@ hotreload很快的一大原因是用内存中的代码去注入，所以其实�
 ***shell tip***
 
 等号两边的空白不是可有可无的，下面的两个等号只有这样用才是对的，加空白或者去空白都是错的。
-```shell
+```sh
 agent="12121"
 if [ $agent = "1212" ]; then
   echo "~~"
 fi
 ```
+
+***A() <--> new A***
+
+在创建对象的过程中，已经可以获得this的正确类型，new 是return的语法糖。这里可以做任意调用都可以返回A实例的语法糖。
+
+```js
+function A() {
+  if(!this instanceof A) {
+    return new A
+  }
+}
+```
+
+***求和计算***
+
+求和计算一定记得踢出异常值，但是分位数计算就不需要这样做。
