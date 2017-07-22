@@ -52,11 +52,6 @@ document.onclick = function (e){
 
 一种最简单的图片preview的方法。使用浏览器默认的preview效果，报一个url即可。
 
-```html
-<a target="_blank" href="xxx">
-  <img src="xxx"/>
-</a>
-```
 
 ***checked 伪类注意事项***
 
