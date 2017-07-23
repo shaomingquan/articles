@@ -2,6 +2,7 @@
 
 - bloomd过滤器简单使用。
 - es6 proxy。
+- hashring使用。
 
 我们这边有个去重的服务，使用bloomd，了解bloomd请走这边，这个在这里不是重点 https://github.com/armon/bloomd/。
 
@@ -92,6 +93,8 @@ module.exports = function (hostOptions) {
 }
 
 ```
+
+最后返回agent，和原始的clients，使用agent调用bloomd方法则使用集群模式，我们仍然可以任选一个client使用单点模式。
 
 ***其实***
 
