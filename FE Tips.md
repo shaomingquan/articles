@@ -193,3 +193,23 @@ function A() {
 ***func.length***
 
 今天突然想到，mocha是如何判定测试是异步的呢？使用函数的length属性。又想起在做curry化的时候其实用过，判定什么时候返回调用。
+
+***node this***
+
+这个我也是刚刚才意识到。。
+
+```js
+console.log(this === exports); // true
+console.log(this === global); // false
+
+(function () {
+  console.log(this === exports); // false
+  console.log(this === global); // true
+} ());
+
+(() => {
+  console.log(this === exports); // true
+  console.log(this === global); // false
+})();
+
+```
