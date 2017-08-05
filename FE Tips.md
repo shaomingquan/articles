@@ -194,6 +194,8 @@ function A() {
 
 今天突然想到，mocha是如何判定测试是异步的呢？使用函数的length属性。又想起在做curry化的时候其实用过，判定什么时候返回调用。
 
+比如express是使用func.length去判断这个函数是中间件还是error handler。
+
 ***node this***
 
 这个我也是刚刚才意识到。。
@@ -213,3 +215,39 @@ console.log(this === global); // false
 })();
 
 ```
+
+***v8 热点函数测试***
+
+```js
+function run (times, func) { 
+  let start = Date.now() ; 
+  for(var i = 0 ; i < times ; i ++) { func() } ; 
+  return Date.now() - start 
+} // 测试函数
+function add (a,b) { return a + b }; // 求和1
+function add2 (a,b) { return a + b }; // 求和2
+function add3 (a,b) { return a + b }; // 求和3
+var a = 0 ; var b = 1; 
+function test1 () { 
+  if(a instanceof Number) { 
+    a = String(a) ; b = String(b) 
+  } else { 
+    a = Number(a) ; b = Number(b) 
+  } 
+  return add(a, b) 
+} // 每次都用一个方法加
+var c = 0 ; var d = 1; 
+function test2 () { 
+  if(c instanceof Number) { 
+    c = String(c) ; d = String(d); 
+    return add2(c, d) 
+  } else { 
+    c = Number(c) ; d = Number(d) ; 
+    return add3(a, b) 
+  } 
+} // 每种类型换不同的方法加
+```
+
+测试结果很奇怪。
+
+![](/images/1500959439ov.png)
