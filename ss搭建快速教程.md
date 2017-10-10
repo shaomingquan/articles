@@ -22,6 +22,10 @@ sudo usermod -aG docker $USER
 
 [https://hub.docker.com/r/easypi/shadowsocks-libev/](https://hub.docker.com/r/easypi/shadowsocks-libev/)
 
+注意还是要修改一下docker-compose里面的密码。
+
 ***4，下载ss客户端***
 
 [https://shadowsocks.org/en/download/clients.html](https://shadowsocks.org/en/download/clients.html)
+
+安装docker-compose文件中的信息填上。
