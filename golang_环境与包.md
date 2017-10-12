@@ -47,7 +47,7 @@ import (
 
 建议把作为本地仓库的第一个GOPATH写入.base_profile中。那么可以省略前面公共的部分。后面私有的部分作为项目专属的包地址。
 
-☭ export GOPATH="$GOPATH:/Users/shaomingquan/2017/gopl/playgroud/package/gopath" ; go run index.go
+☭ export GOPATH="$GOPATH:/Users/fff/2017/gopl/playgroud/package/gopath" ; go run index.go
 
 ***包版本***
 
