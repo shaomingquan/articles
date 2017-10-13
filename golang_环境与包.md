@@ -15,11 +15,11 @@ package b // b为包名
 package main
 
 import (
-	"test"
+  "test"
 )
 
 func main () {
-	test2.Test()
+  test2.Test()
 }
 ```
 
@@ -33,7 +33,7 @@ test包内部指定包名称为 `test2`，即使路径是test，也需要用test
 
 ```
 import (
-	"github.com/shaomingquan/tilejs"
+  "github.com/shaomingquan/tilejs"
 )
 ```
 
@@ -68,7 +68,7 @@ go get总是使用默认分支的head代码。这意味着如果使用传统方�
 
 ```
 import (
-	test3 "github.com/shaomingquan/tilejs"
+  test3 "github.com/shaomingquan/tilejs"
 )
 ```
 
@@ -77,3 +77,10 @@ import (
 
 匿名包专用于副作用类型引入。
 
+```
+import (
+  _ "github.com/shaomingquan/tilejs"
+)
+```
+
+导入包默认都是是有名字的，_表示匿名导入包，这里的_并不是语法糖，我在写js的时候经常用_表示语义无关或者用不到的参数，在golang中导入包不使用会有编译错误，除了匿名导入。
