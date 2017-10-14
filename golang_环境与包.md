@@ -1,17 +1,17 @@
-***本地包***
+***引入本地包***
 
 一个路径对应一个包，一个文件必须使用package指明其所属包，否则编译不通过。
 
 每个路径下的多个文件必须所属同一个包，建议是使用路径的最后一段作为名字包名。存在不属于同一个包的情况则编译不通过。
 
-```js
+```go
 // a/b
 package b // b为包名
 ```
 
 如果不这样做呢？
 
-```
+```go
 package main
 
 import (
@@ -27,19 +27,26 @@ test包内部指定包名称为 `test2`，即使路径是test，也需要用test
 
 本地包导入则按路径索引即可。
 
-***线上包***
+***引入线上包***
 
 与npm的集中式包管理不同的是，golang使用url导入包，使用`go get`命令将包下载到本地。
 
-这就是一个线上包。[https://github.com/shaomingquan/tilejs](https://github.com/shaomingquan/tilejs)。
+这就是一个线上包。[https://github.com/xxx/tilejs](https://github.com/xxx/tilejs)。
 
-```
+```go
 import (
-  "github.com/shaomingquan/tilejs"
+  "github.com/xxx/tilejs"
 )
 ```
 
 如上。直接加入import列表，执行`go get`下载到本地后即可使用。
+
+通过html meta标签的 go-import和go-source可以为当前路径的远程包指定仓库，可能它本身不是一个仓库。
+
+查看git页面源代码也可以发现此元信息。页面作为包的载体指定了协议（一般为git），以及仓库的真正地址。
+```html
+<meta name="go-import" content="github.com/xxx/tilejs git https://github.com/xxx/tilejs.git">
+```
 
 ***$GOPATH***
 
@@ -53,7 +60,17 @@ import (
 
 ***包版本***
 
-go get总是使用默认分支的head代码。这意味着如果使用传统方法几个版本就要用几个仓库。可以使用[http://labix.org/gopkg.in](http://labix.org/gopkg.in)做到将不同版本放到一个仓库中。
+~~go get总是使用默认分支的head代码。这意味着如果使用传统方法几个版本就要用几个仓库。~~
+
+go get会将整个仓库拉下来，可以通过git命令行工具切换仓库内的代码版本。
+
+可以使用[http://labix.org/gopkg.in](http://labix.org/gopkg.in) 做到将不同版本放到一个仓库中。但是切换版本需要改代码。
+
+通过 [https://github.com/golang/dep](https://github.com/golang/dep) 管理依赖。
+
+***包更新***
+
+get -u会检查更新，不加-u会服用本地仓库的包。
 
 ***内网私有包配置***
 
@@ -68,9 +85,9 @@ go get总是使用默认分支的head代码。这意味着如果使用传统方�
 
 当包名冲突，编译不通过，这时需要使用别名，如下。
 
-```
+```go
 import (
-  test3 "github.com/shaomingquan/tilejs"
+  test3 "github.com/xxx/tilejs"
 )
 ```
 
@@ -79,9 +96,9 @@ import (
 
 匿名包专用于副作用类型引入。
 
-```
+```go
 import (
-  _ "github.com/shaomingquan/tilejs"
+  _ "github.com/xxx/tilejs"
 )
 ```
 
