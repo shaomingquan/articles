@@ -71,6 +71,41 @@ func a () {
 
 副作用不是意味着不存在拷贝，指针同样被生成了两份，只是取地址的值是同一份。
 
+不仅是参数会产生深拷贝，返回值也会产生深拷贝。
+
+```go
+copyyy := func (slice *[]int) []int { // return also copy the value
+  return *slice
+}
+```
+上面的返回值与传入值的地址是不同的。至于传参数和返回值，本质上还是赋值，所以其实golang的赋值也完全是拷贝。
+
+```go
+type Test struct { name string }
+testA := Test{"xiaoming"}
+testB := testA
+fmt.Println(&testA == &testB) // false
+```
+
+在js中，用户喜欢使用 === 操作符去比较两个变量是否引用到一个内存。在golang中没有 === 操作符，实际上在其他语言中 == 属于语法糖，包含隐式转化（隐式类型转换发生在接口以及指针类型调用方法时），在golang中，== 相当于其他语言的 ===。按js的套路，下面第一个应该返回false。
+
+```go
+structA := struct {
+  name string
+}{"xiaoming"}
+
+// type struct{string} !== struct{name string}
+copyStruct := func (s struct{name string}) struct{name string} {
+  return s
+}
+structB := copyStruct(structA)
+fmt.Println(structA == structB) // true
+fmt.Println(&structA == &structB) // false
+```
+
+golang中的 == 只是值判断，跟js完全不同。
+
+
 ***添加方法***
 
 这里涉及到type的使用。首先golang不允许给原始类型定义方法，如果想实现一个给int型加2的方法，需要这样：
@@ -83,7 +118,8 @@ func (base Iint) add2 () int {
 ```
 
 - 用type关键字给一个可以表达变量类型命名alias，但是Iint与int不是同一类型，但可以互相显示转化。（一般还会给定义结构体定义type）。
-- 在func和函数名之间声明将要添加方法的type，与其在函数体实现中的代理变量（在js，java中的this），golang中不会出现this，this甚至可以被声明成一个变量。
+- 在func和函数名之间声明将要添加方法的type，与其在函数体实现中的代理变量（在js，java中的this），golang中不会出现this，this甚至可以被声明成一个变量。this避讳了类似js的动态作用域的特性，这有时很让人头疼。
+
 
 然后就可以这样使用：
 
@@ -110,6 +146,15 @@ func (f FuncEmpty) add () FuncEmpty {
 ```go
 f := FuncEmpty(func () {})
 f.add().add().add()
+```
+
+但不可以这样玩
+
+```go
+type FFF func (i int) int
+fff := FFF {
+  return 1
+}
 ```
 
 单靠函数的方法功能还无法担任oop编程，还需要有结构体的帮助。
