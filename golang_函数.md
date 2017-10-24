@@ -78,7 +78,7 @@ copyyy := func (slice *[]int) []int { // return also copy the value
   return *slice
 }
 ```
-上面的返回值与传入值的地址是不同的。至于传参数和返回值，本质上还是赋值，所以其实golang的赋值也完全是拷贝（注意slice在这里是特殊的，slice的值类似指针）。
+上面的返回值与传入值的地址是不同的。至于传参数和返回值，本质上还是赋值，所以其实golang的赋值也完全是拷贝（注意slice在这里是特殊的，slice的值类似指针，引用了一个底层数组）。
 
 ```go
 type Test struct { name string }
