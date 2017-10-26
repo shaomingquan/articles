@@ -103,9 +103,7 @@ for {
 go协程之间没有父子关系。
 
 
-接收和发送是一对一的，如果存在多余的发送，则需要等待下一次接收的执行。实际情况中，在执行某个函数的时候，可能会有报错返回的情况，当有异常检测导致的函数提前返回的情况时，需要手动关闭管道以释放阻塞的go协程。
-
-TODO
+接收和发送是一对一的，如果存在多余的发送，则需要等待下一次接收的执行。
 
 ***读写不同步***
 
@@ -183,10 +181,6 @@ go func () {
 } ()
 ```
 
-***老朋友 promise***
-
-TODO
-
 ***go协程安全***
 
 如果涉及到并发写操作，需要程序保证写入安全。两个思路：
@@ -215,3 +209,124 @@ func WriteToFile( i int, f *os.File, w *sync.WaitGroup ){
 ```
 
 上面的代码利用了缓冲区满写入阻塞的特性，则每次释放之后下一次接收才会执行，保证代码在同一时间只有一个goroutine在执行，也就是并发为1。那么把1换成4，则为并发为4，当然前提是线程安全的代码，这也是缓冲区管道控制并发数的方法。
+
+***老朋友 promise***
+
+提到并发控制，作为jser我首先想到的是promise，虽然js中的并发是假的。因为golang在同协程下是顺序执行的，实际上用不到yield await这样的关键字，在封装内部使用管道阻塞住即可。
+
+
+```go
+package main
+
+import "time"
+
+func add1 (i, j int) int {
+	return i + j
+}
+
+func add2 (i, j int) int {
+	time.Sleep(time.Second * 2)
+	return i + j
+}
+
+func main () {
+	ret := promiseAll(
+		[] <-chan interface{}{
+			promiseFunc(func ()interface{} {
+			return add1(1,2)
+		}), promiseFunc(func ()interface{} {
+			return add2(1,2)
+		})})
+	for _, i := range ret {
+		print(i.(int))
+	}
+}
+
+func promiseFunc (f func () interface{}) <-chan interface{} {
+	ch := make(chan interface{})
+	go func () {
+		ch <- f()
+	} ()
+	return ch
+}
+
+func promiseAll (chs [] <-chan interface{}) []interface{} {
+	length := len(chs)
+	lock := make(chan bool, length)
+	ret := []interface{}{}
+	for _, c := range chs {
+		for r := range c {
+			ret = append(ret, r)
+			lock <- true
+			break
+		}
+	}
+	<- lock
+	return ret
+}
+```
+
+上面的方法封装了promise（all），现象是add1，add2都返回才会向下执行。也可以实现promiseRace，race需要一个chan共享状态。
+
+```go
+package main
+
+import "time"
+
+func add1 (i, j int) int {
+	return i + j
+}
+
+func add2 (i, j int) int {
+	time.Sleep(time.Second * 2)
+	return i + j
+}
+
+func main () {
+	center := make(chan interface{}, 1)
+	ret := promiseAll(
+		[] <-chan interface{}{
+			promiseRace(func ()interface{} {
+				return add1(1,2)
+			}, center),
+			promiseRace(func ()interface{} {
+				return add2(1,2)
+			}, center)})
+	for _, i := range ret {
+		print(i.(int))
+	}
+}
+
+func promiseRace (f func () interface{}, ch chan interface{}) <-chan interface{} {
+	received := false
+	go func() {
+		if received == true {
+			return
+		}
+		ch <- f()
+		received = true;
+		close(ch)
+	} ()
+	return ch
+}
+
+func promiseAll (chs [] <-chan interface{}) []interface{} {
+	length := len(chs)
+	lock := make(chan bool, length)
+	ret := []interface{}{}
+	for _, c := range chs {
+		for r := range c {
+			ret = append(ret, r)
+			lock <- true
+			break
+		}
+	}
+	<- lock
+	return ret
+}
+```
+
+- 不要在接收端close管道，因为向已经关闭的管道发送会panic，且没有一个没有副作用的检查管道是否关闭的方法。
+- 管道作为参数可以指定传输方向，如`<-chan interface{}`为只能接收的管道。
+
+比js中的promise api更活的是，不止可以实现race和all，比如两个执行完返回，三个返回这样更细粒度的控制也可以很清晰的实现。
