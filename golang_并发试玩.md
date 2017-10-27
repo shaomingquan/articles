@@ -103,7 +103,34 @@ for {
 go协程之间没有父子关系。
 
 
-接收和发送是一对一的，如果存在多余的发送，则需要等待下一次接收的执行。
+接收和发送是一对一的，如果存在多余的发送，则需要等待下一次接收的执行。这在有些时候会稍微麻烦一点，**当发送的次数不定**（协程可能提前终止，或者如果有错误则不发送），在接收端需要通过循环的方式接受，这时在发送端需要适时的将管道关闭，接收操作还有第二个参数（接收是否成功，或者管道是否关闭也可），可以判断这个参数以跳出循环，go的for range操作有对管道类型定制，有个自动判断的语法糖。
+
+```go
+package main
+
+func main () {
+	ch := make(chan int)
+	go func() {
+		for i := 0 ; i < 10 ; i ++ {
+			ch <- i
+		}
+		close(ch)
+	}()
+
+	for {
+		value, ok := <- ch
+		if(ok) {
+			print(value)
+		} else {
+			break
+		}
+	}
+	// 或者这样
+	//for value := range ch {
+	//	print(value)
+	//}
+}
+```
 
 ***读写不同步***
 
@@ -209,6 +236,129 @@ func WriteToFile( i int, f *os.File, w *sync.WaitGroup ){
 ```
 
 上面的代码利用了缓冲区满写入阻塞的特性，则每次释放之后下一次接收才会执行，保证代码在同一时间只有一个goroutine在执行，也就是并发为1。那么把1换成4，则为并发为4，当然前提是线程安全的代码，这也是缓冲区管道控制并发数的方法。
+
+***多路复用***
+
+有时不希望前面的阻塞后面的接收，这里使用select case语句，每个case语句对应一个管道的收发操作（可以有赋值操作），总是会执行当前不阻塞的*一个*case。
+
+
+```go
+package main
+
+func main () {
+	ch := make(chan int)
+	ch2 := make(chan int)
+	go func() {
+		ch <- 0
+	}()
+	go func() {
+		ch2 <- 1
+	}()
+
+	select {
+		case i := <-ch:
+			print(i)
+		case i := <-ch2:
+			print(i)
+	}
+}
+```
+
+即使看起来两个都不阻塞也会去找一个执行，而不会执行两个。顺便说一下，go的switch case也是这样的。
+
+```go
+package main
+
+func main () {
+	ch := make(chan int, 1)
+	ch2 := make(chan int, 1)
+    ch <- 0
+    ch2 <- 1
+	i := true
+
+	select {
+		case i := <-ch2:
+			print(i)
+		case i := <-ch:
+			print(i)
+	}
+}
+```
+
+select也提供default。下面都阻塞则输出default对应的2：
+
+```go
+package main
+
+func main () {
+	ch := make(chan int, 1)
+	ch2 := make(chan int, 1)
+	select {
+	case i := <-ch2:
+		print(i)
+	case i := <-ch:
+		print(i)
+	default:
+		print(2)
+	}
+}
+```
+
+***并发的尺度***
+
+我用go协程写了个超慢的斐波那契数列函数。
+
+
+竟然比js版本的慢了一些，以上说明不能一味的并发，当然不并发也是不对的。怎么做才是正确的？如下：
+
+```go
+package main
+
+import "time"
+
+func fib (n int, codeep int) int {
+	codeep --
+	if(n == 1) {
+		return 1
+	} else if(n == 2) {
+		return 2
+	} else {
+		if(codeep <= 0) {
+			return fib(n - 1, codeep) + fib(n - 2, codeep)
+		} else {
+			chh := make(chan int, 2)
+			go func() {
+				chh <- fib(n - 1, codeep)
+			} ()
+			go func () {
+				chh <- fib(n - 2, codeep)
+			} ()
+			i := <- chh
+			j := <- chh
+
+			return i + j
+		}
+	}
+}
+
+func main () {
+	t1 := time.Now()
+	r := fib(30, 11)
+	println(r)
+	print(time.Since(t1).Nanoseconds())
+	//codeep=1 耗时=4423918
+	//codeep=2 耗时=2915501
+	//codeep=3 耗时=2235940
+	//codeep=4 耗时=1638563
+	//codeep=5 耗时=1827314
+	// .....
+	//codeep=10 耗时=2992178
+	//codeep=11 耗时=3293409
+}
+
+```
+
+对于递归的函数，通过控制并发调用所在的最大深度来控制并发的程度。可以看到，当深度在4和5左右速度较高。当然，更细粒度的控制以及函数缓存会更大的优化这里的斐波那契数列函数。
 
 ***老朋友 promise***
 
@@ -328,5 +478,3 @@ func promiseAll (chs [] <-chan interface{}) []interface{} {
 
 - 不要在接收端close管道，因为向已经关闭的管道发送会panic，且没有一个没有副作用的检查管道是否关闭的方法。
 - 管道作为参数可以指定传输方向，如`<-chan interface{}`为只能接收的管道。
-
-比js中的promise api更活的是，不止可以实现race和all，比如两个执行完返回，三个返回这样更细粒度的控制也可以很清晰的实现。
