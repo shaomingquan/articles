@@ -308,6 +308,33 @@ func main () {
 
 我用go协程写了个超慢的斐波那契数列函数。
 
+```go
+func fib (n int, codeep int) int {
+	codeep --
+	if(n == 1) {
+		return 1
+	} else if(n == 2) {
+		return 2
+	} else {
+		if(codeep <= 0) {
+			return fib(n - 1, codeep) + fib(n - 2, codeep)
+		} else {
+			chh := make(chan int, 2)
+			go func() {
+				chh <- fib(n - 1, codeep)
+			} ()
+			go func () {
+				chh <- fib(n - 2, codeep)
+			} ()
+			i := <- chh
+			j := <- chh
+
+			return i + j
+		}
+	}
+}
+```
+
 
 竟然比js版本的慢了一些，以上说明不能一味的并发，当然不并发也是不对的。怎么做才是正确的？如下：
 
