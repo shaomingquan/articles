@@ -69,6 +69,8 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
 
 ***看看源码***
 
+（贴了这么多码地址，最好把代码保存下来一份）
+
 [ListenAndServe](https://golang.org/src/net/http/server.go#L2880)，调用了包内的Server type的一个实例的[listenAndServe](https://golang.org/src/net/http/server.go#L2627)，然后调用[Serve](https://golang.org/src/net/http/server.go#L2678)，这是个要么不不返回要么返回一个错误，会轮询一个tcp的accept方法（这个accept也封装了，[默认使用keepalive的tcp，socket过期时长为三分钟。](https://golang.org/src/net/http/server.go#L3119)），返回一个socket。然后封装一个conn结构体，随后交给一个协程执行，立即监听下一个tcp连接。
 
 协程里面从[这里开始](https://golang.org/src/net/http/server.go#L1690)，首先会书写关闭的逻辑，以及检测是否是tsl协议，[http1.x的部分从这开始](https://golang.org/src/net/http/server.go#L1728)
