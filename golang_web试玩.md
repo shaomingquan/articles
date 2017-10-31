@@ -63,3 +63,6 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
 - gin 有点想express，按照作者的banchmark，gin很有自信的说自己是很快的，具体高在哪里还不知道，作为node玩家，这个框架看着最亲切。
 - beego 大而全的mvc框架。
 
+[这个仓库](https://github.com/julienschmidt/go-http-routing-benchmark)做了一个benchmark去对比各个框架的速度，刨除feature的benchmark都是耍流氓，仅供参考。
+
+- httprouter 与原生的mux相比更高效快速，[很多框架都依赖它](https://github.com/julienschmidt/httprouter#web-frameworks-based-on-httprouter)。所以想造轮子的话，httprouter是可以考虑依赖的。
