@@ -499,7 +499,7 @@ func Promise (countToReturn int, funcs []PromiseFunc) []interface{} {
 	for i := 0 ; i < length ; i ++ {
 		results = append(results, nil)
 	}
-	ch := make(chan int, length)
+	ch := make(chan int)
 	for index, f := range funcs {
 		go func(f PromiseFunc, index int) {
 			results[index] = f();
