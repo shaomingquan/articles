@@ -132,6 +132,47 @@ func main () {
 }
 ```
 
+***context***
+
+上回说到，协程之间没有父子关系，需要有个机制使父协程可以关闭子协程（即return掉），使用google官方提供的context可以很好的完成这个工作。
+
+```go
+package main
+
+import (
+	"context"
+	"time"
+)
+
+func slowJob (d int) <- chan int {
+	ch := make(chan int)
+	go func () {
+		time.Sleep(time.Duration(d) * time.Second)
+		ch <- 1
+	} ()
+	return ch
+}
+
+func runSlowJob (ctx context.Context) int {
+	select {
+	case <-ctx.Done():
+		return -1
+	case res := <- slowJob(1):
+		return res
+	}
+}
+
+func main () {
+	ctx, cancel := context.WithCancel(context.Background());
+	go func () {
+		time.Sleep(2 * time.Second)
+		cancel()
+	} ()
+
+	print (runSlowJob(ctx))
+}
+```
+
 ***读写不同步***
 
 在协程通信中提到接受阻塞的问题，这里需要再提及一点，如果接收端缺少，发送端也会阻塞，在实际场景中，由于种种因素，发送端和接收端两边的逻辑很有可能是延时的。如下：
@@ -450,58 +491,61 @@ package main
 
 import "time"
 
-func add1 (i, j int) int {
-	return i + j
-}
+type PromiseFunc func () interface{}
 
-func add2 (i, j int) int {
-	time.Sleep(time.Second * 2)
-	return i + j
-}
-
-func main () {
-	center := make(chan interface{}, 1)
-	ret := promiseAll(
-		[] <-chan interface{}{
-			promiseRace(func ()interface{} {
-				return add1(1,2)
-			}, center),
-			promiseRace(func ()interface{} {
-				return add2(1,2)
-			}, center)})
-	for _, i := range ret {
-		print(i.(int))
+func Promise (countToReturn int, funcs []PromiseFunc) []interface{} {
+	length := len(funcs)
+	results := []interface{}{}
+	for i := 0 ; i < length ; i ++ {
+		results = append(results, nil)
 	}
-}
+	ch := make(chan int, length)
+	for index, f := range funcs {
+		go func(f PromiseFunc, index int) {
+			results[index] = f();
+			ch <- 1
+		}(f, index)
+	}
 
-func promiseRace (f func () interface{}, ch chan interface{}) <-chan interface{} {
-	received := false
-	go func() {
-		if received == true {
-			return
-		}
-		ch <- f()
-		received = true;
-		close(ch)
-	} ()
-	return ch
-}
-
-func promiseAll (chs [] <-chan interface{}) []interface{} {
-	length := len(chs)
-	lock := make(chan bool, length)
-	ret := []interface{}{}
-	for _, c := range chs {
-		for r := range c {
-			ret = append(ret, r)
-			lock <- true
+	returnedCount := 0
+	for i := range ch {
+		returnedCount += i
+		if returnedCount == countToReturn {
 			break
 		}
 	}
-	<- lock
-	return ret
+	return results
+}
+
+func addA (i, j int) int {
+	time.Sleep(time.Second * 1)
+	return i + j
+}
+
+func addB (i, j, k int) int {
+	time.Sleep(time.Second * 5)
+	return i + k + j
+}
+
+func main () {
+	ret := Promise(2, []PromiseFunc{
+		func () interface{} {
+			return addA(1,2)
+		},
+		func () interface{} {
+			return addA(2,3)
+		},
+		func () interface{} {
+			return addB(1,2,3)
+		}})
+
+	for _, r := range ret {
+		switch r.(type) {
+		case int:
+			print(r.(int))
+		}
+	}
 }
 ```
 
-- 不要在接收端close管道，因为向已经关闭的管道发送会panic，且没有一个没有副作用的检查管道是否关闭的方法。
-- 管道作为参数可以指定传输方向，如`<-chan interface{}`为只能接收的管道。
+挺简单的。填3则为promiseAll，填1为promiseRace。
