@@ -438,59 +438,6 @@ package main
 
 import "time"
 
-func add1 (i, j int) int {
-	return i + j
-}
-
-func add2 (i, j int) int {
-	time.Sleep(time.Second * 2)
-	return i + j
-}
-
-func main () {
-	ret := promiseAll(
-		[] <-chan interface{}{
-			promiseFunc(func ()interface{} {
-			return add1(1,2)
-		}), promiseFunc(func ()interface{} {
-			return add2(1,2)
-		})})
-	for _, i := range ret {
-		print(i.(int))
-	}
-}
-
-func promiseFunc (f func () interface{}) <-chan interface{} {
-	ch := make(chan interface{})
-	go func () {
-		ch <- f()
-	} ()
-	return ch
-}
-
-func promiseAll (chs [] <-chan interface{}) []interface{} {
-	length := len(chs)
-	lock := make(chan bool, length)
-	ret := []interface{}{}
-	for _, c := range chs {
-		for r := range c {
-			ret = append(ret, r)
-			lock <- true
-			break
-		}
-	}
-	<- lock
-	return ret
-}
-```
-
-上面的方法封装了promise（all），现象是add1，add2都返回才会向下执行。也可以实现promiseRace，race需要一个chan共享状态。
-
-```go
-package main
-
-import "time"
-
 type PromiseFunc func () interface{}
 
 func Promise (countToReturn int, funcs []PromiseFunc) []interface{} {
