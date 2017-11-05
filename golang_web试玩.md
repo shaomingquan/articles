@@ -73,10 +73,16 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
 
 [ListenAndServe](https://golang.org/src/net/http/server.go#L2880)，调用了包内的Server type的一个实例的[listenAndServe](https://golang.org/src/net/http/server.go#L2627)，然后调用[Serve](https://golang.org/src/net/http/server.go#L2678)，这是个要么不不返回要么返回一个错误，会轮询一个tcp的accept方法（这个accept也封装了，[默认使用keepalive的tcp，socket过期时长为三分钟。](https://golang.org/src/net/http/server.go#L3119)），返回一个socket。然后封装一个conn结构体，随后交给一个协程执行，立即监听下一个tcp连接。
 
-协程里面从[这里开始](https://golang.org/src/net/http/server.go#L1690)，首先会书写关闭的逻辑，以及检测是否是tsl协议，[http1.x的部分从这开始](https://golang.org/src/net/http/server.go#L1728)
+协程里面从[这里开始](https://golang.org/src/net/http/server.go#L1690)，首先会书写关闭的逻辑，以及检测是否是tsl协议，[http1.x的部分从这开始](https://golang.org/src/net/http/server.go#L1728)，这里的代码也体现了keepAlive连接，这里的for循环一直在重复使用之前创建的tcp链接（也就是socket）。
+
+后面从socket中提取编程所需要的req和res对象，在[这里](https://golang.org/src/net/http/server.go#L1801)，终于调用了handle方法，这里使用了一个struct代理了server来调用handle。注意在下一行调用了ctx的cancel方法，这里是为了graceful shutdown。http包抛出了一个[Shutdown方法](https://golang.org/src/net/http/server.go#L2487)，调用shutdown后会被context的done阻塞，直到当前的handle返回。
+
+handle也就是我们的业务逻辑，这个逻辑可以来自两个部分，如[这段代码](https://golang.org/src/net/http/server.go#L2613)所示，如果我们在ListenAndServe中定义了handle，那么不会取路由mux作为handle。这为用户提供了高级功能和低级功能，一般来说，可以在低级功能上创建自己的路由，如上的httprouter。一般来说，不至于自己写一个http的底层。
+
 
 几个点：
-- 关于context是做什么的，看这个就知道了，重点看看他的例子 http://www.01happy.com/golang-context-reading/（协程退出了，我们如何监控有多少协程在运行呢？）
+- 关于context是做什么的，看这个就知道了，重点看看他的例子 [http://www.01happy.com/golang-context-reading/](http://www.01happy.com/golang-context-reading/)
+
 
 
 
