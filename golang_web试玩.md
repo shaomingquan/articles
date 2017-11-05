@@ -53,6 +53,22 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
 }
 ```
 
+还有个类似语法糖的写法，因为HandleFunc实际上是把函数转成HandlerFunc类型，这里可以这样：
+
+```go
+package main
+import "net/http"
+
+var h http.HandlerFunc = http.HandlerFunc(func (w http.ResponseWriter, r*http.Request) {
+	w.Write([]byte("hello world"))
+})
+
+func main () {
+	http.ListenAndServe(":4004", h)
+}
+```
+
+
 以上是hello world。冠以原生http的使用，更多的直接使用直接看[这里](https://golang.org/pkg/net/http/)。
 
 ***frameworks***
@@ -82,6 +98,47 @@ handle也就是我们的业务逻辑，这个逻辑可以来自两个部分，�
 
 几个点：
 - 关于context是做什么的，看这个就知道了，重点看看他的例子 [http://www.01happy.com/golang-context-reading/](http://www.01happy.com/golang-context-reading/)
+
+***中间件及路由***
+
+这是一个基本的中间件框架，它只做最简单的事，使用如下。
+
+```go
+package main
+
+import (
+	"net/http"
+	"github.com/justinas/alice"
+)
+
+var m1 alice.Constructor = func (handler http.Handler) http.Handler {
+	return http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
+		println(1)
+		handler.ServeHTTP(w, r)
+		println(4)
+	})
+}
+
+
+var m2 alice.Constructor = func (handler http.Handler) http.Handler {
+	return http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
+		println(2)
+		handler.ServeHTTP(w, r)
+		println(3)
+	})
+}
+
+var handle http.Handler = http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("hello world"))
+})
+
+func main () {
+	h := alice.New(m1, m2).Then(handle)
+	http.ListenAndServe(":4004", h)
+}
+```
+
+[httprouter](https://github.com/julienschmidt/httprouter) 提供了高效的http路由，当httprouter与alice一起使用时，特别是路由的中间件没办法实现。所以其实自己造个轮子或者直接找一个轮子用就好。[http框架轮子列表](https://github.com/julienschmidt/httprouter#web-frameworks-based-on-httprouter)。
 
 
 
