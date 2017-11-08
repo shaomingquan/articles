@@ -27,6 +27,14 @@ test包内部指定包名称为 `test2`，即使路径是test，也需要用test
 
 本地包导入则按路径索引即可。
 
+***抛出***
+
+大写即抛出，无论是函数函数。注意一点是在编写一个包的时候，run的时候需要run整个目录下的go文件才能达到共享包内部抛出变量的效果。在IDE(gogland)上，设置run kind为directory即可。
+
+```shell
+go run pkgtest/*.go
+```
+
 ***引入线上包***
 
 与npm的集中式包管理不同的是，golang使用url导入包，使用`go get`命令将包下载到本地。
@@ -66,7 +74,7 @@ go get会将整个仓库拉下来，可以通过git命令行工具切换仓库�
 
 可以使用[http://labix.org/gopkg.in](http://labix.org/gopkg.in) 做到将不同版本放到一个仓库中。但是切换版本需要改代码。
 
-通过 [https://github.com/golang/dep](https://github.com/golang/dep) 管理依赖。
+通过 [https://github.com/golang/dep](https://github.com/golang/dep) 管理依赖。还有很多可以用的工具，这里是[包管理工具的对比](https://ieevee.com/tech/2017/07/10/go-import.html)，这些工具基本的工作原理都是go的vendor特性（go1.5之后）。
 
 ***包更新***
 
@@ -105,3 +113,18 @@ import (
 导入包默认都是是有名字的，_表示匿名导入包，这里的_并不是语法糖，我在写js的时候经常用_表示语义无关或者用不到的参数，在golang中导入包不使用会有编译错误，除了匿名导入。
 
 副作用实现则是通过闭包特性再加上init函数，init函数对于每个文件来讲是特殊的，每个包的不同文件都可以有自己init，引入包的时候每个文件的init函数都会执行，执行顺序按字母序。
+
+***发布工具***
+
+使用线上包直接是一个main包的时候，那么可以理解为获得了一个工具包，这时使用go get的时候会有build操作，直接生成可执行文件到bin目录下面。事先将$GOPATH/bin设置到$PATH列表中，以便方便使用go工具。
+
+至此gopath里面还有一个pkg目录没有被提及，这个目录存放编译时的中间文件（拓展名为*.a），这是golang编译速度较快的原因之一。
+
+***编译其他平台包***
+
+大部分程序员都在mac和windows上工作，使用golang，不必为了编译支持window平台的可执行文件而找一台window电脑，详见[这里](https://github.com/golang/go/wiki/WindowsCrossCompiling)。一般来说，需要指定操作系统(GOOS)，cpu架构(GOARCH)，以及编译文件的名字以添加系统专属拓展名。
+
+```shell
+$ GOOS=windows GOARCH=386 go build -o hello.exe hello.go
+```
+
