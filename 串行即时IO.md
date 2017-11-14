@@ -1,7 +1,7 @@
 在有些场景下，一个handle下可能会有大量的即时消息，如果每个即时消息会产生一个io，那么如何将这些io串行化？如下。
 
 ```js
-// 串行化
+// 获得一个可以串行io的闭包
 function promiseIO () {
    let promise = null;
    return function (io) {
@@ -10,7 +10,8 @@ function promiseIO () {
            return promise;
        } else {
            let prevPromise = promise;
-           promise = (async function () {
+           promise = (async function () { 
+           // 将旧的promise与新的promise compose成一个新的promise
                await prevPromise;
                return io();
            })()
@@ -19,12 +20,12 @@ function promiseIO () {
    }
 }
 
-// 生成io生成器
+// 测试用io生成器
 function ioFaker (ms) {
     return _ => new Promise (res => setTimeout(_ => {res(ms);console.log(ms + 'io')}, ms));
 }
 
-// 获得io生成器
+// 获得几个测试io
 let _1sIO = ioFaker(1000);
 let _2sIO = ioFaker(2000);
 let _3sIO = ioFaker(3000);
