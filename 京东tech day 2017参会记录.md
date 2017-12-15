@@ -1,4 +1,4 @@
-会议ppt集合 https://mp.weixin.qq.com/s/basb3q1T-ZoEPTLlpbdkPA
+会议ppt集合 [https://mp.weixin.qq.com/s/basb3q1T-ZoEPTLlpbdkPA](https://mp.weixin.qq.com/s/basb3q1T-ZoEPTLlpbdkPA)。
 
 #### 第一讲
 
@@ -16,7 +16,7 @@
 
 美团点评的同学。修饰符来定路由这种方式很骚，依赖注入为注入项定接口，而不考虑service具体如何提供，比如express的query与koa的query获取方法不一样，把这个不同放在别的地方，更专注与业务逻辑。提到了中间件配置这个生命周期，实际上初始化的时候当然要配置，只不过配置这次与主逻辑解耦了，配置只与中间件有关。
 
-还讲了一些关于“道”的事，比如免配置运行，像https://www.zhihu.com/question/263676981，对比webpack的配置。架构越散，对人员能力要求越高。
+还讲了一些关于“道”的事，比如免配置运行，像[https://www.zhihu.com/question/263676981](https://www.zhihu.com/question/263676981)，对比webpack的配置。架构越散，对人员能力要求越高。
 
 但是至于promise不用bluebird以及为什么自己做cluster而不用pm2，我需要再跟他讨论下。
 
