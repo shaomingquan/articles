@@ -38,7 +38,7 @@
 - cpu.softirq：Percentage of time spent by the CPU or CPUs to service software interrupts.（比如系统调用就产生了中断）
 - cpu.nice：Percentage of CPU utilization that occurred while executing at the user level with nice priority.（进程有个值为nice，nice表示进程的优先级，Making a process nicer, decreasing the CPU Priority，nicer的人就要礼让nicer的进程也是，用nice可以设定新启动程序nice值，renice可以重新设定一个进程的nice值。nice值从-20到20，其中内核进程的优先级是-20。cup.nice指标解释中，“with nice priority”为nice为正值的进程，而且是一个user level的进程）
 - cpu.steal：Percentage of time spent in involuntary wait by the virtual CPU or CPUs while the hypervisor was servicing another virtual processor.（虚拟机时代，当前虚拟机的cpu资源可能被其他虚拟机占用）
-- cpu.system：Percentage of CPU utilization that occurred while executing at the system level (kernel).
+- cpu.system：Percentage of CPU utilization that occurred while executing at the system level (kernel内核级操作运行时间，语言需要进行系统调用才能得到内核的支持，如网络io，申请内存，譬如在高io的场景下，计算逻辑对应的用户cpu时间较少，发起io相应io的时间对应的系统cpu时间会较长).
 - cpu.user：Percentage of CPU utilization that occurred while executing at the user level (application).
 - cpu.cnt：cpu核数。
 - cpu.switches：cpu上下文切换次数，计数器类型。
@@ -48,6 +48,8 @@
 计算方法：先读取/proc/mounts拿到所有挂载点，然后通过syscall.Statfs_t拿到blocks和inode的使用情况。每个metric都会附加一组tag描述，类似mount=$mount,fstype=$fstype，其中$mount是挂载点，比如/home，$fstype是文件系统，比如ext4。
 
 > 理解inode这个东西 http://www.ruanyifeng.com/blog/2011/12/inode.html，inode（index node）索引节点，存了文件所在的区块以及文件的元信息，unix中一切都是文件，包括socket，inode个数是有限的，当由于异常因素导致inode数量不够，会影响socket的个数，也就是影响了并发。
+
+> 拿挂载点（也就是各个分区，盘符，作为统计的一个维度），再系统调用拿到各种参数。如果是在nodejs这种无法直接使用系统调用的语言中可以调用df命令也可以看到下面的指标。
 
 - df.bytes.free：磁盘可用量，int64
 - df.bytes.free.percent：磁盘可用量占总量的百分比，float64，比如32.1
@@ -64,6 +66,8 @@
 
 使用 megacli 工具读取 RAID 相关信息，每个metric都会附件一组tag描述，用来标明所属PD或者 VD，PD格式为PD=Enclosure_ID:SLOT_ID，比如PD=32:0表明第一块磁盘 ，VD=0 表明第一个逻辑磁盘。
 
+> 关于磁盘阵列，目前我没有接触到。因为部分RAID可能会有安全性问题，所以加监控很有必要。
+
 - sys.disk.lsiraid.pd.Media_Error_Count：这个及以下三个指标目前仅作为数据收集，不一定意味磁盘损坏（只是表示损坏概率变大）
 - sys.disk.lsiraid.pd.Other_Error_Count
 - sys.disk.lsiraid.pd.Predictive_Failure_Count
@@ -76,49 +80,55 @@
 
 使用 smartctl 工具读取磁盘 SMART 信息，目前所有指标仅作为数据收集，不一定意味磁盘损坏（只是表示概率变大），每个metric都会有一组tag描述，表明盘符，例如device=/dev/sda。
 
-sys.disk.smart.Reallocated_Sector_Ct
-sys.disk.smart.Spin_Retry_Count
-sys.disk.smart.Reallocated_Event_Count
-sys.disk.smart.Current_Pending_Sector
-sys.disk.smart.Offline_Uncorrectable
-sys.disk.smart.Temperature_Celsius
+> http://blog.csdn.net/qq_33932782/article/details/54174839  竟然还有温度，厉害了。。不过温度还是cpu比较触目惊心吧。。
+
+- sys.disk.smart.Reallocated_Sector_Ct
+- sys.disk.smart.Spin_Retry_Count
+- sys.disk.smart.Reallocated_Event_Count
+- sys.disk.smart.Current_Pending_Sector
+- sys.disk.smart.Offline_Uncorrectable
+- sys.disk.smart.Temperature_Celsius
 
 ### 6. 分区读写监控
 
 测试所有已挂载分区是否可读写，每个metric都会有一组tag描述，表示挂载点，比如mount=/home
 
-sys.disk.rw： 如果值不为0，表明此分区读写出现问题
+- sys.disk.rw： 如果值不为0，表明此分区读写出现问题
 
 ### 7. IO相关采集项
 
 计算方法：每秒采集一次/proc/diskstats，计算差值，都是计数器类型的。每个metric都会有一组tag描述，形如device=$device，用来表示具体的设备，比如sda1、sdb。用户可以参考iostat的帮助文档来理解具体的metric含义。
 
-disk.io.ios_in_progress：Number of actual I/O requests currently in flight.
-disk.io.msec_read：Total number of ms spent by all reads.
-disk.io.msec_total：Amount of time during which ios_in_progress >= 1.
-disk.io.msec_weighted_total：Measure of recent I/O completion time and backlog.
-disk.io.msec_write：Total number of ms spent by all writes.
-disk.io.read_merged：Adjacent read requests merged in a single req.
-disk.io.read_requests：Total number of reads completed successfully.
-disk.io.read_sectors：Total number of sectors read successfully.
-disk.io.write_merged：Adjacent write requests merged in a single req.
-disk.io.write_requests：total number of writes completed successfully.
-disk.io.write_sectors：total number of sectors written successfully.
-disk.io.read_bytes：单位是byte的数字
-disk.io.write_bytes：单位是byte的数字
-disk.io.avgrq_sz：下面几个值就是iostat -x 1看到的值
-disk.io.avgqu-sz
-disk.io.await
-disk.io.svctm
-disk.io.util：是个百分数，比如56.43，表示56.43%
+> iostat 是依赖/proc/diskstats的一个软件。使用iostat -d -x以及 iostat -d 可以查看所有关于磁盘的指标。下面有些指标是可以用iostat算出来，有些需要查原始的/proc/diskstats，原始field文档查看[https://www.kernel.org/doc/Documentation/iostats.txt](https://www.kernel.org/doc/Documentation/iostats.txt)，iostat查看man手册即可
+
+- disk.io.ios_in_progress：Number of actual I/O requests currently in flight.
+- disk.io.msec_read：Total number of ms spent by all reads.
+- disk.io.msec_total：Amount of time during which ios_in_progress >= 1.
+- disk.io.msec_weighted_total：Measure of recent I/O completion time and backlog.
+- disk.io.msec_write：Total number of ms spent by all writes.
+- disk.io.read_merged：Adjacent read requests merged in a single req.
+- disk.io.read_requests：Total number of reads completed successfully.
+- disk.io.read_sectors：Total number of sectors read successfully.
+- disk.io.write_merged（合并写（读））：Adjacent write requests merged in a single req.
+- disk.io.write_requests：total number of writes completed successfully.
+- disk.io.write_sectors（扇区）：total number of sectors written successfully.
+- disk.io.read_bytes：单位是byte的数字
+- disk.io.write_bytes：单位是byte的数字
+- disk.io.avgrq_sz：下面几个值就是iostat -x 1看到的值
+- disk.io.avgqu-sz
+- disk.io.await（在队列中的平均等待时间，跟io的饱和度有关）
+- disk.io.svctm（平均服务时间，太长会有问题）
+- disk.io.util：是个百分数，比如56.43，表示56.43%（磁盘io花费的时间比例，衡量磁盘io的饱和度）
 
 ### 8. 机器负载相关采集项
 
 计算方法：读取/proc/loadavg，都是原始值类型的：
 
-load.1min
-load.5min
-load.15min
+> 也可以使用top或者uptime查看
+
+- load.1min（在单核情况下，值为1则需要处理了，说明cpu即将过饱和，如果是四核，过饱和阈值为4，一般dashboard会展示loadPerCpu，以统一核数问题。注意与cpu.time区分开来 https://serverfault.com/questions/667078/high-cpu-utilization-but-low-load-average 极端点说，当任务很多，每个任务又很小，cpu忙着调度，队列始终堆积，而由于任务基本不占cpu，所以cpu时间也没有跑满。）
+- load.5min
+- load.15min
 
 ### 9. 内存相关采集项
 
@@ -159,25 +169,30 @@ net.if.total.bytes
 net.if.total.dropped
 net.if.total.errors
 net.if.total.packets
+
 11. 端口采集项
 
 计算方法，通过ss -ln，来判断指定的端口是否处于listen状态。原始值类型，值要么是1：代表在监听，要么是0，代表没有在监听。每个metric都附件一组tag，形如port=$port，$port就是具体的端口。
 
 net.port.listen
+
 12. 机器内核配置
 
 kernel.maxfiles： 读取的/proc/sys/fs/file-max
 kernel.files.allocated：读取的/proc/sys/fs/file-nr第一个Field
 kernel.files.left：值=kernel.maxfiles-kernel.files.allocated
 kernel.maxproc：读取的/proc/sys/kernel/pid_max
+
 13. ntp采集项
 
 使用 ntpq -pn 获取本机时间相对于 ntp 服务器的 offset。
 
 sys.ntp.offset： 本机偏移时间，单位为ms，值过大或者为0则表明有异常，需要报警
+
 14. 进程监控
 
 proc.num：判断某个进程的数目，这里需要分两个场景，一种是根据进程的名字来判定，比如name=sshd；另外一种是根据cmdline来判定，比如Java的应用进程名可能都是java，根据第一种情况没法做区分，此时可以配置cmdline，如cmdline=./falcon_agent-c./cfg.ini
+
 15. 进程资源监控
 
 process.cpu.all：进程和它的子进程使用的sys+user的cpu，单位是jiffies
@@ -186,6 +201,7 @@ process.cpu.user：进程和它的子进程使用的user cpu，单位是jiffies
 process.swap：进程和它的子进程使用的swap，单位是page
 process.fd：进程使用的文件描述符个数
 process.mem：进程占用内存，单位byte
+
 16. ss命令输出
 
 ss.orphaned
@@ -194,3 +210,12 @@ ss.timewait
 ss.slabinfo.timewait
 ss.synrecv
 ss.estab
+
+
+参考资料：
+
+- http://blog.scoutapp.com/articles/2015/02/24/understanding-linuxs-cpu-stats
+- https://www.ibm.com/developerworks/cn/linux/l-proc.html
+- http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages
+- http://linuxperf.com/?p=156
+- https://serverfault.com/questions/667078/high-cpu-utilization-but-low-load-average
