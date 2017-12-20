@@ -134,47 +134,49 @@
 
 计算方法：读取/proc/meminfo 中的内容，其中的mem.memfree是free+buffers+cached，mem.memused=mem.memtotal-mem.memfree。用户具体可以参考free命令的输出和帮助文档来理解每个metric的含义。
 
-mem.memtotal：内存总大小
-mem.memused：使用了多少内存
-mem.memused.percent：使用的内存占比
-mem.memfree
-mem.memfree.percent
-mem.swaptotal：swap总大小
-mem.swapused：使用了多少swap
-mem.swapused.percent：使用的swap的占比
-mem.swapfree
-mem.swapfree.percent
+> 理解swap，swap增大意为着什么。当swap增大，内存已经不足，swap其实就是虚拟内存。[https://www.centos.org/docs/5/html/5.2/Deployment_Guide/s1-swap-what-is.html](https://www.centos.org/docs/5/html/5.2/Deployment_Guide/s1-swap-what-is.html)
+
+- mem.memtotal：内存总大小
+- mem.memused：使用了多少内存
+- mem.memused.percent：使用的内存占比
+- mem.memfree
+- mem.memfree.percent
+- mem.swaptotal：swap总大小
+- mem.swapused：使用了多少swap
+- mem.swapused.percent：使用的swap的占比
+- mem.swapfree
+- mem.swapfree.percent
 
 ### 10. 网络相关采集项
 
 计算方法：读取/proc/net/dev的内容，每个metric都附加有一组tag，形如iface=$iface，标明具体那个interface，比如eth0。metric中带有in的表示流入情况，out表示流出情况，total是总量in+out，支持的metric如下：
 
-net.if.in.bytes
-net.if.in.compressed
-net.if.in.dropped
-net.if.in.errors
-net.if.in.fifo.errs
-net.if.in.frame.errs
-net.if.in.multicast
-net.if.in.packets
-net.if.out.bytes
-net.if.out.carrier.errs
-net.if.out.collisions
-net.if.out.compressed
-net.if.out.dropped
-net.if.out.errors
-net.if.out.fifo.errs
-net.if.out.packets
-net.if.total.bytes
-net.if.total.dropped
-net.if.total.errors
-net.if.total.packets
+- net.if.in.bytes
+- net.if.in.compressed
+- net.if.in.dropped
+- net.if.in.errors
+- net.if.in.fifo.errs
+- net.if.in.frame.errs
+- net.if.in.multicast
+- net.if.in.packets
+- net.if.out.bytes
+- net.if.out.carrier.errs
+- net.if.out.collisions
+- net.if.out.compressed
+- net.if.out.dropped
+- net.if.out.errors
+- net.if.out.fifo.errs
+- net.if.out.packets
+- net.if.total.bytes
+- net.if.total.dropped
+- net.if.total.errors
+- net.if.total.packets
 
 11. 端口采集项
 
 计算方法，通过ss -ln，来判断指定的端口是否处于listen状态。原始值类型，值要么是1：代表在监听，要么是0，代表没有在监听。每个metric都附件一组tag，形如port=$port，$port就是具体的端口。
 
-net.port.listen
+- net.port.listen
 
 12. 机器内核配置
 
