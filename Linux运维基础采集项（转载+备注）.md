@@ -151,6 +151,8 @@
 
 计算方法：读取/proc/net/dev的内容，每个metric都附加有一组tag，形如iface=$iface，标明具体那个interface，比如eth0。metric中带有in的表示流入情况，out表示流出情况，total是总量in+out，支持的metric如下：
 
+> 可以看一些拓展的工具，如：[http://www.binarytides.com/linux-commands-monitor-network/](http://www.binarytides.com/linux-commands-monitor-network/)。
+
 - net.if.in.bytes
 - net.if.in.compressed
 - net.if.in.dropped
@@ -188,6 +190,8 @@ kernel.maxproc：读取的/proc/sys/kernel/pid_max
 13. ntp采集项
 
 使用 ntpq -pn 获取本机时间相对于 ntp 服务器的 offset。
+
+> 服务器时间校准功能。
 
 sys.ntp.offset： 本机偏移时间，单位为ms，值过大或者为0则表明有异常，需要报警
 
