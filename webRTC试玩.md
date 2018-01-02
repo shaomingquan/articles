@@ -102,7 +102,7 @@ main.js:69 Client received message: Object
 
 单从传输目的不考虑其他因素，因为NAT的限制，只通过tcp/ip协议族转达的内容为不足以穿透NAT以达到P2P连接的效果。所以从P2P连接依赖内容角度去看，还需要一个应用层的方案去交换这些信息，这些信息叫做Media Description采用的规范是[SPD](https://en.wikipedia.org/wiki/Session_Description_Protocol)，用来描述多媒体连接内容的协议，例如分辨率，格式，编码，加密算法等。这一整套叫做ICE（交互式连接建立）。
 
-当然，在建立ICE之前的Media Description交换需要用户自己做一个服务，服务技术选型不限。在ICE建立的过程中，NAT穿透相关方案是对开发者透明的，我们只需要交换，方案主要涉及STUN以及TURN。
+当然，在建立ICE之前的Media Description交换需要用户自己做一个服务，服务技术选型不限，Media Description不是webRTC技术范畴，你甚至可以用copy-and-paste去交换Media Description。在ICE建立的过程中，NAT穿透相关方案是对开发者透明的，我们只需要交换，方案主要涉及STUN以及TURN。
 
 建立连接之后，双方接受流进行互推，协议为udp。除了udp，当连接完成之后，可以通过`RTCPeerConnection.prototype.createDataChannel`来建立tcp连接，场景也很容易想，当我们在视频时，也需要传文字，这时候就需要tcp了，应用层协议名为SCTP。
 
@@ -149,6 +149,10 @@ function receiveChannelCallback(e) {
 #### 协议简析
 
 TODO
+
+#### tips
+
+- 当我尝试与别人在局域网玩webRTC时，webRTC提示[安全域策略](https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features)不允许。
 
 #### 其他链接
 
