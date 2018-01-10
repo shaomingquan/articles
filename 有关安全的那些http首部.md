@@ -28,9 +28,25 @@ csp中的upgrade-insecure-requests选项对于http迁移https会很有用处，�
 
 告诉浏览器强制使用https访问该资源，相当于用户代理帮服务器做了一次重定向的事，而且这个状态可以缓存，也就是说一段时间内是切不到原来的状态的，参考cache。
 
-### set-cookie的httpOnly选项
+### set-cookie
+
+***httpOnly选项***
 
 由于历史包袱，httpOnly在一般的大型网站中都没有完全使用。目前各大网站使用httpOnly的方式是将cookie分组，在鉴权成功的时候，可以为该域指定多组cookie，方式是写入多个set-cookie首部，个别组可以使用httpOnly策略，现象是使用document.cookie获取的cookie串的长度要小于http请求头中cookie字段的长度，这样对个别关键字段做了保护。
+
+***domin***
+
+设置domin，从而让某些子域名变成cookie free domin。
+
+### cors
+
+Access-Control-Allow-Credentials 有可能被反向盗取cookie。但其实虽然服务端可以设置cookie发送的接口，客户端仍可以用csp防止恶意脚本发送cookie。
+
+### 其他
+
+- 为敏感信息关闭自动提醒：[https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion](https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion)。
+- 使用csp的sri特性校验，脚本和样式是否被篡改。[https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)。
+
 
 待续。
 
