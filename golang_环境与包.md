@@ -128,3 +128,6 @@ import (
 $ GOOS=windows GOARCH=386 go build -o hello.exe hello.go
 ```
 
+***tips***
+
+- 调试包内方法的注意事项，在go中，包内方法可以互相引用，使用go run调试时需要注意要以全文件列表的形式跑整个包，go run *.go。

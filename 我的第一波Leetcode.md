@@ -41,7 +41,7 @@ var isPowerOfThree = function(n) {
 ```
 类似的：
 - https://leetcode.com/problems/valid-perfect-square/#/description
-- https://leetcode.com/problems/unique-paths/#/description
+- 组合数（注意不要算C7,6，要算C7,1） [https://leetcode.com/problems/unique-paths/#/description](https://leetcode.com/problems/unique-paths/#/description)
 - [牛顿迭代法](http://baike.baidu.com/item/%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95) https://leetcode.com/problems/sqrtx/
 - https://leetcode.com/problems/nim-game/#/description
 - 3 \* 3 > 2 \* 2 \* 2  https://leetcode.com/problems/integer-break/#/description
