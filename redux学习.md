@@ -17,7 +17,7 @@
 
 约束较多或者较少，看各自喜好，各类特性也是。
 
-### 带看思路
+### 源码
 
 从一个最简单的例子入手吧！所以一下子不需要看所有的功能，使用createStore就可以实现一个最基本的东西。再加上redux和redux-react一起，可以实现与react框架的高效绑定。在实现大型项目的时候，需要做一些架构上的优化，这时候需要一些设计模式，redux会提供一些非核心功能去做这些事。
 
@@ -25,7 +25,7 @@
 - redux和redux-react。[示例代码](https://github.com/mocheng/react-and-redux/tree/master/chapter-03/react-redux)。
 - redux高阶功能。
 
-### createStore
+***createStore***
 
 redux的设计有些渐进式的意味，当createStore只应用前两个参数时，使用的是redux的基本功能。实际上redux实现了一个低配版的事件订阅模式，源码不难，有几个优秀的设计以及几个需要注意的点。
 
