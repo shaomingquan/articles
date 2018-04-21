@@ -47,7 +47,7 @@ func main() {
 {"val":"0","children":[{"val":"1","children":[]}]}
 ```
 
-***是的，没有val为2这个节点。***想要的结果是`{"val":"0","children":[{"val":"1","children":[{"val":"2","children":[]}]}]}`。
+***是的，没有val为2这个节点***。想要的结果是`{"val":"0","children":[{"val":"1","children":[{"val":"2","children":[]}]}]}`。
 
 因为go是偏底层的，所以内存操作没有js那么神秘，而且作为现代语言go也没有c一样的繁琐内存操作。在使用append的时候，实际上是操作一个不定长的数组类型，当增加元素时，go会重新申请内存，将将要append的进去的item复制一份到新内存中，机制简单粗暴。
 
