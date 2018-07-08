@@ -1,5 +1,3 @@
-***在实践中出现问题，需更新....***
-
 最近在看《Nodejs硬实战》这本书，在书中的前半部分基础库介绍中不止一次提到了`unref`方法，这里总结下。
 
 > 从表面上来看，基于消息队列的node会等进程中没有handle的时候终止进行，unref则是打破这种“常规”。
@@ -40,16 +38,18 @@ http.get({
     port: 3000
 }, function (res) {
     res.pipe(process.stdout);
-    server.unref(); // http 的listening process 不鸟了
+    server.unref();
 });
 ```
 分离子进程，这样主进程只负责开进程，之后就退出。
 ```js
-var _process = require('child_process').spawn('node', ['./httpserver.js'], {
+var spawn = require('child_process').spawn;
+var child = spawn('node', ['./simpleserver.js'], {
     detached: true, // 设为分离的
-    stdio: ['ignore', 'pipe', 'pipe'] // 忽略输入流
-});
-_process.unref(); // 进程不要在意process的事件流
+    stdio: 'ignore' // 忽略输入流
+})
+console.log(child.pid);
+child.unref();
 ```
 
 ***`unref`从何而来？***
