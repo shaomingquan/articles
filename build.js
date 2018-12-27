@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const getLinkByFileName = name => `https://github.com/shaomingquan/articles/blob/master/src/${name}.md`
+const getLinkByFileName = name => `https://github.com/shaomingquan/articles/blob/master/src/${encodeURIComponent(name)}.md`
 
 const makeBlogItem = name => `- [${name}](${getLinkByFileName(name)})
 `
