@@ -41,10 +41,8 @@ function chartDSL (series, expressions) {
   for(let i = 0 ; i < sCount ; i ++) { 
   // 算一些特殊值
   // $1_sum 表示第一个serie的y值总和。count一样
-    eval(` 
-      scope['$${i}_sum']=${sum(series[i])};
-      scope['$${i}_count']=${sum(series[i])};
-    `)
+    scope[`$${i}_sum`]=sum(series[i]);
+    scope[`$${i}_count`]=sum(series[i]);
   }
 
   return expressions.map(exp => {
@@ -52,7 +50,7 @@ function chartDSL (series, expressions) {
     let sLength = ret.length;
     for(let i = 0 ; i < sLength ; i ++) {
       for(let j = 0 ; j < sCount ; j ++) {
-        eval(`scope[$${j}]=series[${j}][${i}].y`); 
+        scope[`$${j}`]=series[j][i].y; 
         // $0,$1... 表示每个将要参与计算的值
       }
       ret[i].y = mathjs.eval(exp, scope); // 安全的eval
