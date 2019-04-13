@@ -1,12 +1,14 @@
 ### hi
 
-[🍭 ***for more interesting things***](http://shaomingquan.github.io/laboratory/)
+[🍭 ***一些有意思的小玩意***](https://shaomingquan.github.io/laboratory/)
 
-this is my blog
+[🍭 ***技术分享***](https://slides.com/shaomingquan/)
 
-write by [mdmd](https://github.com/shaomingquan/mdmd)
 
-wechat 1218525419
+联系我：
+- 微信 => 1218525419
+- [在线留言](https://github.com/shaomingquan/articles/issues)
+
 
 ---------------------------articles----------------------------
 
