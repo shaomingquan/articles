@@ -25,7 +25,6 @@
 - [ss搭建快速教程](https://github.com/shaomingquan/articles/blob/master/src/ss%E6%90%AD%E5%BB%BA%E5%BF%AB%E9%80%9F%E6%95%99%E7%A8%8B.md)
 - [一个延迟响应引发的思考](https://github.com/shaomingquan/articles/blob/master/src/%E4%B8%80%E4%B8%AA%E5%BB%B6%E8%BF%9F%E5%93%8D%E5%BA%94%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83.md)
 - [一种自定义索引的方案](https://github.com/shaomingquan/articles/blob/master/src/%E4%B8%80%E7%A7%8D%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B4%A2%E5%BC%95%E7%9A%84%E6%96%B9%E6%A1%88.md)
-- [个人简历](https://github.com/shaomingquan/articles/blob/master/src/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.md)
 - [交互中的掠过效果](https://github.com/shaomingquan/articles/blob/master/src/%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E6%8E%A0%E8%BF%87%E6%95%88%E6%9E%9C.md)
 - [京东tech day 2017参会记录](https://github.com/shaomingquan/articles/blob/master/src/%E4%BA%AC%E4%B8%9Ctech%20day%202017%E5%8F%82%E4%BC%9A%E8%AE%B0%E5%BD%95.md)
 - [代码review时需要注意的几个点](https://github.com/shaomingquan/articles/blob/master/src/%E4%BB%A3%E7%A0%81review%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%87%A0%E4%B8%AA%E7%82%B9.md)
