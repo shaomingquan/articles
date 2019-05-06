@@ -161,6 +161,46 @@ range有什么问题呢？先看这个 https://stackoverflow.com/questions/15945
 
 bingo，没错。
 
-那也顺带强调一下range的另外一个坑。上文提过了，看这个就行，这里不啰嗦了。https://stackoverflow.com/questions/15945030/change-values-while-iterating-in-golang。
+那也顺带强调一下range的另外一个坑。先看这个。https://stackoverflow.com/questions/15945030/change-values-while-iterating-in-golang。
+
+是一个可能被惯性思维带偏的坑，其实重要的是要区分哪些是引用类型，哪些不是。
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	m := []map[string]string{
+		map[string]string{
+			"a": "b",
+		},
+		map[string]string{
+			"a": "b",
+		},
+	}
+
+	for _, mitem := range m {
+		mitem["a"] = "c"
+	}
+
+	type A struct {
+		a string
+	}
+
+	n := []A{
+		A{a: "b"},
+		A{a: "b"},
+	}
+
+	for _, nitem := range n {
+		nitem.a = "c"
+	}
+
+	fmt.Printf("%v\n", m) // 注意引用类型还是会变的 [map[a:c] map[a:c]]
+	fmt.Printf("%v\n", n) // 不变 [{b} {b}]
+}
+
+```
 
 还有range闭包的坑。如果之前有类似js的经验，这个就不算新鲜事了。没听说过的可以搜一下。
