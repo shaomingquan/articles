@@ -35,6 +35,7 @@
 - [工作第一年的一些思考](https://github.com/shaomingquan/articles/blob/master/src/%E5%B7%A5%E4%BD%9C%E7%AC%AC%E4%B8%80%E5%B9%B4%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83.md)
 - [我为啥不用安卓](https://github.com/shaomingquan/articles/blob/master/src/%E6%88%91%E4%B8%BA%E5%95%A5%E4%B8%8D%E7%94%A8%E5%AE%89%E5%8D%93.md)
 - [扯淡交互合集](https://github.com/shaomingquan/articles/blob/master/src/%E6%89%AF%E6%B7%A1%E4%BA%A4%E4%BA%92%E5%90%88%E9%9B%86.md)
+- [找个方式降低你的心智模型复杂度](https://github.com/shaomingquan/articles/blob/master/src/%E6%89%BE%E4%B8%AA%E6%96%B9%E5%BC%8F%E9%99%8D%E4%BD%8E%E4%BD%A0%E7%9A%84%E5%BF%83%E6%99%BA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E6%9D%82%E5%BA%A6.md)
 - [知识图谱调研](https://github.com/shaomingquan/articles/blob/master/src/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%B0%83%E7%A0%94.md)
 - [简谈js递归优化](https://github.com/shaomingquan/articles/blob/master/src/%E7%AE%80%E8%B0%88js%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96.md)
 - [纯css实现曲线路径](https://github.com/shaomingquan/articles/blob/master/src/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E6%9B%B2%E7%BA%BF%E8%B7%AF%E5%BE%84.md)
