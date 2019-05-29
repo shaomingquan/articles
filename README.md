@@ -33,6 +33,7 @@
 - [位操作算法 (.trans)](https://github.com/shaomingquan/articles/blob/master/src/%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AE%97%E6%B3%95%20(.trans).md)
 - [关于go的append坑的启示](https://github.com/shaomingquan/articles/blob/master/src/%E5%85%B3%E4%BA%8Ego%E7%9A%84append%E5%9D%91%E7%9A%84%E5%90%AF%E7%A4%BA.md)
 - [去除滚动留白](https://github.com/shaomingquan/articles/blob/master/src/%E5%8E%BB%E9%99%A4%E6%BB%9A%E5%8A%A8%E7%95%99%E7%99%BD.md)
+- [小程序杂谈](https://github.com/shaomingquan/articles/blob/master/src/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9D%82%E8%B0%88.md)
 - [工作第一年的一些思考](https://github.com/shaomingquan/articles/blob/master/src/%E5%B7%A5%E4%BD%9C%E7%AC%AC%E4%B8%80%E5%B9%B4%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83.md)
 - [我为啥不用安卓](https://github.com/shaomingquan/articles/blob/master/src/%E6%88%91%E4%B8%BA%E5%95%A5%E4%B8%8D%E7%94%A8%E5%AE%89%E5%8D%93.md)
 - [扯淡交互合集](https://github.com/shaomingquan/articles/blob/master/src/%E6%89%AF%E6%B7%A1%E4%BA%A4%E4%BA%92%E5%90%88%E9%9B%86.md)
