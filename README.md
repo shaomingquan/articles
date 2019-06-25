@@ -47,6 +47,7 @@
 - [说一个简单的解耦模型](https://github.com/shaomingquan/articles/blob/master/src/%E8%AF%B4%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%A7%A3%E8%80%A6%E6%A8%A1%E5%9E%8B.md)
 - [谈谈webassembly](https://github.com/shaomingquan/articles/blob/master/src/%E8%B0%88%E8%B0%88webassembly.md)
 - [跟从“默认”](https://github.com/shaomingquan/articles/blob/master/src/%E8%B7%9F%E4%BB%8E%E2%80%9C%E9%BB%98%E8%AE%A4%E2%80%9D.md)
+- [这三年](https://github.com/shaomingquan/articles/blob/master/src/%E8%BF%99%E4%B8%89%E5%B9%B4.md)
 - [这个项目差点崩了](https://github.com/shaomingquan/articles/blob/master/src/%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E5%B7%AE%E7%82%B9%E5%B4%A9%E4%BA%86.md)
 - [重新思考地址栏](https://github.com/shaomingquan/articles/blob/master/src/%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E5%9C%B0%E5%9D%80%E6%A0%8F.md)
 - [鬼畜不完全指南](https://github.com/shaomingquan/articles/blob/master/src/%E9%AC%BC%E7%95%9C%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97.md)
