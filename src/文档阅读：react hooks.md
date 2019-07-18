@@ -115,7 +115,7 @@ function FriendStatus(props) {
 }
 ```
 
-useEffect返回的函数会在下一次执行这个effect的时候调用，做一些cleanup的事情，通常是mirror方法。在willUNmount的时候也会执行。
+useEffect返回的函数会在下一次执行这个effect的时候尝试调用，做一些cleanup的事情，通常是mirror方法。在willUNmount的时候也会执行。
 
 使用一组useState和useEffect就可以实现一个可插拔的抽象，在未做抽象之前，也提倡使用这种方式将逻辑解耦（后续实习自己的hooks）。
 
@@ -125,9 +125,103 @@ useEffect返回的函数会在下一次执行这个effect的时候调用，做�
 
 ***我想用原来的一些模式，怎么回退呀？***
 
-我就想用类似componentDidMount和componentWillUnmount这样的怎么办？这时候就用到useEffect的第二个参数了，这个就很灵活了，一些states或者props会驱动这些effects的执行，把它们放到一个数组里，如果跟上次相比都没有变化，那么effect不执行。
+我就想用类似componentDidMount和componentWillUnmount这样的怎么办？这时候就用到useEffect的第二个参数了，这个就很灵活了，一些states或者props会驱动这些effects的执行，把它们放到一个数组里，如果跟上次相比都没有变化，那么effect不执行，上一个effect的cleanup也不调用，所以上面说cleanup是“尝试调用”。
 
 好像跟componentDidMount和componentWillUnmount没什么关系？把第二个参数设置为空数组，effect执行函数和返回值就相当于componentDidMount和componentWillUnmount生命周期，它们分别在初次渲染和UNmount执行。
 
-### 5，[Building Your Own Hooks](https://reactjs.org/docs/hooks-custom.html)
+***感想***
 
+- useEffect简化了原先复杂的生命周期函数。
+- 同时更关注副作用，副作用的cleanup，更容易指示副作用去re-perform。
+- 这种模式把states和props同质化，没必要区分谁是谁，我只知道它变了就行（但一般来说副作用往往还是props驱动的）。
+
+> 我开始喜欢上hooks了！
+
+### 5，[Rules of Hooks](https://reactjs.org/docs/hooks-rules.html)
+
+> 使用hooks，我们需要遵循官方的一些游戏方法。
+
+***Only Call Hooks at the Top Level***
+
+最重要的是，hooks通过执行顺序去identify它是哪个state，或者effect，把它放在for循环和if里面，不会有语法错误，只是这样更容易出bug，流程语句会改变顺序以及个数。
+
+***Only Call Hooks from React Functions***
+
+我不知道在其他地方call这个能做什么。
+
+**工具**
+
+可以加一个[eslint](https://reactjs.org/docs/hooks-rules.html#eslint-plugin)。
+
+### 6，[Building Your Own Hooks](https://reactjs.org/docs/hooks-custom.html)
+
+抽出公共逻辑，hooks的代码段插拔特别容易。
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function FriendStatus(props) {
+
+  // 可复用逻辑
+  const [isOnline, setIsOnline] = useState(null);
+
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+    };
+  });
+
+  if (isOnline === null) {
+    return 'Loading...';
+  }
+  return isOnline ? 'Online' : 'Offline';
+}
+```
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+// 抽离
+function useFriendStatus(friendID) {
+  const [isOnline, setIsOnline] = useState(null);
+
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+
+    ChatAPI.subscribeToFriendStatus(friendID, handleStatusChange);
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(friendID, handleStatusChange);
+    };
+  });
+
+  return isOnline;
+}
+
+// 可以在这用
+function FriendStatus(props) {
+  const isOnline = useFriendStatus(props.friend.id);
+
+  if (isOnline === null) {
+    return 'Loading...';
+  }
+  return isOnline ? 'Online' : 'Offline';
+}
+
+// 也可以在其他组件里直接使用
+function FriendListItem(props) {
+  const isOnline = useFriendStatus(props.friend.id);
+
+  return (
+    <li style={{ color: isOnline ? 'green' : 'black' }}>
+      {props.friend.name}
+    </li>
+  );
+}
+```
