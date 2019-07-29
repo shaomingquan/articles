@@ -28,8 +28,6 @@
 
 这种情景是有害的，他们会在build过程和生产环境拉取意料之外的包版本，让lock文件的好处都变得徒劳。
 
-Luckily, there is a way to tell both Yarn and npm to adhere to a specified set of dependencies and their versions by referencing them from the lockfile. Any inconsistency will abort the installation. The command line should read as follows:
-
 幸运的是，有一种方法去告诉yarn或者npm参考lock文件去遵守一个特定的依赖集合和版本。任何的不一致会让install过程终止。对应的命令行像下面这样：
 - yarn：`yarn install --frozen-lockfile`
 - npm：`npm ci`
@@ -55,8 +53,6 @@ npm 命令行工具与package的run-scripts共同工作，如果你曾经运行n
 
 如果没有审查发行记录，代码变更，也没有基于全面理解而对更新做全面的测试，就去不断的急着更新到他们的最新发行版，必定不是一个最佳实践。就像上面说过的，保持过时并且一点都不更新，或者很长时间才更新，这也是一种问题的来源。
 
-The npm CLI can provide information about the freshness of dependencies you use with regards to their semantic versioning offset. By running npm outdated, you can see which packages are out of date:
-
 npm命令行工具提供了关于你所用依赖的新鲜度的信息，这与他们的semver的偏移量有关。通过运行npm outdated，你可以查看哪些包是过期的：
 
 ![](/images/npm-10-security-best-practices-CLI.png)
@@ -77,8 +73,57 @@ npm命令行工具提供了关于你所用依赖的新鲜度的信息，这与�
 
 # 5. 对开源依赖的漏洞进行审计
 
-The npm ecosystem is the single largest repository of application libraries amongst all the other language ecosystems. The registry and the libraries in it are at the core for JavaScript developers as they are able to leverage work that others have already built and incorporate it into their code-base. With that said, the increasing adoption of open source libraries in applications brings with it an increased risk of introducing security vulnerabilities.
+在所有语言的生态系统中，npm是最大的独立app lib仓库。registry和它里面的libs是JavaScript开发者心中的地位是核心的，因为他们可以在工作利用到其他人已经构建的lib，把它引入到自己的代码库里。这样一来，越多的在应用中采用开源lib，引入安全性漏洞的风险就会随之提升。
 
-Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm request, superagent, mongoose, and even security-related packages like jsonwebtoken, and npm validator.
+很多流行的npm 包被发现是有漏洞的，并且如果你的项目依赖没有正确的安全性审计，就可能伴随显著的风险。举一些例子：npm的request，superagent，mongoose。甚至安全相关的包，像是jsonwebtoken，npm的validator。
 
-Security doesn’t end by just scanning for security vulnerabilities when installing a package but should also be streamlined with developer workflows to be effectively adopted throughout the entire lifecycle of software development, and monitored continuously when code is deployed.
+安全性不止于在安装包的时候做安全性漏洞扫描，也应该与开发者的工作流一致，贯穿整个软件的开发生命周期高效的应用安全检查，并且在代码上线之后也持续的监控。
+
+***扫描漏洞***
+
+使用Snyk扫描安全性漏洞：
+
+```
+$ npm install -g snyk
+$ snyk test
+```
+
+当你运行`snyk test`时，Snyk报告它发现的漏洞，并且展示有漏洞的路径，所以可以跟踪依赖数去知晓那个模块引入了一个漏洞。最重要的是，Snyk给你提供了可行的整治建议，所以你可以通过一个Snyk在你的仓库自动打开的pr升级到一个被修复的版本，或者如果没有可用的修复Scyk会提供一个补丁去减轻这个漏洞的影响。Snyk通过对出漏洞的包推荐最小semver升级提供一个智能的升级。
+
+监控开源库中发现的漏洞
+
+安全工作并未就此结束。
+
+在部署应用程序后，应用程序的依赖中发现的安全漏洞应该如何应对？这就是安全监控和与项目开发生命周期紧密集成的重要性所在。（未上报的运行时漏洞）
+
+我们推荐将Snyk与你的源码管理系统（Github或者GibLab）集成，这样的话Snyk会参与到监控你的项目，并且：
+
+- 自动开pr去升级你的依赖或者或者打补丁
+- 引入新的pr是，扫描探测开源lib的漏洞
+
+如果你不能把Snyk集成到代码管理系统中，也可以使用Snyk监控你的项目快照（安全性快照），仅仅需要执行：
+
+```
+$ snyk monitor
+```
+Snyk与npm audit有什么不同呢？
+
+- 我们邀请你去审查一篇发布于Nearfrom的博客，它[对比了Snyk与npm audit](https://www.nearform.com/blog/comparing-npm-audit-with-snyk/)
+- Snyk的[漏洞数据库](https://snyk.io/vuln)提供了全面的数据，通过它的威胁情报系统（？？？）。提供更好的覆盖范围，并能够显示和报告尚未收到CVE的漏洞。举例来说，百分之72的被npm公告的漏洞被首次添加到Snyk的数据库。详情请查看这里：[https://snyk.io/features/vulnerabilitiy-database/](https://snyk.io/features/vulnerabilitiy-database/)
+
+### 6. Use a local npm proxy
+
+The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of the most of the Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:
+
+When you run npm install, it automatically starts a communication with the main registry to resolve all your dependencies; if you wish to use a different registry, that too is pretty straightforward:
+
+- Set npm set registry to set up a default registry.
+- Use the argument --registry for one single registry.
+
+Verdaccio is a simple lightweight zero-config-required private registry and installing it is as simple as follows:
+
+```
+$ npm install --global verdaccio
+```
+
+![](/images/npm-10-security-best-practices-verdaccio.png)
