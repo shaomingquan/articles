@@ -32,7 +32,7 @@
 - yarn：`yarn install --frozen-lockfile`
 - npm：`npm ci`
 
-#### 3. 通过忽略运行脚本来最小化攻击的可操作性
+### 3. 通过忽略运行脚本来最小化攻击的可操作性
 
 npm 命令行工具与package的run-scripts共同工作，如果你曾经运行npm start和npm test那么你也曾使用过run-scripts。npm命令行工具基于package声明的脚本来构建，并且允许package在其安装的过程中指定切入点（钩子）来运行脚本。举个例子，一些[脚本钩子](https://docs.npmjs.com/misc/scripts)入口是postinstall脚本，当一个package已经完成安装后它就会执行，去做一些杂事。
 
@@ -71,7 +71,7 @@ npm命令行工具提供了关于你所用依赖的新鲜度的信息，这与�
 - 对不同的目录执行权限检查，比如local和global的node_modules文件夹，还有npm package的缓存文件夹
 - 检查本机的模块缓存的校验和正确性
 
-# 5. 对开源依赖的漏洞进行审计
+### 5. 对开源依赖的漏洞进行审计
 
 在所有语言的生态系统中，npm是最大的独立app lib仓库。registry和它里面的libs是JavaScript开发者心中的地位是核心的，因为他们可以在工作利用到其他人已经构建的lib，把它引入到自己的代码库里。这样一来，越多的在应用中采用开源lib，引入安全性漏洞的风险就会随之提升。
 
@@ -152,3 +152,20 @@ $ verdaccio --config /path/config --listen 5000
 ```
 
 你的registry已经跑起来了！！现在，仅仅使用npm publish就可以把包上传了，然后就可以把它分享给全世界了。
+
+### 7. 负责任地让漏洞显露
+
+When security vulnerabilities are found, they pose a potentially serious threat if publicly disclosed without prior warning or appropriate mitigation available for users to protect themselves.
+
+当安全漏洞被发现，如果被公开显露但没有事先预警或者适当的降低用户的可访问性来保护他们，那么这将构成潜在的严重威胁
+
+It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, it’s impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.
+
+Security is too important to be an afterthought or handled unethically. At Snyk, we deeply value the security community and believe that a responsible disclosure of security vulnerabilities in open source packages helps us ensure the security and privacy of the users.
+
+Snyk’s security research team regularly collaborates with the community for bug bounties, such as the case with f2e-server that resulted in hundreds of community disclosures, as well as Snyk’s very close partnership with academic researchers such as Virginia Tech to provide security expertise and the ability to coordinate with vendors and community maintainers.
+
+We invite you to collaborate with us and offer our help with the disclosure process:
+
+Report responsible security disclosures at https://snyk.io/vulnerability-disclosure or by email security@snyk.io
+Our disclosure policy can be seen here.
