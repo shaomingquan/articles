@@ -113,17 +113,42 @@ Snyk与npm audit有什么不同呢？
 
 ### 6. Use a local npm proxy
 
-The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of the most of the Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:
+对于Javascript开发者，绝大部分的可用package都在npm registry中，并且是绝大部分web开源软件的中心。但是有些时候你可能在安全，开发，性能方面有不同的需求。如果真的是这样，npm允许你切换到不同的registry上：
 
-When you run npm install, it automatically starts a communication with the main registry to resolve all your dependencies; if you wish to use a different registry, that too is pretty straightforward:
+当你执行npm install，npm自动跟主registry开始通信，去解析你所有的依赖；如果你希望去使用一个不同的registry，这也很简单：
 
-- Set npm set registry to set up a default registry.
-- Use the argument --registry for one single registry.
+- 运行`npm set registry`去设置一个默认的registry。
+- 使用--registry参数指定单个registry。
 
-Verdaccio is a simple lightweight zero-config-required private registry and installing it is as simple as follows:
+Verdaccio是一个简单轻量零配置的私有registry，可以像下面这样简单安装：
 
 ```
 $ npm install --global verdaccio
 ```
 
 ![](/images/npm-10-security-best-practices-verdaccio.png)
+
+托管你自己的registry从未如此简单！我们来看看这个工具最重要的功能：
+
+- 他支持包括私有包，scope支持，包访问控制，通过web接口授权等模式。
+- 它提供了关联远程registry的能力，并且提供了给每个依赖分配不同路由的能力，并且可以缓存tarball文件。为了在本地的开发环境和CI服务器上减少重复下载并且节省带宽，你应该代理所有的依赖
+- 权限认证是默认提供的，verdaccio使用htpassword做权限验证，但是也支持Gitlab, Bitbucket, LDAP。可也能用你自己的方式。
+- 它可以简单的使用不同的存储提供者来扩容
+- 如果你的项目基于Docker，使用官方的镜像是最好的选择。（比如某公司的上线是基于k8s的，那么用镜像直接发布也是很好的）
+- 它能给测试环境提供真正快速的部署，并且在大型的mono-reps项目很方便
+
+运行起来相当简单
+
+```
+$ verdaccio --config /path/config --listen 5000
+```
+
+如果你使用verdaccio作为一个本地的私有registry，考虑下在你的package下面加一个配置去强制的发布到本地registry，这样可以避免开发者发布到共有registry。要达到这个效果可以添加下面的配置到package.json中。
+
+```
+“publishConfig”: {
+  “registry”: "https://localhost:5000"
+}
+```
+
+你的registry已经跑起来了！！现在，仅仅使用npm publish就可以把包上传了，然后就可以把它分享给全世界了。
