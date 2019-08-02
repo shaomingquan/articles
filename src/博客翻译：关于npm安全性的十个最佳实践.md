@@ -155,17 +155,15 @@ $ verdaccio --config /path/config --listen 5000
 
 ### 7. 负责任地让漏洞显露
 
-When security vulnerabilities are found, they pose a potentially serious threat if publicly disclosed without prior warning or appropriate mitigation available for users to protect themselves.
-
 当安全漏洞被发现，如果被公开显露但没有事先预警或者适当的降低用户的可访问性来保护他们，那么这将构成潜在的严重威胁
 
-It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, it’s impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.
+建议安全人员遵循一个负责任的披露程序，它是一个安全人员与客户或者有漏洞程序的维护者沟通的程序和指导。为了传达漏洞的影响和影响面，一旦这个漏洞被正确的鉴别分类，客户和安全人员需要协商一个解决问题的排期，努力去提供一个升级方法或者在问题被公布之前提醒受影响的用户。
 
-Security is too important to be an afterthought or handled unethically. At Snyk, we deeply value the security community and believe that a responsible disclosure of security vulnerabilities in open source packages helps us ensure the security and privacy of the users.
+安全太重要了，以至于不能马后炮也经受不起恶意利用。在Snyk，我们非常重视安全社区，并且相信负责任的揭露开源软件的漏洞对保障用户的安全和隐私是非常有帮助的。
 
-Snyk’s security research team regularly collaborates with the community for bug bounties, such as the case with f2e-server that resulted in hundreds of community disclosures, as well as Snyk’s very close partnership with academic researchers such as Virginia Tech to provide security expertise and the ability to coordinate with vendors and community maintainers.
+Snyk安全研究团队定期与社区组织bug悬赏活动，像是[f2e-server](https://snyk.io/vuln/npm:f2e-server:20170418)这个例子就是来自上百个社区披露的结果。Snyk也[与学术研究员有非常紧密的合作](https://people.cs.vt.edu/fservant/papers/Davis_Coghlan_Servant_Lee_FSE18.pdf)，提供安全专业知识并且可以跟客户还有社区的维护者合作，像是Virginia Tech团队。
 
-We invite you to collaborate with us and offer our help with the disclosure process:
+我们邀请你与我们合作，通过漏洞揭露流程来给我们提供帮助。
 
-Report responsible security disclosures at https://snyk.io/vulnerability-disclosure or by email security@snyk.io
-Our disclosure policy can be seen here.
+- 在[https://snyk.io/vulnerability-disclosure](https://snyk.io/vulnerability-disclosure)报告负责任的安全性问题揭露，或者给[security@snyk.io](security@snyk.io)发邮件。
+- 我们的揭露策略可以在[这里](https://snyk.io/docs/security#disclosure-policy)看到。
