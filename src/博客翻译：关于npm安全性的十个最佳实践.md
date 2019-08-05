@@ -167,3 +167,42 @@ Snyk安全研究团队定期与社区组织bug悬赏活动，像是[f2e-server](
 
 - 在[https://snyk.io/vulnerability-disclosure](https://snyk.io/vulnerability-disclosure)报告负责任的安全性问题揭露，或者给[security@snyk.io](security@snyk.io)发邮件。
 - 我们的揭露策略可以在[这里](https://snyk.io/docs/security#disclosure-policy)看到。
+
+### 8. 开启双因素验证
+
+在2017年十月，npm宣布支持双因素验证（2FA），开发者可以在npm registry上使用它托管开源或者非开源的项目。
+
+Even though 2FA has been supported on the npm registry for a while now, it seems to be slowly adopted with one example being the eslint-scope incident in mid-2018 when a stolen developer account on the ESLint team lead to a malicious version of eslint-scope being published by bad actors.
+
+即便是npm registry已经暂时支持了2FA，它似乎被很慢的采纳，举一个例子来说明，在2018年中旬的eslint-scope事件中，当时一个eslint开发者的账号泄露了，导致攻击者发布了一个【eslint-scope的恶意版本](https://snyk.io/vuln/npm:eslint-scope)。
+
+在一个用户账号下，registry 支持两种模式开启2FA的模式：
+
+- Authorization-only：当一个用户通过web站点或者命令行工具登陆npm时，或者运行其他命令像是修改用户信息。
+- Authorization and write-mode：修改用户资料和登录行为，还有写入动作，像是管理token和package，和一些次要的团队支持和包可见性信息维护。
+
+
+给自己装备一个认证应用，像是Google Authentication，你可以把它装到手机上，然后你已经准备好去开始了。开始使用2FA为你的账号提供更大范围的保护，一个简单的方式是使用npm的用户接口，它允许你非常简单的开启2FA，如果你习惯于使用命令行，也能很简单的使用支持这个特性的npm版本(>=5.5.1)去开启它：
+
+```
+$ npm profile enable-2fa auth-and-writes
+```
+
+根据命令行的指引去开启2FA，并且保存紧急授权码。如果你只是想在登录和修改资料时开启2FA模式，你可以使用上面出现的代码把`auth-and-writes`替换为`auth-only`。
+
+
+### 9. Use npm author tokens
+
+每次你使用npm 命令行工具登录的时候，它为你的用户生成一个token，你可以用它在npm registry上授权。token让一些registry相关动作的运行变得简单，它们可能发生在CI和自动化处理中，就像访问registry上的私有模块或者在构建阶段发布一些新的版本。
+
+token能在npm registry的web站点上管理，也可以使用npm命令行工具。
+
+举一个使用命令行工具创建一个只读的token的例子，下面的例子把它限制在了一个指定的IPv4地址范围内。
+
+```
+$ npm token create --read-only --cidr=192.0.2.0/24
+```
+
+To verify which tokens are created for your user or to revoke tokens in cases of emergency, you can use `npm token list` or `npm token revoke` respectively.
+
+去验证哪些token是为你的用户创建的或者在紧急时刻吊销token，你可以使用`npm token list`或者`npm token revoke`。
