@@ -23,6 +23,7 @@
 - [go 指针升级](https://github.com/shaomingquan/articles/blob/master/src/go%20%E6%8C%87%E9%92%88%E5%8D%87%E7%BA%A7.md)
 - [golang range的坑](https://github.com/shaomingquan/articles/blob/master/src/golang%20range%E7%9A%84%E5%9D%91.md)
 - [graphQL简析](https://github.com/shaomingquan/articles/blob/master/src/graphQL%E7%AE%80%E6%9E%90.md)
+- [lazy programming](https://github.com/shaomingquan/articles/blob/master/src/lazy%20programming.md)
 - [optimize pipeline cheatSheet](https://github.com/shaomingquan/articles/blob/master/src/optimize%20pipeline%20cheatSheet.md)
 - [ss搭建快速教程](https://github.com/shaomingquan/articles/blob/master/src/ss%E6%90%AD%E5%BB%BA%E5%BF%AB%E9%80%9F%E6%95%99%E7%A8%8B.md)
 - [一个延迟响应引发的思考](https://github.com/shaomingquan/articles/blob/master/src/%E4%B8%80%E4%B8%AA%E5%BB%B6%E8%BF%9F%E5%93%8D%E5%BA%94%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83.md)
