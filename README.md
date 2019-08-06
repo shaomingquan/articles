@@ -33,6 +33,7 @@
 - [关于go的append坑的启示](https://github.com/shaomingquan/articles/blob/master/src/%E5%85%B3%E4%BA%8Ego%E7%9A%84append%E5%9D%91%E7%9A%84%E5%90%AF%E7%A4%BA.md)
 - [博客翻译：mobx+react的最佳实践](https://github.com/shaomingquan/articles/blob/master/src/%E5%8D%9A%E5%AE%A2%E7%BF%BB%E8%AF%91%EF%BC%9Amobx%2Breact%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md)
 - [博客翻译：位操作算法](https://github.com/shaomingquan/articles/blob/master/src/%E5%8D%9A%E5%AE%A2%E7%BF%BB%E8%AF%91%EF%BC%9A%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AE%97%E6%B3%95.md)
+- [博客翻译：关于npm安全性的十个最佳实践](https://github.com/shaomingquan/articles/blob/master/src/%E5%8D%9A%E5%AE%A2%E7%BF%BB%E8%AF%91%EF%BC%9A%E5%85%B3%E4%BA%8Enpm%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E5%8D%81%E4%B8%AA%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md)
 - [去除滚动留白](https://github.com/shaomingquan/articles/blob/master/src/%E5%8E%BB%E9%99%A4%E6%BB%9A%E5%8A%A8%E7%95%99%E7%99%BD.md)
 - [小程序杂谈](https://github.com/shaomingquan/articles/blob/master/src/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9D%82%E8%B0%88.md)
 - [工作日志：pc网站优化1.0](https://github.com/shaomingquan/articles/blob/master/src/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97%EF%BC%9Apc%E7%BD%91%E7%AB%99%E4%BC%98%E5%8C%961.0.md)
