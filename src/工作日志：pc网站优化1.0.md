@@ -1,4 +1,4 @@
-可能以后的重点方向在pc站上面了，最近也是各种弄pc站的需求。pc站页面宽，但是也不是无极限的宽，用户也可能是台式机，笔记本。
+> 可能以后的重点方向在pc站上面了，最近也是各种弄pc站的需求。pc站页面宽，但是也不是无极限的宽，用户也可能是台式机，笔记本。这是一些交互相关的事，专职的交互设计师在变少，前端应该抓起这方面事。
 
 ### 优化1：长文字
 
@@ -15,3 +15,9 @@
 
 - antd: https://ant.design/components/table-cn/#components-table-demo-fixed-columns-header
 - 祖师爷rc-table: http://react-component.github.io/table/examples/fixedColumnsAndHeader.html
+
+### 优化3：合并步骤
+
+比如当执行动作A的时候，需要执行动作B和动作C，那么让动作B和C在同一个弹出界面里操作。
+
+比如“取消用户大v认证”，这个动作需要两个后续动作，“填写拒绝理由”，“确认拒绝”，可以把这两个动作合并到一个modal里面，这样更节省主页面空间，也将“取消用户大v认证”这个步骤更内聚。
