@@ -172,9 +172,7 @@ Snyk安全研究团队定期与社区组织bug悬赏活动，像是[f2e-server](
 
 在2017年十月，npm宣布支持双因素验证（2FA），开发者可以在npm registry上使用它托管开源或者非开源的项目。
 
-Even though 2FA has been supported on the npm registry for a while now, it seems to be slowly adopted with one example being the eslint-scope incident in mid-2018 when a stolen developer account on the ESLint team lead to a malicious version of eslint-scope being published by bad actors.
-
-即便是npm registry已经暂时支持了2FA，它似乎被很慢的采纳，举一个例子来说明，在2018年中旬的eslint-scope事件中，当时一个eslint开发者的账号泄露了，导致攻击者发布了一个【eslint-scope的恶意版本](https://snyk.io/vuln/npm:eslint-scope)。
+即便是npm registry已经暂时支持了2FA，它似乎被很慢的采纳，举一个例子来说明，在2018年中旬的eslint-scope事件中，当时一个eslint开发者的账号泄露了，导致攻击者发布了一个[eslint-scope的恶意版本](https://snyk.io/vuln/npm:eslint-scope)。
 
 在一个用户账号下，registry 支持两种模式开启2FA的模式：
 
@@ -191,7 +189,9 @@ $ npm profile enable-2fa auth-and-writes
 根据命令行的指引去开启2FA，并且保存紧急授权码。如果你只是想在登录和修改资料时开启2FA模式，你可以使用上面出现的代码把`auth-and-writes`替换为`auth-only`。
 
 
-### 9. Use npm author tokens
+### 9. 使用npm的认证token
+
+> 也就是说noauth的不可以publish
 
 每次你使用npm 命令行工具登录的时候，它为你的用户生成一个token，你可以用它在npm registry上授权。token让一些registry相关动作的运行变得简单，它们可能发生在CI和自动化处理中，就像访问registry上的私有模块或者在构建阶段发布一些新的版本。
 
@@ -203,6 +203,37 @@ token能在npm registry的web站点上管理，也可以使用npm命令行工具
 $ npm token create --read-only --cidr=192.0.2.0/24
 ```
 
-To verify which tokens are created for your user or to revoke tokens in cases of emergency, you can use `npm token list` or `npm token revoke` respectively.
-
 去验证哪些token是为你的用户创建的或者在紧急时刻吊销token，你可以使用`npm token list`或者`npm token revoke`。
+
+### 10. 理解模块命名惯例和注册近似名攻击
+
+给模块命名可能是你在创建一个package时要做的第一件事，但是在定义最终名字之前，package的名字必须遵循npm定义的一些规则：
+
+- 它需要短于214字符
+- 他不能以逗号或者下划线开头
+- 在名字中不能存在大写字母
+- 没有结尾的空格
+- 只有小写字母（跟上面的大写重复了吧）
+- 不允许添加一些特殊的字符：“~\’!()*”)’
+- 他不能以逗号或者下划线开头（又重复？？）
+- 不能使用node_modules或者favicon.ico由于被禁止的原因
+
+即使你遵守这些规则了，要知道当你发布一个新package的时候，npm使用一种垃圾邮件检测机制，这种机制基于一个分数还有一个package是否违反npm服务的规则，如果情况是违反，registry可以否定这个请求。
+
+注册近似名是一种靠用户犯错的攻击手段，就像是错别字。使用注册近似名，攻击者可以向registry发布恶意包，使用看起来非常像已存在流行模块的名字。
+
+我们已经在npm生态中跟踪到了非常多的恶意package；这些情况也在Python的PyPi registry中出现过。可能在这其中最流行的几个事件[cross-env](https://snyk.io/vuln/npm:crossenv:20170802), [event-stream](https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638), 还有 [eslint-scope](https://snyk.io/vuln/npm:eslint-scope:20180712)。
+
+![](/images/npm-10-security-best-practices-vuln-pages.png)
+
+注册近似名攻击的一个最主要的目标是用户的权限凭证，因为任何package都有通过全局变量`process.env`读取环境变量的权限。我们之前也见过一些其他例子，包括event-stream这个例子，攻击目标是开发人员，手段是希望在源代码中注入一些恶意代码。
+
+去降低这类攻击的风险，你可以做下面这些事：
+
+- 当复制粘贴package安装指引到terminal的时候要格外的小心，一定要在源码仓库核对，也要看npm registry上面的确实是你想要安装的包。你可以使用`npm info`去核对package 的元信息，他可以获取更多的关于贡献者和最新版本的信息。
+- 在你的日常常规工作中默认让npm登出，这样你的登陆凭证不会不安全的暴露，这样很容易让你的账号丢失。
+- 当安装package时，加上`--ignore-scripts`的后缀，用来降低任意运行命令带来的风险。举个例子：`npm install my-malicious-package --ignore-scripts`
+
+**下载cheetSheet！**
+
+一定要打印这个cheatSheet让后把它钉在某个地方，他可以帮你你把npm安全性上的最佳时机铭记于心，你应该遵循这些，如果你是一个JavaScript开发者，或者只是因为娱乐来用npm。
