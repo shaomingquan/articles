@@ -25,7 +25,7 @@ export default App;
 
 ### 2，createPortal事件冒泡
 
-使用react事件结构需要脱离dom的结构，如果按dom结构去考虑下面例子，那么事件是不会冒泡到`.App`的，道理都懂，react合成事件是代理到document之后统一处理的，它只看react本身的结构。
+使用react事件结构需要脱离dom的结构，如果按dom结构去考虑下面例子，那么事件是不会冒泡到`.App`的，道理都懂，react合成事件是代理到document之后统一处理的，它只看react本身的结构，会无视dom结构，所以下面的log可以打印。
 
 ```js
 import React from 'react';
@@ -43,6 +43,7 @@ function App() {
 
 export default App;
 ```
+这里需要注意的是，`e.nativeEvent.path`不会包含`.App`，使用类似clickOutSide组件的时候要注意。
 
 ### 3，ref上的原生事件慎用阻止冒泡
 
