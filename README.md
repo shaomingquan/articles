@@ -49,6 +49,7 @@
 - [找个方式降低你的心智模型复杂度](https://github.com/shaomingquan/articles/blob/master/src/%E6%89%BE%E4%B8%AA%E6%96%B9%E5%BC%8F%E9%99%8D%E4%BD%8E%E4%BD%A0%E7%9A%84%E5%BF%83%E6%99%BA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E6%9D%82%E5%BA%A6.md)
 - [数据产品的统一复盘](https://github.com/shaomingquan/articles/blob/master/src/%E6%95%B0%E6%8D%AE%E4%BA%A7%E5%93%81%E7%9A%84%E7%BB%9F%E4%B8%80%E5%A4%8D%E7%9B%98.md)
 - [文档阅读：react hooks](https://github.com/shaomingquan/articles/blob/master/src/%E6%96%87%E6%A1%A3%E9%98%85%E8%AF%BB%EF%BC%9Areact%20hooks.md)
+- [日常（1）](https://github.com/shaomingquan/articles/blob/master/src/%E6%97%A5%E5%B8%B8%EF%BC%881%EF%BC%89.md)
 - [流量“支配”](https://github.com/shaomingquan/articles/blob/master/src/%E6%B5%81%E9%87%8F%E2%80%9C%E6%94%AF%E9%85%8D%E2%80%9D.md)
 - [知识图谱调研](https://github.com/shaomingquan/articles/blob/master/src/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%B0%83%E7%A0%94.md)
 - [简谈js递归优化](https://github.com/shaomingquan/articles/blob/master/src/%E7%AE%80%E8%B0%88js%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96.md)
