@@ -34,6 +34,9 @@ export function propagateChanged(observable: IObservable) {
 
 ```js
 export function propagateMaybeChanged(observable: IObservable) {
+    // 如果被设置成STALE了，则不会再被设置成POSSIBLY_STALE
+    // 相比之下propagateChanged可以把POSSIBLY_STALE设置成STALE
+    // 也就是说STALE的优先级大于POSSIBLY_STALE
     if (observable.lowestObserverState !== IDerivationState.UP_TO_DATE) return
     observable.lowestObserverState = IDerivationState.POSSIBLY_STALE
 
