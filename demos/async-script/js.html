@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test js</title>
+    <!-- <script src="/javascript/a.js"></script> -->
+    <!-- 
+        this is a.js 
+        this is b.js
+        DOM fully loaded and parsed
+    -->
+
+    <!-- <script defer src="/javascript/a.js"></script> -->
+    <!-- 
+        this is b.js
+        this is a.js 
+        DOM fully loaded and parsed
+    -->
+
+    <script async src="/javascript/a.js"></script>
+    <!-- 
+        this is b.js
+        DOM fully loaded and parsed
+        this is a.js 
+    -->
+    <script src="/javascript/b.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            console.log('DOM fully loaded and parsed');
+        });
+    </script>
+</head>
+<body>
+    <div id="div">this is html doc</div>
+</body>
+</html>
