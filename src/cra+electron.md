@@ -13,7 +13,7 @@
 - react-app-rewire-multiple-entry
 - customize-cra
 
-它的原理很简单，利用了require在引用模块时会优先读取cache的特点，react-app-rewired在执行cra的react-script提前读取了它的config，并加载目录下的config-overrides.js文件对配置进行重写，重写后重写防止模块的exports属性上。
+它的原理很简单，利用了require在引用模块时会优先读取cache的特点，react-app-rewired在执行cra的react-script提前读取了它的config，并加载目录下的config-overrides.js文件对配置进行重写，重写后的结果在放到模块的exports属性上。
 
 ### electron多页面打包
 
