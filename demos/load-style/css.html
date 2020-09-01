@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test js</title>
+    <!-- won't block parse html -->
+    <link rel="stylesheet" href="/css/a.css">
+</head>
+<body>
+    <div id="div">this is html doc</div>
+    <script>
+        // block parse html
+        console.log(document.getElementById('div'))
+        window.addEventListener('DOMContentLoaded', (event) => {
+            console.log('DOM fully loaded and parsed');
+        });
+    </script>
+</body>
+</html>
