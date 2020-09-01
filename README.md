@@ -19,6 +19,7 @@
 - [Nodejs中的循环引用](https://github.com/shaomingquan/articles/blob/master/src/Nodejs%E4%B8%AD%E7%9A%84%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8.md)
 - [Webpack线上线下策略](https://github.com/shaomingquan/articles/blob/master/src/Webpack%E7%BA%BF%E4%B8%8A%E7%BA%BF%E4%B8%8B%E7%AD%96%E7%95%A5.md)
 - [app页面栈管理思路](https://github.com/shaomingquan/articles/blob/master/src/app%E9%A1%B5%E9%9D%A2%E6%A0%88%E7%AE%A1%E7%90%86%E6%80%9D%E8%B7%AF.md)
+- [cra+electron](https://github.com/shaomingquan/articles/blob/master/src/cra%2Belectron.md)
 - [go underscore解析--go reflect骚操作](https://github.com/shaomingquan/articles/blob/master/src/go%20underscore%E8%A7%A3%E6%9E%90--go%20reflect%E9%AA%9A%E6%93%8D%E4%BD%9C.md)
 - [go 并发](https://github.com/shaomingquan/articles/blob/master/src/go%20%E5%B9%B6%E5%8F%91.md)
 - [go 指针升级](https://github.com/shaomingquan/articles/blob/master/src/go%20%E6%8C%87%E9%92%88%E5%8D%87%E7%BA%A7.md)
