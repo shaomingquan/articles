@@ -1,4 +1,4 @@
-做一个的npm-register的最小闭环
+记录一个已经经过线上实践的npm-register最小闭环
 
 - 能发布，并安装发布的包
 - 管理发布权限
@@ -193,3 +193,7 @@ function getCryptoPassword(password) {
 const htpasswd = users.map(user => [user, getCryptoPassword(passwords[user])].join(':')).join('\n')
 fs.writeFileSync('./htpasswd', htpasswd)
 ```
+
+### 其他方案
+
+- https://help.sonatype.com/repomanager3/formats/npm-registry
