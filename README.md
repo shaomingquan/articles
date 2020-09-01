@@ -29,6 +29,7 @@
 - [mobx的possibly stale机制](https://github.com/shaomingquan/articles/blob/master/src/mobx%E7%9A%84possibly%20stale%E6%9C%BA%E5%88%B6.md)
 - [optimize pipeline cheatSheet](https://github.com/shaomingquan/articles/blob/master/src/optimize%20pipeline%20cheatSheet.md)
 - [polyfill怎样最靠谱？](https://github.com/shaomingquan/articles/blob/master/src/polyfill%E6%80%8E%E6%A0%B7%E6%9C%80%E9%9D%A0%E8%B0%B1%EF%BC%9F.md)
+- [private npm-registry mvp](https://github.com/shaomingquan/articles/blob/master/src/private%20npm-registry%20mvp.md)
 - [react-tabs设计解读](https://github.com/shaomingquan/articles/blob/master/src/react-tabs%E8%AE%BE%E8%AE%A1%E8%A7%A3%E8%AF%BB.md)
 - [react事件的几个坑](https://github.com/shaomingquan/articles/blob/master/src/react%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%87%A0%E4%B8%AA%E5%9D%91.md)
 - [ss搭建快速教程](https://github.com/shaomingquan/articles/blob/master/src/ss%E6%90%AD%E5%BB%BA%E5%BF%AB%E9%80%9F%E6%95%99%E7%A8%8B.md)
