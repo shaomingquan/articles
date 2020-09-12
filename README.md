@@ -25,6 +25,7 @@
 - [go 指针升级](https://github.com/shaomingquan/articles/blob/master/src/go%20%E6%8C%87%E9%92%88%E5%8D%87%E7%BA%A7.md)
 - [golang range的坑](https://github.com/shaomingquan/articles/blob/master/src/golang%20range%E7%9A%84%E5%9D%91.md)
 - [graphQL简析](https://github.com/shaomingquan/articles/blob/master/src/graphQL%E7%AE%80%E6%9E%90.md)
+- [koa-compose起底](https://github.com/shaomingquan/articles/blob/master/src/koa-compose%E8%B5%B7%E5%BA%95.md)
 - [lazy programming](https://github.com/shaomingquan/articles/blob/master/src/lazy%20programming.md)
 - [mobx的possibly stale机制](https://github.com/shaomingquan/articles/blob/master/src/mobx%E7%9A%84possibly%20stale%E6%9C%BA%E5%88%B6.md)
 - [optimize pipeline cheatSheet](https://github.com/shaomingquan/articles/blob/master/src/optimize%20pipeline%20cheatSheet.md)
