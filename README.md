@@ -19,6 +19,7 @@
 - [Nodejs text decode](https://github.com/shaomingquan/articles/blob/master/src/Nodejs%20text%20decode.md)
 - [Nodejs中异步操作的底层差别](https://github.com/shaomingquan/articles/blob/master/src/Nodejs%E4%B8%AD%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%9A%84%E5%BA%95%E5%B1%82%E5%B7%AE%E5%88%AB.md)
 - [Nodejs中的循环引用](https://github.com/shaomingquan/articles/blob/master/src/Nodejs%E4%B8%AD%E7%9A%84%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8.md)
+- [Nodejs拓展学习记录](https://github.com/shaomingquan/articles/blob/master/src/Nodejs%E6%8B%93%E5%B1%95%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95.md)
 - [Webpack线上线下策略](https://github.com/shaomingquan/articles/blob/master/src/Webpack%E7%BA%BF%E4%B8%8A%E7%BA%BF%E4%B8%8B%E7%AD%96%E7%95%A5.md)
 - [app页面栈管理思路](https://github.com/shaomingquan/articles/blob/master/src/app%E9%A1%B5%E9%9D%A2%E6%A0%88%E7%AE%A1%E7%90%86%E6%80%9D%E8%B7%AF.md)
 - [cra+electron](https://github.com/shaomingquan/articles/blob/master/src/cra%2Belectron.md)
