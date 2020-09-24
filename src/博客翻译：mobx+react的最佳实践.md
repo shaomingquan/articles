@@ -1,3 +1,8 @@
+---
+date: 2019-06-10
+tags: 翻译
+---
+
 > 原文：https://iconof.com/best-practices-for-mobx-with-react/
 
 这是我为那些刚刚使用Mobx来搭配React的朋友们准备的8条有用的建议和最佳实践。它的意图不是对Mobx进行介绍，并且假定读者已经对Mobx的[关键概念](https://mobx.js.org/intro/overview.html)很熟悉。

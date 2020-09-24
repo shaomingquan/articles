@@ -1,3 +1,7 @@
+---
+date: 2019-07-06
+tags: 翻译
+---
 
 ![](/images/npm-10-security-best-practices-CLI.png)
 

@@ -62,7 +62,11 @@ uv_udp_send(&send_req, &send_socket, &discover_msg, 1, (const struct sockaddr *)
 
 如果异步事件不直接执行呢？因为单个Isolate要在单个线程中执行（死月的书里说的，具体他引用的哪里没找到）
 
-### 工程
+### npm
+
+如果存在gyp文件，则自动执行rebuild，或者指定install脚本
+
+### 总结
 
 整个c++拓展的研发流程和使用到的重点工具
 
