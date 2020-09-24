@@ -62,6 +62,7 @@
 - [知识图谱调研](https://github.com/shaomingquan/articles/blob/master/src/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%B0%83%E7%A0%94.md)
 - [简谈js递归优化](https://github.com/shaomingquan/articles/blob/master/src/%E7%AE%80%E8%B0%88js%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96.md)
 - [纯css实现曲线路径](https://github.com/shaomingquan/articles/blob/master/src/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E6%9B%B2%E7%BA%BF%E8%B7%AF%E5%BE%84.md)
+- [网络库封装](https://github.com/shaomingquan/articles/blob/master/src/%E7%BD%91%E7%BB%9C%E5%BA%93%E5%B0%81%E8%A3%85.md)
 - [视差滚动的n种实现](https://github.com/shaomingquan/articles/blob/master/src/%E8%A7%86%E5%B7%AE%E6%BB%9A%E5%8A%A8%E7%9A%84n%E7%A7%8D%E5%AE%9E%E7%8E%B0.md)
 - [说一个简单的解耦模型](https://github.com/shaomingquan/articles/blob/master/src/%E8%AF%B4%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%A7%A3%E8%80%A6%E6%A8%A1%E5%9E%8B.md)
 - [谈谈webassembly](https://github.com/shaomingquan/articles/blob/master/src/%E8%B0%88%E8%B0%88webassembly.md)
