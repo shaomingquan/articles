@@ -69,8 +69,8 @@ let openCounts = 3
 const hasOpenCounts = () => openCounts >= 0
 const withDetails = (title, content, open) => {
     if (open === undefined) {
-        open = openCounts >= 0
         openCounts --;
+        open = openCounts >= 0
     }
     return `<details ${open ? 'open' : ''}>
     <summary>${title}</summary>
