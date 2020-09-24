@@ -66,7 +66,7 @@
         <details open>
     <summary>2020年</summary>
     <ul>
-        <details >
+        <details open>
     <summary>4月</summary>
     <ul>
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E8%BE%B9%E9%99%85%E6%95%88%E5%BA%94.md">边际效应</a></li></ul>
@@ -76,24 +76,24 @@
 </details><details open>
     <summary>2019年</summary>
     <ul>
-        <details >
+        <details open>
     <summary>7月</summary>
     <ul>
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%8D%9A%E5%AE%A2%E7%BF%BB%E8%AF%91%EF%BC%9A%E5%85%B3%E4%BA%8Enpm%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E5%8D%81%E4%B8%AA%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md">博客翻译：关于npm安全性的十个最佳实践</a></li></ul>
     </ul>
-</details><details >
+</details><details open>
     <summary>6月</summary>
     <ul>
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%8D%9A%E5%AE%A2%E7%BF%BB%E8%AF%91%EF%BC%9Amobx%2Breact%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md">博客翻译：mobx+react的最佳实践</a></li></ul>
     </ul>
-</details><details >
+</details><details open>
     <summary>4月</summary>
     <ul>
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/9102%E4%BA%86%EF%BC%8C%E6%88%91%E6%8A%8A%E8%BF%99%E4%B8%AA%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%A4%8D%E4%B8%AA%E7%9B%98.md">9102了，我把这个前端项目复个盘</a></li></ul>
     </ul>
 </details>
     </ul>
-</details><details open>
+</details><details >
     <summary>2018年</summary>
     <ul>
         <details >
@@ -103,7 +103,7 @@
     </ul>
 </details>
     </ul>
-</details><details open>
+</details><details >
     <summary>2017年</summary>
     <ul>
         <details >
@@ -113,7 +113,7 @@
     </ul>
 </details>
     </ul>
-</details><details open>
+</details><details >
     <summary>2016年</summary>
     <ul>
         <details >

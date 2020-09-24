@@ -67,7 +67,7 @@ const sortNumber = (arr) => {
 
 let openCounts = 3
 const hasOpenCounts = () => openCounts >= 0
-const withDetails = (title, content, open = false) => {
+const withDetails = (title, content, open) => {
     if (open === undefined) {
         open = openCounts >= 0
         openCounts --;
