@@ -70,9 +70,9 @@ const withDetails = (title, content, open = false) => {
     openCounts --;
     return `<details ${openCounts >= 0 ? 'open' : ''}>
     <summary>${title}</summary>
-    <p>
+    <ul>
         ${content}
-    </p>
+    </ul>
 </details>`
 }
 const getLinkByFileName = name => `https://github.com/shaomingquan/articles/blob/master/src/${encodeURIComponent(name)}.md`
