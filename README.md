@@ -52,8 +52,10 @@
 <details>
     <summary>contact me</summary>
     <p>
-- 微信 => 1218525419
-- [在线留言](https://github.com/shaomingquan/articles/issues)
+        <ul>
+            <li>微信: 1218525419</li>
+            <li><a href="https://github.com/shaomingquan/articles/issues">在线留言</a></li>
+        </ul>
     </p>
 </details>
 
