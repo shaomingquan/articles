@@ -77,7 +77,7 @@ const withDetails = (title, content, open = false) => {
 }
 const getLinkByFileName = name => `https://github.com/shaomingquan/articles/blob/master/src/${encodeURIComponent(name)}.md`
 const withUl = content => `<ul>${content}</ul>`
-const makeBlogItemLi = name => `<li href="${getLinkByFileName(name)}">${name}</li>`
+const makeBlogItemLi = name => `<li><a href="${getLinkByFileName(name)}">${name}</a></li>`
 
 const _files = fs.readdirSync('./src')
 const header = fs.readFileSync('./_README.md').toString()
