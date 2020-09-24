@@ -66,9 +66,14 @@ const sortNumber = (arr) => {
 }
 
 let openCounts = 3
+const hasOpenCounts = () => openCounts >= 0
 const withDetails = (title, content, open = false) => {
-    openCounts --;
-    return `<details ${openCounts >= 0 ? 'open' : ''}>
+    if (open === undefined) {
+        openCounts --;
+    } else {
+        open = openCounts >= 0
+    }
+    return `<details ${open ? 'open' : ''}>
     <summary>${title}</summary>
     <ul>
         ${content}
@@ -112,6 +117,7 @@ const header = fs.readFileSync('./_README.md').toString()
         let yearChunk = ''
         const appednYearChunk = content => (yearChunk = yearChunk + content)
         
+        const shouldCurYearOpen = hasOpenCounts()
         monthKeys = sortNumber(Object.keys(byMonths))
         for (const month of monthKeys) {
             const monthTitle = month + '月'
@@ -122,7 +128,6 @@ const header = fs.readFileSync('./_README.md').toString()
             curMonthInfos.sort((a, b) => {
                 return - Number(a.day) + Number(b.day)
             })
-
             
             for (const articleInfo of curMonthInfos) {
                 appednMonthChunk(makeBlogItemLi(articleInfo.filename))
@@ -133,10 +138,10 @@ const header = fs.readFileSync('./_README.md').toString()
             appednYearChunk(monthChunk)
         }
 
-        yearChunk = withDetails(yearTitle, yearChunk)
+        yearChunk = withDetails(yearTitle, yearChunk, shouldCurYearOpen)
         appednYearChunkAll(yearChunk)
     }
-    yearChunkAll = withDetails(yearAllTitle, yearChunkAll)
+    yearChunkAll = withDetails(yearAllTitle, yearChunkAll, true)
     appendBody(yearChunkAll)
 
     fs.writeFileSync('./README.md', body)
