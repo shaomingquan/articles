@@ -44,7 +44,7 @@
                 2018@bytedance: <a target="_blank" href="https://slides.com/shaomingquan/go-for-jsers-4">Golang并发</a>
             </li>
             <li>
-                2016@meituan: <a target="_blank" href="https://slides.com/shaomingquan/echo">活动运营平台数据报表系统</a>
+                2016@bytedance: <a target="_blank" href="https://slides.com/shaomingquan/echo">活动运营平台数据报表系统</a>
             </li>
         </ul>
     </p>
