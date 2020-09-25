@@ -1,7 +1,7 @@
 ### 欢迎
 
 <details open>
-    <summary>演示</summary>
+    <summary>演示文稿</summary>
     <p>
         <ul>
             <li>
@@ -24,7 +24,7 @@
 </details>
 
 <details>
-    <summary>示例</summary>
+    <summary>在线示例</summary>
     <p>
     <ul>
         <li>

@@ -1,7 +1,7 @@
 ### 欢迎
 
 <details open>
-    <summary>演示</summary>
+    <summary>演示文稿</summary>
     <p>
         <ul>
             <li>
@@ -24,7 +24,7 @@
 </details>
 
 <details>
-    <summary>示例</summary>
+    <summary>在线示例</summary>
     <p>
     <ul>
         <li>
@@ -302,8 +302,8 @@
 </details>
     </ul>
 </details>
-<details>
-    <summary>关于</summary>
+<details open>
+    <summary>联系作者</summary>
     <p>
         <ul>
             <li>微信: 1218525419</li>
