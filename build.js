@@ -19,10 +19,14 @@ const ARTICLES_GROUP_YEAR_SUFFIX = '年'
 const ARTICLES_GROUP_MONTH_SUFFIX = '月'
 
 const ARTICLES_BY_TAGS_TITLE = '文章 (按标签)'
+
 const MAX_EXPAND_CONTENT = 3
 
 const GEN_YEAR = true
 const GEN_TAGS = true
+
+const getLinkByFileName = name => `${REPO_HOST}/${REPO}/blob/master/src/${encodeURIComponent(name)}.md`
+const makeBlogItemLi = (name, dateStr = '') => `<li><a href="${getLinkByFileName(name)}">${name}</a><span>&nbsp;${dateStr ? '[' + dateStr + ']' : ''}</span></li>`
 
 const articleInfoMatterFactory = filename => {
     const filePath = path.resolve(FILE_REPO_PATH, './' + filename + '.md')
@@ -101,9 +105,7 @@ const withDetails = (title, content, open) => {
     </ul>
 </details>`
 }
-const getLinkByFileName = name => `${REPO_HOST}/${REPO}/blob/master/src/${encodeURIComponent(name)}.md`
 const withUl = content => `<ul>${content}</ul>`
-const makeBlogItemLi = (name, dateStr = '') => `<li><a href="${getLinkByFileName(name)}">${name}</a><span>&nbsp;${dateStr ? '[' + dateStr + ']' : ''}</span></li>`
 
 module.exports = gen
 ;(require.main === module) && gen()
