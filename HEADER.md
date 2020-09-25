@@ -5,7 +5,7 @@
     <p>
         <ul>
             <li>
-                2020@taou: <a target="_blank" href="https://slides.com/shaomingquan/deck-0cc907">更好的接口</a>。
+                2020@taou: <a target="_blank" href="https://slides.com/shaomingquan/deck-0cc907">更好的接口</a>
             </li>
             <li>
                 2019@taou: <a target="_blank" href="https://slides.com/shaomingquan/nodejs">Node.js: 一种事件循环架构的原理，实现，与应用</a>

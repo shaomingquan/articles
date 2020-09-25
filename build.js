@@ -103,7 +103,7 @@ const withDetails = (title, content, open) => {
 }
 const getLinkByFileName = name => `${REPO_HOST}/${REPO}/blob/master/src/${encodeURIComponent(name)}.md`
 const withUl = content => `<ul>${content}</ul>`
-const makeBlogItemLi = (name, dateStr = '') => `<li><a href="${getLinkByFileName(name)}">${name}</a><span>${dateStr ? '[' + dateStr + ']' : ''}</span></li>`
+const makeBlogItemLi = (name, dateStr = '') => `<li><a href="${getLinkByFileName(name)}">${name}</a><span>&nbsp;${dateStr ? '[' + dateStr + ']' : ''}</span></li>`
 
 module.exports = gen
 ;(require.main === module) && gen()
