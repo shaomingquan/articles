@@ -5,8 +5,24 @@ const assert = require('assert');
 
 const underCmd = dir => path.resolve(process.cwd(), dir)
 
+const REPO_HOST = 'https://github.com'
+const REPO = 'shaomingquan/articles'
+
 const FILE_REPO_PATH = underCmd('./src')
 const HEADER_FILE_PATH = underCmd('./HEADER.md')
+const FOOTER_FILE_PATH = underCmd('./FOOTER.md')
+const DRAFT_PREFIX = '_draft_'
+const MAIN_PAGE_FILE = underCmd('./README.md')
+
+const ARTICLES_BY_TIME_TITLE = '文章 (按时间)'
+const ARTICLES_GROUP_YEAR_SUFFIX = '年'
+const ARTICLES_GROUP_MONTH_SUFFIX = '月'
+
+const ARTICLES_BY_TAGS_TITLE = '文章 (按标签)'
+const MAX_EXPAND_CONTENT = 3
+
+const GEN_YEAR = true
+const GEN_TAGS = true
 
 const articleInfoMatterFactory = filename => {
     const filePath = path.resolve(FILE_REPO_PATH, './' + filename + '.md')
@@ -41,6 +57,7 @@ const articleInfoMatterFactory = filename => {
         const tagArr = tags.split(',')
         return {
             year, month, day,
+            dateStr: [year, month, day].join('-'),
             tags: tagArr,
             filename,
         }
@@ -52,7 +69,7 @@ const articleInfoMatterFactory = filename => {
 }
 
 
-function groupBy (arr, key) {
+const groupBy = (arr, key) => {
     const ret = {}
     for (const item of arr) {
         const groupKeys = Array.isArray(item[key]) ? item[key] : [ item[key] ]
@@ -70,7 +87,7 @@ const sortNumber = (arr) => {
     })
 }
 
-let openCounts = 3
+let openCounts = MAX_EXPAND_CONTENT
 const hasOpenCounts = () => openCounts >= 0
 const withDetails = (title, content, open) => {
     if (open === undefined) {
@@ -84,21 +101,23 @@ const withDetails = (title, content, open) => {
     </ul>
 </details>`
 }
-const getLinkByFileName = name => `https://github.com/shaomingquan/articles/blob/master/src/${encodeURIComponent(name)}.md`
+const getLinkByFileName = name => `${REPO_HOST}/${REPO}/blob/master/src/${encodeURIComponent(name)}.md`
 const withUl = content => `<ul>${content}</ul>`
-const makeBlogItemLi = name => `<li><a href="${getLinkByFileName(name)}">${name}</a></li>`
+const makeBlogItemLi = (name, dateStr = '') => `<li><a href="${getLinkByFileName(name)}">${name}</a><span>${dateStr ? '[' + dateStr + ']' : ''}</span></li>`
 
-
-;(async function () {
+module.exports = gen
+;(require.main === module) && gen()
+;async function gen () {
     const _files = fs.readdirSync(FILE_REPO_PATH)
     const header = fs.readFileSync(HEADER_FILE_PATH).toString()
-    
+    const footer = fs.readFileSync(FOOTER_FILE_PATH).toString()
+
     let body = ''
     let appendBody = content => (body = body + content)
     appendBody(header)
     
     const files = _files
-        .filter(filename => filename.indexOf('.md') > -1 && !filename.startsWith('_draft_'))
+        .filter(filename => filename.indexOf('.md') > -1 && !filename.startsWith(DRAFT_PREFIX))
         .map(filename => filename.substring(0, filename.length - 3))
     
     const contentInfos = (await Promise.all(
@@ -107,49 +126,84 @@ const makeBlogItemLi = name => `<li><a href="${getLinkByFileName(name)}">${name}
             .map(item => item.parse())
         )).filter(Boolean)
     
-    //////////////////////////////  gen years  ////////////////////////////////
-
-    const yearAllTitle = 'articles by time'
-    const byYears = groupBy(contentInfos, 'year')
-    const yearKeys = sortNumber(Object.keys(byYears))
-    let yearChunkAll = ''
-    const appednYearChunkAll = content => (yearChunkAll = yearChunkAll + content)
-
-
-    for (const year of yearKeys) {
-        const yearTitle = year + '年'
-        const byMonths = groupBy(byYears[year], 'month')
-        let yearChunk = ''
-        const appednYearChunk = content => (yearChunk = yearChunk + content)
-        
-        const shouldCurYearOpen = hasOpenCounts()
-        monthKeys = sortNumber(Object.keys(byMonths))
-        for (const month of monthKeys) {
-            const monthTitle = month + '月'
-            let monthChunk = ''
-            const appednMonthChunk = content => (monthChunk = monthChunk + content)
+    const genYear = async () => {
+        const yearAllTitle = ARTICLES_BY_TIME_TITLE
+        const byYears = groupBy(contentInfos, 'year')
+        const yearKeys = sortNumber(Object.keys(byYears))
+        let yearChunkAll = ''
+        const appednYearChunkAll = content => (yearChunkAll = yearChunkAll + content)
+    
+        for (const year of yearKeys) {
+            const yearTitle = year + ARTICLES_GROUP_YEAR_SUFFIX
+            const byMonths = groupBy(byYears[year], 'month')
+            let yearChunk = ''
+            const appednYearChunk = content => (yearChunk = yearChunk + content)
             
-            const curMonthInfos = byMonths[month]
-            curMonthInfos.sort((a, b) => {
-                return - Number(a.day) + Number(b.day)
-            })
-            
-            for (const articleInfo of curMonthInfos) {
-                appednMonthChunk(makeBlogItemLi(articleInfo.filename))
+            const shouldCurYearOpen = hasOpenCounts()
+            monthKeys = sortNumber(Object.keys(byMonths))
+            for (const month of monthKeys) {
+                const monthTitle = month + ARTICLES_GROUP_MONTH_SUFFIX
+                let monthChunk = ''
+                const appednMonthChunk = content => (monthChunk = monthChunk + content)
+                
+                const curMonthInfos = byMonths[month]
+                curMonthInfos.sort((a, b) => {
+                    return - Number(a.day) + Number(b.day)
+                })
+                
+                for (const articleInfo of curMonthInfos) {
+                    appednMonthChunk(makeBlogItemLi(articleInfo.filename))
+                }
+                
+                monthChunk = withUl(monthChunk)
+                monthChunk = withDetails(monthTitle, monthChunk)
+                appednYearChunk(monthChunk)
             }
-            
-            monthChunk = withUl(monthChunk)
-            monthChunk = withDetails(monthTitle, monthChunk)
-            appednYearChunk(monthChunk)
+    
+            yearChunk = withDetails(yearTitle, yearChunk, shouldCurYearOpen)
+            appednYearChunkAll(yearChunk)
         }
+        yearChunkAll = withDetails(yearAllTitle, yearChunkAll, true)
+        appendBody(yearChunkAll)
 
-        yearChunk = withDetails(yearTitle, yearChunk, shouldCurYearOpen)
-        appednYearChunkAll(yearChunk)
     }
-    yearChunkAll = withDetails(yearAllTitle, yearChunkAll, true)
-    appendBody(yearChunkAll)
 
-    fs.writeFileSync('./README.md', body)
-})()
+    const genTags = async () => {
+        const tagsAllTitle = ARTICLES_BY_TAGS_TITLE 
+        const byTags = groupBy(contentInfos, 'tags')
+        let tagsAllChunk = ''
+        const appendTagsAllChunk = content => (tagsAllChunk = tagsAllChunk + content)
+        
+        const tagKeys = sortNumber(Object.keys(byTags))
+        const shouldTagOpen = hasOpenCounts()
+        for (const tagKey of tagKeys) {
+            const curTagTitle = tagKey
+            const curTagArticles = byTags[tagKey]
+            curTagArticles.sort((a, b) => {
+                return - Number(a.year + a.month + a.day) + 
+                Number(b.year + b.month + b.day)
+            })
+    
+            let curTagChunk = ''
+            const appendCurTagChunk = content => (curTagChunk = curTagChunk + content)
+            
+            for (const articleInfo of curTagArticles) {
+                appendCurTagChunk(makeBlogItemLi(articleInfo.filename, articleInfo.dateStr))
+            }
+    
+            curTagChunk = withUl(curTagChunk)
+            curTagChunk = withDetails(curTagTitle, curTagChunk)
+            appendTagsAllChunk(curTagChunk)
+        }
+    
+        tagsAllChunk = withDetails(tagsAllTitle, tagsAllChunk)
+        appendBody(tagsAllChunk)
+    }
 
+    GEN_YEAR && genYear()
+    GEN_TAGS && genTags()
+
+    appendBody(footer)
+    fs.writeFileSync(MAIN_PAGE_FILE, body)
+}
 

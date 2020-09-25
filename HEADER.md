@@ -1,5 +1,5 @@
 <details>
-    <summary>demos</summary>
+    <summary>示例</summary>
     <p>
     <ul>
         <li>
@@ -28,7 +28,7 @@
 </details>
 
 <details>
-    <summary>presentations</summary>
+    <summary>演示</summary>
     <p>
         <ul>
             <li>
@@ -46,16 +46,6 @@
             <li>
                 2016@bytedance: <a target="_blank" href="https://slides.com/shaomingquan/echo">活动运营平台数据报表系统</a>
             </li>
-        </ul>
-    </p>
-</details>
-
-<details>
-    <summary>contact me</summary>
-    <p>
-        <ul>
-            <li>微信: 1218525419</li>
-            <li><a href="https://github.com/shaomingquan/articles/issues">在线留言</a></li>
         </ul>
     </p>
 </details>
