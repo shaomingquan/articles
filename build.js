@@ -179,10 +179,10 @@ module.exports = gen
         for (const tagKey of tagKeys) {
             const curTagTitle = tagKey
             const curTagArticles = byTags[tagKey]
-            const append0 = x => x < 10 ? '0' + x : x
+            const append0 = x => x < 10 ? '0' + x : '' + x
             curTagArticles.sort((a, b) => {
-                return - Number(a.year + append0(a.month) + append0(a.day)) + 
-                Number(b.year + append0(b.month) + append0(b.day))
+                return - Number((a.year + '') + append0(a.month) + append0(a.day)) + 
+                Number((b.year + '') + append0(b.month) + append0(b.day))
             })
     
             let curTagChunk = ''
