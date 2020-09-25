@@ -1,3 +1,8 @@
+---
+date: 2020-08-12
+tags: electron,javascript
+---
+
 > 花了点时间将create-react-app和electron做了个结合
 
 目的是：

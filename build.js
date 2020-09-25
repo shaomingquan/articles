@@ -3,8 +3,13 @@ const matter = require('gray-matter')
 const path = require('path')
 const assert = require('assert');
 
+const underCmd = dir => path.resolve(process.cwd(), dir)
+
+const FILE_REPO_PATH = underCmd('./src')
+const HEADER_FILE_PATH = underCmd('./HEADER.md')
+
 const articleInfoMatterFactory = filename => {
-    const filePath = path.resolve('./src/' + filename + '.md')
+    const filePath = path.resolve(FILE_REPO_PATH, './' + filename + '.md')
 
     const parse = async function () {
         const content = await new Promise((resolve, reject) => {
@@ -83,10 +88,11 @@ const getLinkByFileName = name => `https://github.com/shaomingquan/articles/blob
 const withUl = content => `<ul>${content}</ul>`
 const makeBlogItemLi = name => `<li><a href="${getLinkByFileName(name)}">${name}</a></li>`
 
-const _files = fs.readdirSync('./src')
-const header = fs.readFileSync('./_README.md').toString()
 
 ;(async function () {
+    const _files = fs.readdirSync(FILE_REPO_PATH)
+    const header = fs.readFileSync(HEADER_FILE_PATH).toString()
+    
     let body = ''
     let appendBody = content => (body = body + content)
     appendBody(header)

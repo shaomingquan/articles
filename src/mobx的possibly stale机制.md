@@ -1,3 +1,8 @@
+---
+date: 2020-06-18
+tags: javascript
+---
+
 ### TL;DR
 
 - mobx的computed value通过扩散POSSIBLY_STALE状态减少不必要的reaction调度。

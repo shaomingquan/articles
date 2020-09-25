@@ -1,3 +1,8 @@
+---
+date: 2020-06-07
+tags: javascript
+---
+
 polyfill了就一定靠谱吗？现在把工程中的js代码分为三个部分：
 
 1. polyfill

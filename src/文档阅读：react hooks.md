@@ -1,3 +1,8 @@
+---
+date: 2019-08-05
+tags: javascript
+---
+
 ### 1，[Introducing Hooks](https://reactjs.org/docs/hooks-intro.html)
 
 这篇文档中官方告诉我们为啥要有hooks 。

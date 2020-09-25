@@ -1,3 +1,8 @@
+---
+date: 2020-09-02
+tags: nodejs
+---
+
 介绍一个nodejs的经典问题：
 
 ```js

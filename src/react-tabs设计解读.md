@@ -1,3 +1,8 @@
+---
+date: 2019-09-12
+tags: javascript
+---
+
 > 接触react也有一段时间了，这次读了下react-tabs的代码，了解一些正统的设计理念。
 
 它的主要文件放在`https://github.com/reactjs/react-tabs/tree/master/src/components`下面，有这样几个组件：

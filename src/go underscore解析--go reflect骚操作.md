@@ -1,3 +1,8 @@
+---
+date: 2018-10-02
+tags: golang
+---
+
 > golang作为静态语言，对于常用动态语言的程序员来说，可能会觉得很束缚，在golang中，一个在javascript非常常见的FOP语句，在golang中却无法有很通用的抽象。然而并不是完全没有办法，在golang中，增强动态性的手段有四种。（1）接口+类型断言。（2）反射。（3）unsafe.Pointer。（4）代码生成。
 
 > 我不会讲reflect和interface的底层，本文着重解析`github.com/tobyhede/go-underscore`的原理，来感受反射带来的动态性。

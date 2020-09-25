@@ -1,3 +1,8 @@
+---
+date: 2018-11-02
+tags: misc
+---
+
 ***1，购买服务器***
 
 使用 [https://my.vultr.com/](https://my.vultr.com/) 买Ubuntu机器 优点：

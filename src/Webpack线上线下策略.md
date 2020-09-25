@@ -1,3 +1,8 @@
+---
+date: 2016-07-02
+tags: misc
+---
+
 ## webpack 简述
 
 webpack学习请访问webpack官网以及github。

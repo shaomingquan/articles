@@ -1,3 +1,8 @@
+---
+date: 2019-09-21
+tags: nodejs
+---
+
 > Nodejs主要基于libuv，将一些系统操作通过v8，提供给js。
 
 Nodejs作为一种JavaScript的运行时给js提供了非常丰富的api，这些api中有很多api是异步了，从js的角度来看，它们没有什么大区别（当然功能是不同的），但是从c++的角度来看，区别就比较大了。

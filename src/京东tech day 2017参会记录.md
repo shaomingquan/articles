@@ -1,3 +1,8 @@
+---
+date: 2017-12-14
+tags: 思考
+---
+
 会议ppt集合 [https://mp.weixin.qq.com/s/basb3q1T-ZoEPTLlpbdkPA](https://mp.weixin.qq.com/s/basb3q1T-ZoEPTLlpbdkPA)。
 
 #### 第一讲

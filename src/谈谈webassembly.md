@@ -1,3 +1,8 @@
+---
+date: 2017-05-24
+tags: javascript
+---
+
 ***What?***
 
 WebAssembly 下文简称 wasm。
