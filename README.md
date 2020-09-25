@@ -1,4 +1,4 @@
-<details>
+<details open>
     <summary>演示</summary>
     <p>
         <ul>
