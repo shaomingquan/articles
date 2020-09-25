@@ -1,6 +1,6 @@
 ---
 date: 2019-05-21
-tags: nodejs
+tags: javascript
 ---
 
 > 对于典型的现代浏览器架构，优化的思路及快速参考。原理参考[gpu-accelerated-compositing-in-chrome](http://www.chromium.org/developers/design-documents/gpu-accelerated-compositing-in-chrome)。

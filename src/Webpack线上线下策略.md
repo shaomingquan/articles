@@ -1,6 +1,6 @@
 ---
 date: 2016-07-02
-tags: misc
+tags: javascript
 ---
 
 ## webpack 简述
