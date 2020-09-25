@@ -31,6 +31,9 @@
             golang api组织框架，<a target="_blank" href="https://github.com/shaomingquan/catalyst-documentary">catalyst</a>。
         </li>
         <li>
+            帮助你在github上生成一个博客，<a target="_blank" href="https://github.com/shaomingquan/tiny-blog-gen">tiny-blog-gen</a>。
+        </li>
+        <li>
             帮助你快速生成<code>@keyframe</code>多帧动画代码，firecracker。
             <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/firecracker/">DEMO</a></span>
         </li>
