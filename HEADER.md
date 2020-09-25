@@ -28,13 +28,13 @@
     <p>
     <ul>
         <li>
-            golang api组织框架，<a target="_blank" href="https://github.com/shaomingquan/catalyst-documentary">catalyst</a>。
+            golang api组织框架，<a target="_blank" href="https://github.com/shaomingquan/catalyst-documentary">catalyst</a>
         </li>
         <li>
-            帮助你在github上生成一个博客，<a target="_blank" href="https://github.com/shaomingquan/tiny-blog-gen">tiny-blog-gen</a>。
+            帮助你在github上生成一个博客，<a target="_blank" href="https://github.com/shaomingquan/tiny-blog-gen">tiny-blog-gen</a>
         </li>
         <li>
-            帮助你快速生成<code>@keyframe</code>多帧动画代码，firecracker。
+            帮助你快速生成<code>@keyframe</code>多帧动画代码，firecracker
             <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/firecracker/">DEMO</a></span>
         </li>
         <li>
@@ -42,15 +42,15 @@
             <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/shotshot/">DEMO</a></span>
         </li>
         <li>
-            翻牌记忆游戏。
+            翻牌记忆游戏
             <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/memgame/">DEMO</a></span>
         </li>
         <li>
-            基于canvas的颜色选择器，所见即所得。
+            基于canvas的颜色选择器，所见即所得
             <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/canvascolorpicker/">DEMO</a></span>
         </li>
-        <li>我的毕业设计<a target="_blank" href="http://v.youku.com/v_show/id_XMTYyMjk1OTUyOA==.html">展示视频</a>，基于插件+用户协同推荐的笔记应用。</li>
-        <li>毕业季另一个作品<a target="_blank" href="http://v.youku.com/v_show/id_XMTYyMjk2NDY1Mg==.html">展示视频</a>，监督学习的一款RN应用。</li>
+        <li>我的毕业设计<a target="_blank" href="http://v.youku.com/v_show/id_XMTYyMjk1OTUyOA==.html">展示视频</a>，基于插件+用户协同推荐的笔记应用</li>
+        <li>毕业季另一个作品<a target="_blank" href="http://v.youku.com/v_show/id_XMTYyMjk2NDY1Mg==.html">展示视频</a>，监督学习的一款RN应用</li>
     </ul>
     </p>
 </details>
