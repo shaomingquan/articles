@@ -63,7 +63,7 @@
         <details open>
     <summary>10月</summary>
     <ul>
-        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/redux%20vs%20mobx.md">redux vs mobx</a><span>&nbsp;</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E4%BF%A1%E6%81%AF%E5%9E%83%E5%9C%BE%E6%88%90%E7%81%BE%E7%9A%84%E6%97%B6%E4%BB%A3.md">信息垃圾成灾的时代</a><span>&nbsp;</span></li></ul>
+        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%B8%A6GUI%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%96%E7%A8%8B.md">带GUI的浏览器编程</a><span>&nbsp;</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/redux%20vs%20mobx.md">redux vs mobx</a><span>&nbsp;</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E4%BF%A1%E6%81%AF%E5%9E%83%E5%9C%BE%E6%88%90%E7%81%BE%E7%9A%84%E6%97%B6%E4%BB%A3.md">信息垃圾成灾的时代</a><span>&nbsp;</span></li></ul>
     </ul>
 </details><details open>
     <summary>9月</summary>
@@ -290,7 +290,7 @@
 </details><details >
     <summary>js</summary>
     <ul>
-        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/redux%20vs%20mobx.md">redux vs mobx</a><span>&nbsp;[2020-10-6]</span></li></ul>
+        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%B8%A6GUI%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%96%E7%A8%8B.md">带GUI的浏览器编程</a><span>&nbsp;[2020-10-10]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/redux%20vs%20mobx.md">redux vs mobx</a><span>&nbsp;[2020-10-6]</span></li></ul>
     </ul>
 </details><details >
     <summary>misc</summary>
