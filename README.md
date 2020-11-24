@@ -63,7 +63,7 @@
         <details open>
     <summary>11月</summary>
     <ul>
-        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%9C%8B%E7%9C%8BgraphQL%E7%9A%84dataLoader.md">看看graphQL的dataLoader</a><span>&nbsp;</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%BB%9E%E6%9D%80%E8%80%85%E6%A8%A1%E5%BC%8F.md">绞杀者模式</a><span>&nbsp;</span></li></ul>
+        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%91%A8%E6%9C%9F%E7%9A%84%E6%80%9D%E8%80%83.md">前端项目周期的思考</a><span>&nbsp;</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%9C%8B%E7%9C%8BgraphQL%E7%9A%84dataLoader.md">看看graphQL的dataLoader</a><span>&nbsp;</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%BB%9E%E6%9D%80%E8%80%85%E6%A8%A1%E5%BC%8F.md">绞杀者模式</a><span>&nbsp;</span></li></ul>
     </ul>
 </details><details open>
     <summary>10月</summary>
@@ -303,6 +303,11 @@
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%BB%9E%E6%9D%80%E8%80%85%E6%A8%A1%E5%BC%8F.md">绞杀者模式</a><span>&nbsp;[2020-11-2]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%BD%91%E7%BB%9C%E5%BA%93%E5%B0%81%E8%A3%85.md">网络库封装</a><span>&nbsp;[2020-9-25]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E6%B5%81%E9%87%8F%E2%80%9C%E6%94%AF%E9%85%8D%E2%80%9D.md">流量“支配”</a><span>&nbsp;[2020-2-1]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97%EF%BC%9A%E6%9C%8D%E5%8A%A1%E8%BF%81%E7%A7%BB.md">工作日志：服务迁移</a><span>&nbsp;[2020-1-19]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97%EF%BC%9A%E4%B8%80%E6%AC%A1%E6%9B%B2%E6%8A%98%E7%9A%84%E4%B8%8A%E7%BA%BF.md">工作日志：一次曲折的上线</a><span>&nbsp;[2019-9-25]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E6%95%B0%E6%8D%AE%E4%BA%A7%E5%93%81%E7%9A%84%E7%BB%9F%E4%B8%80%E5%A4%8D%E7%9B%98.md">数据产品的统一复盘</a><span>&nbsp;[2019-7-1]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9D%82%E8%B0%88.md">小程序杂谈</a><span>&nbsp;[2019-5-10]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/ss%E6%90%AD%E5%BB%BA%E5%BF%AB%E9%80%9F%E6%95%99%E7%A8%8B.md">ss搭建快速教程</a><span>&nbsp;[2018-11-2]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E5%9C%B0%E5%9D%80%E6%A0%8F.md">重新思考地址栏</a><span>&nbsp;[2016-12-3]</span></li></ul>
     </ul>
 </details><details >
+    <summary>软技能</summary>
+    <ul>
+        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%91%A8%E6%9C%9F%E7%9A%84%E6%80%9D%E8%80%83.md">前端项目周期的思考</a><span>&nbsp;[2020-11-5]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E8%BE%B9%E9%99%85%E6%95%88%E5%BA%94.md">边际效应</a><span>&nbsp;[2020-4-15]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E9%9D%A2%E8%AF%95.md">面试</a><span>&nbsp;[2020-1-30]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86.md">金字塔原理</a><span>&nbsp;[2019-12-30]</span></li></ul>
+    </ul>
+</details><details >
     <summary>翻译</summary>
     <ul>
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%8D%9A%E5%AE%A2%E7%BF%BB%E8%AF%91%EF%BC%9A%E5%85%B3%E4%BA%8Enpm%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E5%8D%81%E4%B8%AA%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md">博客翻译：关于npm安全性的十个最佳实践</a><span>&nbsp;[2019-7-6]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%8D%9A%E5%AE%A2%E7%BF%BB%E8%AF%91%EF%BC%9Amobx%2Breact%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md">博客翻译：mobx+react的最佳实践</a><span>&nbsp;[2019-6-10]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%8D%9A%E5%AE%A2%E7%BF%BB%E8%AF%91%EF%BC%9A%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AE%97%E6%B3%95.md">博客翻译：位操作算法</a><span>&nbsp;[2018-12-9]</span></li></ul>
@@ -311,11 +316,6 @@
     <summary>css</summary>
     <ul>
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%8E%BB%E9%99%A4%E6%BB%9A%E5%8A%A8%E7%95%99%E7%99%BD.md">去除滚动留白</a><span>&nbsp;[2018-10-30]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E8%A7%86%E5%B7%AE%E6%BB%9A%E5%8A%A8%E7%9A%84n%E7%A7%8D%E5%AE%9E%E7%8E%B0.md">视差滚动的n种实现</a><span>&nbsp;[2016-10-19]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E6%9B%B2%E7%BA%BF%E8%B7%AF%E5%BE%84.md">纯css实现曲线路径</a><span>&nbsp;[2016-6-12]</span></li></ul>
-    </ul>
-</details><details >
-    <summary>软技能</summary>
-    <ul>
-        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E8%BE%B9%E9%99%85%E6%95%88%E5%BA%94.md">边际效应</a><span>&nbsp;[2020-4-15]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E9%9D%A2%E8%AF%95.md">面试</a><span>&nbsp;[2020-1-30]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86.md">金字塔原理</a><span>&nbsp;[2019-12-30]</span></li></ul>
     </ul>
 </details><details >
     <summary>js</summary>

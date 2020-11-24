@@ -68,7 +68,7 @@ function getCurrentBatch<K, V>(loader: DataLoader<K, V, any>): Batch<K, V> {
 
   // Then schedule a task to dispatch this batch of requests.
   loader._batchScheduleFn(() => {
-    //   这里就不用细看了，其实就是把callbacks中的resolve给执行了，那么load返回的promise就都resolve了
+    // 这里就不用细看了，其实就是把callbacks中的resolve给执行了，那么load返回的promise就都resolve了
     dispatchBatch(loader, newBatch);
   });
 
