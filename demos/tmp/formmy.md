@@ -14,7 +14,7 @@ req
     })
     .on('data', function(buffer) {
         self.write(buffer);
-    })
+    }) 
     .on('end', function() {
         if (self.error) {
             return;
