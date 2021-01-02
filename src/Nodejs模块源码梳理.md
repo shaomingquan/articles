@@ -150,7 +150,7 @@ node源码有两部分c++部分写一些底层，也有很多js来做封装。�
 
 在`loaders.js`内部，定义了nodejs内部js模块的一些逻辑，这些内部js模块已经提前被编译近二进制了，通过`getBinding('natives');`获取，如果未被提前编译，则为非法内部模块。同时给`process`对象挂载了`binding`方法，这个是用户打通到`nodejs`内部的核心方法。
 
-随后`NativeModule`被注入到`lib/internal/bootstrap/node.js`中，以注入`commonJS`能力到用户代码。
+随后通过`NativeModule`引入`internal/modules/cjs/loader`再执行`Module.runMain`。
 
 ```js
 // lib/internal/bootstrap/node.js
@@ -171,14 +171,19 @@ Module.runMain = function() {
 };
 ```
 
-在runMain中，CommonJS体系接管了入口文件，并注入CommonJS功能。这里开始就把权利交给用户代码了。
+在runMain中，通过`_load`编译用户代码，并注入CommonJS（require，exports）功能。这里开始就把权利交给用户代码了。
 
 ## runtime phase - 注入模块体系到js
 
-在nodejs内部的js代码中也有require，用户代码中也有require，这两个require是不同的。不过require的注入是基本一样的，其实就是把代码包装一下。用户端CommonJS的inject代码：
+在nodejs内部的js代码中也有require，用户代码中也有require，这两个require是不同的。所以其实有两套注入逻辑：
+
+- nodejs用户空间代码：lib/internal/modules/cjs/loader.js
+- nodejs的js源码：lib/internal/bootstrap/loaders.js
+
+不过require的注入是基本一样的，其实就是把代码包装一下。用户端CommonJS的inject代码：
 
 ```js
-// lib/internal/modules/cjs/loader.js
+// internal/modules/cjs/loader.js
 let wrap = function(script) {
   return Module.wrapper[0] + script + Module.wrapper[1];
 };
@@ -199,6 +204,7 @@ result = compiledWrapper.call(this.exports, this.exports, require, this,
 同样的，源码require体系的inject
 
 ```js
+  // lib/internal/bootstrap/loaders.js
   NativeModule.wrap = function(script) {
     return NativeModule.wrapper[0] + script + NativeModule.wrapper[1];
   };
