@@ -1,0 +1,3 @@
+> 最近遇到太多“半受控”的case了，所以在React官方文档中搜索了一番，确实[给了些建议](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#preferred-solutions)。
+
+一般来说对于非受控组件，内部初始化的时候都会同步props的值到state，不过后续便不受props的影响，对于受控组件则相反。而实际开发的过程中常常需要在update生命周期中，根据外部的props更新内部的state，很容易[写出反模式](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#preferred-solutions)。虽然也并不是啥难解决的是，不过还是看看[官方的建议](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#preferred-solutions)。
