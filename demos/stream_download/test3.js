@@ -48,7 +48,6 @@ class MyReadable extends Readable {
     _read () {
         this._source.readStart()
     }
-    res
 }
 
 class MyWritable extends Writable {
