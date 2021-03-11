@@ -1,0 +1,16 @@
+{
+  "name": "oom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --max-old-space-size=512 index.js 2000"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pidusage": "^2.0.21",
+    "piscina": "^2.1.0"
+  }
+}

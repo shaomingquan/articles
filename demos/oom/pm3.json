@@ -1,0 +1,10 @@
+{
+    "apps" : [{
+        "name"        : "leak",
+        "script"      : "./leak.js",
+        "instances"   : 3,
+        "exec_mode"   : "fork",
+        "max_memory_restart": "100M",
+        "node_args": [ "--max-old-space-size=50" ]
+    }]
+}
