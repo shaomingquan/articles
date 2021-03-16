@@ -2,7 +2,7 @@ const {
     parentPort, 
     workerData // 传个查询条件
 } = require('worker_threads');
-const { fillChar } = workerData
+const { fillChar, speed = 200 } = workerData
 
 // task generator
 let times = 0 
@@ -14,10 +14,9 @@ const makeReadTask = () => {
     return () => {
         return new Promise(resolve => {
             setTimeout(() => {
-                console.log('send ' + times, Date.now())
                 parentPort.postMessage(Buffer.alloc(4, fillChar))
                 resolve()
-            }, 200)
+            }, speed)
         })
     }
 }
@@ -29,7 +28,6 @@ let running = false
 const runTasks = async () => {
     running = true
     while (queue.length) {
-        console.log(queue.length)
         const task = queue.shift()
         if (paused) {
             break
