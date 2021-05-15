@@ -58,5 +58,8 @@ parentPort.on('message', async (msg) => {
     } else if (msg === 'pause') {
         // 太快了，暂停读取
         paused = true
+    } else if (msg === 'close') {
+        paused = true
+        process.exit(0)
     }
 })
