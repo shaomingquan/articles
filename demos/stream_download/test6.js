@@ -7,21 +7,13 @@ const {
     workerData // 传个查询条件
 } = require('worker_threads');
 
-<<<<<<< HEAD
-const sourceFile = __dirname + '/hello-resource-2.js'
-=======
 const sourceFile = __dirname + '/hello-resource.js'
->>>>>>> df5ae7e3e579eb711a8279220b44166ac17899ec
 
 const getWorkerSource = () => {
     const worker = new Worker(sourceFile, {
         workerData: {
-<<<<<<< HEAD
-            fillChar: 'x'
-=======
             fillChar: 'x',
             speed: 10,
->>>>>>> df5ae7e3e579eb711a8279220b44166ac17899ec
         }
     })
 
@@ -54,17 +46,15 @@ const getWorkerSource = () => {
 }
 
 class MyReadable extends Readable {
-    constructor (options, source, req) {
+    constructor (options, source) {
         super(options)
         this._source = source
-        let closed = false
 
         // Every time there's data, push it into the internal buffer.
         this._source.ondata = (chunk) => {
-            if (closed) {
-                return
-            }
             // If push() returns false, then stop reading from source.
+            console.log('push', Date.now())
+
             if (!this.push(chunk))
                 this._source.readStop();
         };
@@ -73,33 +63,56 @@ class MyReadable extends Readable {
         this._source.onend = () => {
             this.push(null);
         };
-
-        const close = () => {
-            if (closed) {
-                return
-            }
-            closed = true
-            this._source.onend()
-        }
-        req.on('aborted', close)
-        req.on('close', close)
-
     }
     async _read () {
-        console.log('writer reading')
+        console.log('read', Date.now())
         this._source.readStart()
     }
 }
 
 
-const server = http.createServer((req, res) => {
+class MyWritable extends Writable {
+    constructor(options) {
+        super(options);
+    }
+    _write(chunk, encoding, callback) {
+        console.log('write ' + chunk.toString())
 
-    const source = getWorkerSource()
+        // callback();
+        setTimeout(() => {
+            callback();
+        }, 1000)
+    }
+    _final(callback) {
+        console.log('done')
+        callback();
+    }
+}
 
-    res.setHeader('Content-Type', 'application/octet-stream')
-    res.setHeader('Content-Disposition', 'attachment;filename="download.txt"')
+const ra = new MyReadable({
+    highWaterMark: 20
+}, getWorkerSource());
 
-    ;(new MyReadable(undefined, source, req)).pipe(res)
+const wa = new MyWritable({
+    highWaterMark: 2
 })
 
-server.listen(6677)
+ra.on('resume', () => console.log('resumu'))
+wa.on('drain', () => console.log('drain'))
+
+;(ra).pipe(wa)
+
+// const rs = new MyReadable({
+//     highWaterMark: 4
+// }, getWorkerSource())
+
+// rs.on('data', data => {
+// })
+
+// rs.on('end', () => {
+//     console.log('end')
+// })
+
+// https://tech.meituan.com/2016/07/15/stream-internals.html
+
+// push不进去了是因为reader的buffer满了，不过其实还是因为writer太慢了
