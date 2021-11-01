@@ -136,3 +136,5 @@ This helps us get a more optimal memory footprint in low-memory situations. The 
 - google 2016 面向服务的架构
 - 一个小哥的总结 https://www.zhihu.com/people/nian-xi-97/posts
 - 网络进程 http://www.chromium.org/developers/design-documents/multi-process-resource-loading
+- https://developers.google.com/web/updates/2018/09/inside-browser-part1
+- https://docs.google.com/document/d/15I7sQyQo6zsqXVNAlVd520tdGaS8FCicZHrN0yRu-oU/edit#
