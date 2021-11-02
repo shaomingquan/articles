@@ -16,9 +16,10 @@ tags: nodejs
 关于第一点是比较好理解的，那么第二点的影响具体会有多大，做个小实验：
 
 ```js
-// 如果都是静态的路由，且线性的遍历，regExp test耗时是equals的近百倍
-// equals:       290373
-// regExp test:  23289630
+/*
+首先用koa-router的同款lib path-to-regexp
+准备好1000个path以及对应的regexp
+*/
 
 const { pathToRegexp } = require('path-to-regexp');
 
@@ -34,79 +35,73 @@ const randomPath = n => {
 }
 
 const pathes = []
-const pathesRegs = {}
+const pathesRegs = []
 for (let i = 0 ; i < 1000 ; i ++) {
     const path = randomPath(3)
     pathes.push(path)
-    pathesRegs[path] = pathToRegexp(path)
+    pathesRegs.push(pathToRegexp(path))
 }
 
+// 随机拿一个path，同样使用线性遍历，找到匹配的路径
 const s = 1e9;
-// 都从线性的角度来看，匹配1000个备选path
-let durationEquals = 0
-for (const path of pathes) {
-    const start = process.hrtime()
-    const ret = path === path
-    const diff = process.hrtime(start)
-    durationEquals += (s * diff[0] + diff[1])
+for (let i = 1 ; i <= 10 ; i ++) {
+    let durationEquals = 0
+    let toCheckPath = pathes[Math.floor(Math.random() * pathes.length)]
+    let result = ''
+    for (const path of pathes) {
+        const start = process.hrtime()
+        if (toCheckPath === path) {
+            result = path
+        }
+        const diff = process.hrtime(start)
+        durationEquals += (s * diff[0] + diff[1])
+    }
+    console.log(`equals: ${i}`, toCheckPath, result, durationEquals)
 }
-console.log('equals: ', durationEquals)
-
-let durationRegExpText = 0
-for (const path of pathes) {
-    const regExp = pathesRegs[path]
-
-    const start = process.hrtime()
-    const ret = regExp.test(path)
-    const diff = process.hrtime(start)
-    durationRegExpText += (s * diff[0] + diff[1])
-}
-console.log('regExp test: ', durationRegExpText)
 
 
-```
-
-<del>可见如果我们并不需要动态路由的时候，这里的计算其实是浪费的。</del>结果真的是这样吗？我在实际测量接口性能的时候，发现第二次比第一次要快，于是又改造了一下测试代码，如下：
-
-```js
-// equals:  337921
-// regExp test 1:  27525448
-// regExp test 2:  930323
-// regExp test 3:  308074
-// regExp test 4:  292517
-// regExp test 5:  310793
-// regExp test 6:  344182
-// regExp test 7:  861970
-// regExp test 8:  855501
-// regExp test 9:  604949
-// regExp test 10:  341888
-const s = 1e9;
-// 都从线性的角度来看，匹配1000个备选path
-let durationEquals = 0
-for (const path of pathes) {
-    const start = process.hrtime()
-    const ret = path === path
-    const diff = process.hrtime(start)
-    durationEquals += (s * diff[0] + diff[1])
-}
-console.log('equals: ', durationEquals)
-
-// 验证js正则的预热过程
 for (let i = 1 ; i <= 10 ; i ++) {
     let durationRegExpText = 0
-    for (const path of pathes) {
-        const regExp = pathesRegs[path]
+    let toCheckPath = pathes[Math.floor(Math.random() * pathes.length)]
+    let result = ''
+    for (const regExp of pathesRegs) {
     
         const start = process.hrtime()
-        const ret = regExp.test(path)
+        if (regExp.test(toCheckPath)) {
+            result = regExp
+        }
         const diff = process.hrtime(start)
         durationRegExpText += (s * diff[0] + diff[1])
     }
-    console.log(`regExp test ${i}: `, durationRegExpText)
+    console.log(`regExp test ${i}: `, toCheckPath, result, durationRegExpText)
 }
+
+// 结果
+/*
+equals: 1 /x/v/j /x/v/j 316399
+equals: 2 /i/v/y /i/v/y 317208
+equals: 3 /x/k/x /x/k/x 355215
+equals: 4 /q/s/l /q/s/l 171751
+equals: 5 /c/x/q /c/x/q 193422
+equals: 6 /i/v/u /i/v/u 147818
+equals: 7 /e/k/d /e/k/d 143465
+equals: 8 /h/l/j /h/l/j 168824
+equals: 9 /h/v/d /h/v/d 144017
+equals: 10 /s/s/a /s/s/a 175671
+regExp test 1:  /m/t/w /^\/m\/t\/w[\/#\?]?$/i 24158646
+regExp test 2:  /g/o/z /^\/g\/o\/z[\/#\?]?$/i 827808
+regExp test 3:  /f/q/i /^\/f\/q\/i[\/#\?]?$/i 267779
+regExp test 4:  /t/p/z /^\/t\/p\/z[\/#\?]?$/i 254306
+regExp test 5:  /q/s/l /^\/q\/s\/l[\/#\?]?$/i 231546
+regExp test 6:  /r/d/t /^\/r\/d\/t[\/#\?]?$/i 227686
+regExp test 7:  /q/m/o /^\/q\/m\/o[\/#\?]?$/i 269306
+regExp test 8:  /m/i/a /^\/m\/i\/a[\/#\?]?$/i 235597
+regExp test 9:  /p/g/y /^\/p\/g\/y[\/#\?]?$/i 227333
+regExp test 10:  /e/x/f /^\/e\/x\/f[\/#\?]?$/i 255128
+*/
 ```
 
-发现除了第一次性能较差，后续运行test时性能就好很多了，接近equals，我这里暂且认为js的RegExp是有预热的
+使用regExp test时，除了前两次性能较差，后续运行test时性能就好很多了，接近equals，我这里暂且认为js的RegExp是有预热的。但毕竟还是要慢一点，可见如果我们并不需要动态路由的时候，最好还是不用regExp。
 
 ### 优化思路
 
@@ -115,7 +110,7 @@ for (let i = 1 ; i <= 10 ; i ++) {
     - 直接使用hashmap数据结构匹配
 - 对于动态路由
     - 分段test，对于静态的段不使用regExp
-    - 使用trie树数据结构
+    - 使用trie树数据结构存储分段结构
 
 **个人建议**
 
@@ -129,3 +124,4 @@ for (let i = 1 ; i <= 10 ; i ++) {
 ### TODO
 
 - 了解一下`path-to-regexp`细节，动态路由具体性能。
+- 了解一些js的RegExp机制。
