@@ -3,7 +3,7 @@ date: 2022-01-24
 tags: nodejs
 ---
 
-tldr:
+tldr:
 
 - 如果架构内部可抽象出client server模式，都可以用过`koa-compose`和`koa-router`管理。
 - `koa-compose`和`koa-router`都可以脱离http这一套逻辑独立运行，这点有别于koa（koa就是http框架）。
@@ -65,6 +65,6 @@ asyncCall(ctxB).then(() => {
 - 大型应用的内部分层
 - server client同构
 
-> 通过包装ctx轻易的兼容了koa-router，使其能脱离http场景，
+> 通过包装ctx轻易的兼容了koa-router，使其能脱离http场景，或许其他koa生态组件也可以？
 
 > 把一个熟悉的模式应用到不同的场景，感觉还是不错的。这种模式脱离场景的思考方式也值得在其他地方应用。
