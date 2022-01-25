@@ -5,6 +5,12 @@
     <p>
         <ul>
             <li>
+                2022@taou: <a target="_blank" href="https://slides.com/shaomingquan/deck-38a603/">Node.js多进程服务原理&实践</a>
+            </li>
+            <li>
+                2021@taou: <a target="_blank" href="https://slides.com/shaomingquan/deck-4a2b07">CRM的低代码实践</a>
+            </li>
+            <li>
                 2020@taou: <a target="_blank" href="https://slides.com/shaomingquan/deck-0cc907">更好的接口</a>
             </li>
             <li>
@@ -28,13 +34,16 @@
     <p>
     <ul>
         <li>
+            帮你实现自己的git client，<a target="_blank" href="https://github.com/shaomingquan/your-own-git">your-own-git</a>
+        </li>
+        <li>
             golang api组织框架，<a target="_blank" href="https://github.com/shaomingquan/catalyst-documentary">catalyst</a>
         </li>
         <li>
-            帮助你在github上生成一个博客，<a target="_blank" href="https://github.com/shaomingquan/tiny-blog-gen">tiny-blog-gen</a>
+            帮你在github上生成一个博客，<a target="_blank" href="https://github.com/shaomingquan/tiny-blog-gen">tiny-blog-gen</a>
         </li>
         <li>
-            帮助你快速生成<code>@keyframe</code>多帧动画代码，firecracker
+            帮你快速生成<code>@keyframe</code>多帧动画代码，firecracker
             <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/firecracker/">DEMO</a></span>
         </li>
         <li>
