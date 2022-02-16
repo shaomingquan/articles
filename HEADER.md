@@ -29,8 +29,8 @@
     </p>
 </details>
 
-<details>
-    <summary>在线示例</summary>
+<details open>
+    <summary>开源工具</summary>
     <p>
     <ul>
         <li>
@@ -42,6 +42,14 @@
         <li>
             帮你在github上生成一个博客，<a target="_blank" href="https://github.com/shaomingquan/tiny-blog-gen">tiny-blog-gen</a>
         </li>
+    </ul>
+    </p>
+</details>
+
+<details open>
+    <summary>在线示例</summary>
+    <p>
+    <ul>
         <li>
             帮你快速生成<code>@keyframe</code>多帧动画代码，firecracker
             <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/firecracker/">DEMO</a></span>
@@ -58,8 +66,6 @@
             基于canvas的颜色选择器，所见即所得
             <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/canvascolorpicker/">DEMO</a></span>
         </li>
-        <li>我的毕业设计<a target="_blank" href="http://v.youku.com/v_show/id_XMTYyMjk1OTUyOA==.html">展示视频</a>，基于插件+用户协同推荐的笔记应用</li>
-        <li>毕业季另一个作品<a target="_blank" href="http://v.youku.com/v_show/id_XMTYyMjk2NDY1Mg==.html">展示视频</a>，监督学习的一款RN应用</li>
     </ul>
     </p>
 </details>
