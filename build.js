@@ -20,7 +20,7 @@ const ARTICLES_GROUP_MONTH_SUFFIX = '月'
 
 const ARTICLES_BY_TAGS_TITLE = '文章 (按标签)'
 
-const MAX_EXPAND_CONTENT = 12
+const MAX_EXPAND_CONTENT = 22
 
 const GEN_YEAR = true
 const GEN_TAGS = true
