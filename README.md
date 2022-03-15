@@ -34,6 +34,9 @@
     <p>
     <ul>
         <li>
+            快手视频打码工具，可批量，用koa管理electron ipc，<a target="_blank" href="https://github.com/shaomingquan/electron-watermark">electron-watermark</a>
+        </li>
+        <li>
             帮你实现自己的git client，<a target="_blank" href="https://github.com/shaomingquan/your-own-git">your-own-git</a>
         </li>
         <li>
@@ -76,6 +79,11 @@
     <summary>2022年</summary>
     <ul>
         <details open>
+    <summary>3月</summary>
+    <ul>
+        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/monorepo%E6%80%9D%E8%80%83.md">monorepo思考</a><span>&nbsp;</span></li></ul>
+    </ul>
+</details><details open>
     <summary>2月</summary>
     <ul>
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/chrome%E7%9A%84%E4%B8%80%E4%B8%AA%E5%86%B7%E7%9F%A5%E8%AF%86.md">chrome的一个冷知识</a><span>&nbsp;</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/nginx%2BnodeJs%20http%20keep-alive%E5%B0%8F%E8%AE%B0.md">nginx+nodeJs http keep-alive小记</a><span>&nbsp;</span></li></ul>
@@ -195,7 +203,7 @@
 </details><details open>
     <summary>2019年</summary>
     <ul>
-        <details open>
+        <details >
     <summary>12月</summary>
     <ul>
         <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E9%87%91%E5%AD%97%E5%A1%94%E5%8E%9F%E7%90%86.md">金字塔原理</a><span>&nbsp;</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97%EF%BC%9A%E5%BC%82%E6%AD%A5%E4%BC%98%E5%85%88.md">工作日志：异步优先</a><span>&nbsp;</span></li></ul>
@@ -375,7 +383,7 @@
 </details><details >
     <summary>js</summary>
     <ul>
-        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/chromium%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.md">chromium内存模型</a><span>&nbsp;[2021-8-31]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/js%E8%8E%B7%E5%8F%96%E8%BF%90%E8%A1%8C%E6%97%B6%E4%B8%8A%E4%B8%8B%E6%96%87.md">js获取运行时上下文</a><span>&nbsp;[2021-8-24]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/ts%E8%8C%83%E5%9E%8B%E7%BA%A6%E6%9D%9F%E2%80%9C%E4%BC%A0%E9%80%92%E2%80%9D%E4%B8%8E%E2%80%9C%E5%88%86%E5%8F%89%E2%80%9D%E7%8E%B0%E8%B1%A1.md">ts范型约束“传递”与“分叉”现象</a><span>&nbsp;[2021-7-17]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%BB%88%E4%BA%8E%E7%94%A8%E4%B8%8A%E4%BA%86async_hooks.md">终于用上了async_hooks</a><span>&nbsp;[2021-7-14]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3ts%E7%9A%84covariance%26contravariance.md">通俗理解ts的covariance&contravariance</a><span>&nbsp;[2021-6-29]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%B8%A6GUI%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%96%E7%A8%8B.md">带GUI的浏览器编程</a><span>&nbsp;[2020-10-10]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/redux%20vs%20mobx.md">redux vs mobx</a><span>&nbsp;[2020-10-6]</span></li></ul>
+        <ul><li><a href="https://github.com/shaomingquan/articles/blob/master/src/monorepo%E6%80%9D%E8%80%83.md">monorepo思考</a><span>&nbsp;[2022-3-2]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/chromium%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.md">chromium内存模型</a><span>&nbsp;[2021-8-31]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/js%E8%8E%B7%E5%8F%96%E8%BF%90%E8%A1%8C%E6%97%B6%E4%B8%8A%E4%B8%8B%E6%96%87.md">js获取运行时上下文</a><span>&nbsp;[2021-8-24]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/ts%E8%8C%83%E5%9E%8B%E7%BA%A6%E6%9D%9F%E2%80%9C%E4%BC%A0%E9%80%92%E2%80%9D%E4%B8%8E%E2%80%9C%E5%88%86%E5%8F%89%E2%80%9D%E7%8E%B0%E8%B1%A1.md">ts范型约束“传递”与“分叉”现象</a><span>&nbsp;[2021-7-17]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E7%BB%88%E4%BA%8E%E7%94%A8%E4%B8%8A%E4%BA%86async_hooks.md">终于用上了async_hooks</a><span>&nbsp;[2021-7-14]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3ts%E7%9A%84covariance%26contravariance.md">通俗理解ts的covariance&contravariance</a><span>&nbsp;[2021-6-29]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/%E5%B8%A6GUI%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%96%E7%A8%8B.md">带GUI的浏览器编程</a><span>&nbsp;[2020-10-10]</span></li><li><a href="https://github.com/shaomingquan/articles/blob/master/src/redux%20vs%20mobx.md">redux vs mobx</a><span>&nbsp;[2020-10-6]</span></li></ul>
     </ul>
 </details><details >
     <summary>软件</summary>

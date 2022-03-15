@@ -34,6 +34,9 @@
     <p>
     <ul>
         <li>
+            快手视频打码工具，可批量，用koa管理electron ipc，<a target="_blank" href="https://github.com/shaomingquan/electron-watermark">electron-watermark</a>
+        </li>
+        <li>
             帮你实现自己的git client，<a target="_blank" href="https://github.com/shaomingquan/your-own-git">your-own-git</a>
         </li>
         <li>
