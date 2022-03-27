@@ -37,10 +37,10 @@
             快手视频打码工具，可批量，用koa管理electron ipc，<a target="_blank" href="https://github.com/shaomingquan/electron-watermark">electron-watermark</a>
         </li>
         <li>
-            帮你实现自己的git client，<a target="_blank" href="https://github.com/shaomingquan/your-own-git">your-own-git</a>
+            一种hook方式，帮你实现自己的git client，<a target="_blank" href="https://github.com/shaomingquan/your-own-git">your-own-git</a>
         </li>
         <li>
-            golang api组织框架，<a target="_blank" href="https://github.com/shaomingquan/catalyst-documentary">catalyst</a>
+            golang http框架，基于ast+codegen，<a target="_blank" href="https://github.com/shaomingquan/catalyst-documentary">catalyst</a>
         </li>
         <li>
             帮你在github上生成一个博客，<a target="_blank" href="https://github.com/shaomingquan/tiny-blog-gen">tiny-blog-gen</a>
