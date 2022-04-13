@@ -34,6 +34,9 @@
     <p>
     <ul>
         <li>
+            自动化的koa ctx挂载，自动化的ts类型支持，<a target="_blank" href="https://github.com/shaomingquan/koa-injection">koa-injection</a>
+        </li>
+        <li>
             快手视频打码工具，可批量，用koa管理electron ipc，<a target="_blank" href="https://github.com/shaomingquan/electron-watermark">electron-watermark</a>
         </li>
         <li>
