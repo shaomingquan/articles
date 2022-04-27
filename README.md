@@ -5,9 +5,6 @@
     <p>
         <ul>
             <li>
-                2022@taou: <a target="_blank" href="https://slides.com/shaomingquan/deck-38a603/">Node.js多进程服务原理&实践</a>
-            </li>
-            <li>
                 2021@taou: <a target="_blank" href="https://slides.com/shaomingquan/deck-4a2b07">CRM的低代码实践</a>
             </li>
             <li>
