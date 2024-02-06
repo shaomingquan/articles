@@ -1,6 +1,6 @@
 ---
 date: 2021-07-14
-tags: js
+tags: javascript
 ---
 
 最近有一个bff的仓库，有很多http的rpc，对于单个bff请求，在调试过程中经常会需要查看有哪些rpc，为了方便查看这些rpc，bff在单个http生命周期添加rpc追踪功能（非prod环境），返回给前端，这样控制台即可查看bff的rpc调用。

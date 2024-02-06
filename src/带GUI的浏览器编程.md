@@ -1,6 +1,6 @@
 ---
 date: 2020-10-10
-tags: js
+tags: javascript
 ---
 
 前两个月陆续看了一些electron，electron+chromium，nodejs+chromium，以及结合puppeteer的玩法，或者说就是浏览器编程。觉得挺有场景的，自动化测试啊，爬虫之类的可以用到，包括下面的网站，也是在调研过程中了解到的。

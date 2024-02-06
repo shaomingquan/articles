@@ -1,6 +1,6 @@
 ---
 date: 2022-03-02
-tags: js
+tags: javascript
 ---
 
 ### 问题

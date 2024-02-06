@@ -1,6 +1,6 @@
 ---
 date: 2021-06-29
-tags: js
+tags: javascript
 ---
 
 不知道covariance&contravariance可以看 https://www.stephanboyer.com/post/132/what-are-covariance-and-contravariance。

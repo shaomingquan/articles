@@ -1,6 +1,6 @@
 ---
 date: 2021-08-24
-tags: js
+tags: javascript
 ---
 
 今天想做一个给分页信息持久化到localStorage的事。我有个通用的分页Store（PaginationStore），其他业务Store都会声明一个这个Store的实例，以复用其逻辑。按传统的做法，业务在声明PaginationStore实例的时候，给一个特定的存储key，很容易就实现这个功能。但是这样要改太多文件了，因为每个业务Store都在使用PaginationStore的实例，那么可以自动的拿到一个key吗？且在不同业务中这个key不同且不变？以作为Pagination被特定业务实例化的标示。

@@ -1,6 +1,6 @@
 ---
 date: 2020-10-06
-tags: js
+tags: javascript
 ---
 
 > 过去两年都在搞mobx，最近重温了一下redux。

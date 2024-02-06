@@ -1,6 +1,6 @@
 ---
 date: 2021-08-31
-tags: js
+tags: javascript
 ---
 
 > 参考 https://www.chromium.org/developers/design-documents/process-models

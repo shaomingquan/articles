@@ -1,6 +1,6 @@
 ---
 date: 2021-07-17
-tags: js
+tags: javascript
 ---
 
 > 泛型约束为前置知识
