@@ -50,29 +50,6 @@
 </details>
 
 <details open>
-    <summary>在线示例</summary>
-    <p>
-    <ul>
-        <li>
-            帮你快速生成<code>@keyframe</code>多帧动画代码，firecracker
-            <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/firecracker/">DEMO</a></span>
-        </li>
-        <li>
-            粗暴的射击小游戏
-            <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/shotshot/">DEMO</a></span>
-        </li>
-        <li>
-            翻牌记忆游戏
-            <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/memgame/">DEMO</a></span>
-        </li>
-        <li>
-            基于canvas的颜色选择器，所见即所得
-            <span class="demo"><a target="_blank" href="http://shaomingquan.github.io/canvascolorpicker/">DEMO</a></span>
-        </li>
-    </ul>
-    </p>
-</details>
-<details open>
     <summary>文章 (按时间)</summary>
     <ul>
         <details open>
